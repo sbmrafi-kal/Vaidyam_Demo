@@ -580,9 +580,9 @@
         </div>
       </section>
 
-      {%- when 'by_concern' -%}
-      {%- comment -%} ============ BY CONCERN SPOTLIGHT ============ {%- endcomment -%}
-      <section class="vaidyam-concern" id="by-concern" {{ block.shopify_attributes }}>
+            {%- when 'by_concern' -%}
+      {%- comment -%} ============ BROWSE BY CLINICAL CONCERN (MATCHING CARE PATHS UI) ============ {%- endcomment -%}
+      <section class="vaidyam-carepaths-section vaidyam-concern-section" id="by-concern" {{ block.shopify_attributes }}>
         <div class="page-width vaidyam-container">
           <div class="vaidyam-section-header-center">
             <p class="vaidyam-eyebrow">CLINICAL REVIEWS · FREE OPEN ACCESS</p>
@@ -590,47 +590,83 @@
             <p class="vaidyam-section-subtitle">Every clinical monograph below is standalone, physician-reviewed, and free to access for practitioners and scholars.</p>
           </div>
 
-          <div class="vaidyam-concern__filter-bar">
-            <button class="vaidyam-concern-pill active" type="button">All Concerns</button>
-            <button class="vaidyam-concern-pill" type="button">Digestion &amp; Gut Health</button>
-            <button class="vaidyam-concern-pill" type="button">Metabolic Disorders</button>
-            <button class="vaidyam-concern-pill" type="button">Thyroid Care</button>
-            <button class="vaidyam-concern-pill" type="button">Sports Ayurveda</button>
-          </div>
-
-          <div class="vaidyam-concern__featured-card">
-            <div class="vaidyam-concern__art-col">
-              <div class="vaidyam-concern__art-badge">VOL VIII · ISSUE 4</div>
-              <div class="vaidyam-concern__art-visual">
-                <svg viewBox="0 0 120 120" width="120" height="120" fill="none">
-                  <circle cx="60" cy="60" r="52" stroke="#E4C264" stroke-width="1.5" stroke-dasharray="4 4"/>
-                  <path d="M60 20 C45 35 35 55 60 85 C85 55 75 35 60 20 Z" fill="#2D6A4F"/>
-                  <path d="M60 20 L60 85" stroke="#E4C264" stroke-width="2"/>
-                  <circle cx="60" cy="60" r="16" fill="#C9A84C" opacity="0.9"/>
-                </svg>
-              </div>
-              <span class="vaidyam-concern__art-tag">DIGESTIVE &amp; METABOLIC</span>
+          <div class="ka-blog-care-panel">
+            <div class="ka-blog-care-intro">
+              <h3>Physician-Reviewed Clinical Monographs</h3>
+              <p class="ka-blog-lead">Explore practitioner-oriented reviews, formulation breakdowns, and CARE-format clinical case studies across core therapeutic specialties.</p>
             </div>
-
-            <div class="vaidyam-concern__text-col">
-              <div class="vaidyam-concern__meta-tags">
-                <span class="vaidyam-badge vaidyam-badge--primary">CLINICAL MONOGRAPH</span>
-                <span class="vaidyam-badge vaidyam-badge--gold">PEER-REVIEWED</span>
-                <span class="vaidyam-badge vaidyam-badge--outline">12 MIN READ</span>
-              </div>
-              <h3 class="vaidyam-concern__headline">Triphala in Clinical Practice: A Multidisciplinary Review on Gut Health, Metabolic Modulation and Srotas Purification</h3>
-              <p class="vaidyam-concern__lead">Evidence-based analysis of the Rasapanchaka matrix, HPLC-characterized polyphenols, short-chain fatty acid synthesis, and a 90-day CARE-standard case study in metabolic syndrome management.</p>
-              
-              <div class="vaidyam-concern__author-row">
-                <div class="vaidyam-author-avatar-chip">NS</div>
-                <div>
-                  <strong>Dr. Nimin Sreedhar, BAMS, MD (Ay.)</strong>
-                  <span>Chief of Medical Technology, Kerala Ayurveda Limited</span>
+            
+            <div class="ka-blog-path-list">
+              <div class="ka-care-card">
+                <div class="ka-care-card__content">
+                  <span class="ka-care-card__badge">DIGESTIVE SYSTEM · CLINICAL</span>
+                  <h4 class="ka-care-card__title">Triphala in Clinical Practice</h4>
+                  <p class="ka-care-card__desc">Rasapanchaka synergy, prebiotic SCFA modulation, Srotoshodhana, and a 90-day metabolic CARE case report.</p>
+                  <a href="/blogs/ayurveda" class="ka-care-card__link">
+                    <span>Read Free Manuscript</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  </a>
                 </div>
               </div>
 
-              <div class="vaidyam-concern__btn-wrap">
-                <a class="vaidyam-btn vaidyam-btn--primary vaidyam-btn--lg" href="/blogs/ayurveda">Read Full Clinical Manuscript &rarr;</a>
+              <div class="ka-care-card">
+                <div class="ka-care-card__content">
+                  <span class="ka-care-card__badge">THYROID &amp; METABOLISM</span>
+                  <h4 class="ka-care-card__title">Multidisciplinary Thyroid Management</h4>
+                  <p class="ka-care-card__desc">Integrative approaches to Galaganda and Hypothyroidism combining classical Panchakarma with modern endocrinology.</p>
+                  <a href="/blogs/ayurveda" class="ka-care-card__link">
+                    <span>Read Free Manuscript</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="ka-care-card">
+                <div class="ka-care-card__content">
+                  <span class="ka-care-card__badge">SPORTS MEDICINE · TRAUMA</span>
+                  <h4 class="ka-care-card__title">Sports Injury Recovery with Murivenna</h4>
+                  <p class="ka-care-card__desc">Evidence-based acute trauma management, ligament recovery, and Marma therapy protocols for athletes.</p>
+                  <a href="/blogs/ayurveda" class="ka-care-card__link">
+                    <span>Read Free Manuscript</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="ka-care-card">
+                <div class="ka-care-card__content">
+                  <span class="ka-care-card__badge">DERMATOLOGY &amp; VARNYA</span>
+                  <h4 class="ka-care-card__title">Classical Protocols for Dermatitis</h4>
+                  <p class="ka-care-card__desc">Raktaprasadana therapeutics, topical herbal Lepas, and gut-skin axis modulation in refractory eczema.</p>
+                  <a href="/blogs/ayurveda" class="ka-care-card__link">
+                    <span>Read Free Manuscript</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="ka-care-card">
+                <div class="ka-care-card__content">
+                  <span class="ka-care-card__badge">MANAS &amp; NEUROLOGY</span>
+                  <h4 class="ka-care-card__title">Medhya Rasayanas in Stress Resilience</h4>
+                  <p class="ka-care-card__desc">Pharmacological actions of Brahmi, Shankhapushpi, and Ashwagandha in autonomic regulation and cognitive health.</p>
+                  <a href="/blogs/ayurveda" class="ka-care-card__link">
+                    <span>Read Free Manuscript</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="ka-care-card">
+                <div class="ka-care-card__content">
+                  <span class="ka-care-card__badge">STRI ROGA · HORMONES</span>
+                  <h4 class="ka-care-card__title">Integrative PCOD &amp; Artava Protocols</h4>
+                  <p class="ka-care-card__desc">Metabolic correction, Sukumaram Kashayam therapeutics, and classical dietary Pathya for endocrine balance.</p>
+                  <a href="/blogs/ayurveda" class="ka-care-card__link">
+                    <span>Read Free Manuscript</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
