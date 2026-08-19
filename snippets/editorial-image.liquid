@@ -1,0 +1,24 @@
+{% comment %}
+  snippets/editorial-image.liquid
+  Failsafe, resilient image renderer for Shopify themes.
+  Handles Shopify image objects, asset file names, string URLs, and fallbacks.
+{% endcomment %}
+
+{%- if image != blank -%}
+  {%- if image.src -%}
+    {{ image | image_url: width: width | image_tag: 
+       loading: 'lazy', 
+       class: class_names, 
+       alt: alt_text | default: image.alt | escape }}
+  {%- else -%}
+    <img src="{{ image | asset_url }}" alt="{{ alt_text | escape }}" loading="lazy" class="{{ class_names }}" />
+  {%- endif -%}
+{%- elsif asset_name != blank -%}
+  <img src="{{ asset_name | asset_url }}" alt="{{ alt_text | escape }}" loading="lazy" class="{{ class_names }}" />
+{%- elsif image_url != blank -%}
+  <img src="{{ image_url }}" alt="{{ alt_text | escape }}" loading="lazy" class="{{ class_names }}" />
+{%- else -%}
+  <div class="vaidyam-image-fallback {{ class_names }}">
+    <span>Archive Scan Pending</span>
+  </div>
+{%- endif -%}

@@ -1,389 +1,81 @@
+{% comment %}
+  sections/footer.liquid — High-End Editorial Publishing Footer
+  Features:
+  - Brand Masthead: Vaidyam Publication Division, Aluva, Kerala | ISSN: 2394-4323
+  - Author Guidelines & Policies (Review Articles, CARE format, Student Innovations, IAST Sanskrit)
+  - Official Channels & Quarterly Dispatch Newsletter
+  - Bottom Bar with ICMJE, CARE & Vancouver Publishing Guidelines
+{% endcomment %}
+
 {{ 'section-footer.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'footer.js' | asset_url }}" defer="defer"></script>
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: 0px;
-    }
-  }
-
-  @media screen and (max-width: 989px) {
-    /* Hide empty footer logo/brand container to remove top gap */
-    .theme-footer-brand {
-      display: none;
-    }
-
-    /* Set exact footer padding-top and zero out padding-bottom */
-    .theme-footer,
-    footer.theme-product-page__section.section-{{ section.id }}-padding,
-    .theme-footer .section-{{ section.id }}-padding,
-    .theme-footer footer {
-      padding-top: 16px;
-      padding-bottom: 0;
-    }
-
-    /* Tagline spacing */
-    .theme-footer-tagline-wrapper {
-      margin-top: 36px;
-      margin-bottom: 16px;
-    }
+<footer class="vaidyam-journal-footer" id="author-guidelines">
+  <div class="page-width vaidyam-container">
     
-    /* Divider line margin */
-    .theme-footer-column::after {
-      margin: 20px 0 0;
-    }
-
-    /* Zero out decoration wrapper bottom spacing */
-    .theme-footer-decoration {
-      display: block;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-bottom: 0;
-      line-height: 0;
-      opacity: 1;
-    }
-
-    /* Make leaves tall and align to the left edge of the screen */
-    .theme-footer-decoration__svg {
-      width: 100%;
-      height: 96px;
-      object-fit: cover;
-      object-position: left bottom;
-      display: block;
-      margin: 0;
-      padding: 0;
-    }
-    
-    /* Ensure social icon overrides apply cleanly */
-    .theme-footer-social__icon,
-    .theme-product-page .theme-footer-social__icon {
-      width: 20px;
-      height: 20px;
-    }
-    .theme-footer-social__icon svg,
-    .theme-footer-social__icon-img,
-    .theme-product-page .theme-footer-social__icon svg,
-    .theme-product-page .theme-footer-social__icon-img {
-      width: 20px;
-      height: 20px;
-    }
-  }
-{%- endstyle -%}
-
-<footer class="theme-product-page__section theme-reveal section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
-  <div class="theme-product-page__wrap">
-    {%- assign link_blocks = section.blocks | where: 'type', 'link_column' -%}
-
-    <div class="theme-footer-grid">
-      <!-- Brand column -->
-      <div class="theme-footer-brand">
-        {%- if section.settings.logo_image != blank -%}
-          {{
-            section.settings.logo_image
-            | image_url: width: 800
-            | image_tag: class: 'theme-footer-brand__logo', loading: 'lazy', alt: section.settings.logo_alt
-          }}
-        {%- endif -%}
+    <!-- Top Grid -->
+    <div class="vaidyam-footer-main-grid">
+      
+      <!-- Brand Masthead (4 Cols) -->
+      <div class="footer-col brand-mission-col">
+        <div class="footer-brand-wrap">
+          <span class="footer-brand-title">VAIDYAM</span>
+          <span class="footer-brand-tag">A Journal on Evolving Ayurveda • Estd. 2003</span>
+        </div>
+        <p class="footer-mission-desc">
+          Kerala Ayurveda Vaidyam is a pioneering quarterly publication committed to classical textual interpretation, CARE-compliant clinical observations, and med-tech innovation.
+        </p>
+        <div class="footer-office-meta">
+          <p><strong>ISSN:</strong> 2394-4323 (Print &amp; Digital)</p>
+          <p><strong>Editorial Office:</strong> Publication Division, Athani Post, Aluva, Ernakulam District, Kerala – 683585, India</p>
+        </div>
       </div>
 
-      <!-- Link columns (render blocks if present) -->
-      {%- for block in link_blocks -%}
-        <div class="theme-footer-column" {{ block.shopify_attributes }}>
-          {%- if block.settings.heading != blank -%}
-            <h2 class="theme-footer-column__title">{{ block.settings.heading }}</h2>
-          {%- endif -%}
-          {%- if block.settings.menu != blank -%}
-            <ul class="theme-footer-list">
-              {%- for link in linklists[block.settings.menu].links -%}
-                {%- assign title_downcase = link.title | downcase -%}
-                {%- if title_downcase == 'search' -%}
-                  {%- continue -%}
-                {%- endif -%}
-                <li>
-                  <a href="{{ link.url }}">{{ link.title }}</a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
+      <!-- Author Guidelines & Policies (4 Cols) -->
+      <div class="footer-col guidelines-col">
+        <h4 class="footer-col-heading">Author Guidelines &amp; Policies</h4>
+        <ul class="footer-guidelines-list">
+          <li>✦ <strong>Review Articles:</strong> &lt;1,500 words with minimum 5 Vancouver citations</li>
+          <li>✦ <strong>Clinical Cases:</strong> Strict international CARE format (&lt;1,500 words)</li>
+          <li>✦ <strong>Student Innovations:</strong> &lt;800 words campus reviews &amp; reflections</li>
+          <li>✦ <strong>Sanskrit Style:</strong> IAST transliteration, italicized non-proper nouns</li>
+          <li>✦ <strong>Direct Submissions:</strong> <a href="mailto:vaidyam@keralaayurveda.biz" class="footer-gold-link">vaidyam@keralaayurveda.biz</a></li>
+        </ul>
+      </div>
+
+      <!-- Official Channels & Newsletter (4 Cols) -->
+      <div class="footer-col channels-col">
+        <h4 class="footer-col-heading">Official Channels &amp; Outreach</h4>
+        <ul class="footer-channels-list">
+          <li>➔ <a href="https://dravya.app" target="_blank" rel="noopener">Dravya App Knowledge Platform</a></li>
+          <li>➔ <a href="https://spotify.com" target="_blank" rel="noopener">Spotify: Kerala Ayurveda Podcast</a></li>
+          <li>➔ <a href="https://youtube.com/@KALVaidyam" target="_blank" rel="noopener">YouTube: @KALVaidyam Dialogues</a></li>
+          <li>➔ <a href="https://instagram.com/keralaayurvedavaidyam" target="_blank" rel="noopener">Instagram: @keralaayurvedavaidyam</a></li>
+          <li>➔ Direct Phone: +91 9048033348</li>
+        </ul>
+
+        <div class="footer-newsletter-wrap">
+          <span class="newsletter-lbl">Subscribe to Quarterly Digital Table of Contents:</span>
+          <form onsubmit="event.preventDefault(); alert('Subscribed to Vaidyam Quarterly Dispatch.');" class="newsletter-form">
+            <input type="email" placeholder="doctor@hospital.org" required class="newsletter-input">
+            <button type="submit" class="newsletter-btn">Join</button>
+          </form>
         </div>
-      {%- endfor -%}
+      </div>
+
     </div>
 
-    <!-- Social links block-based first, fall back to section level settings -->
-    {%- assign social_blocks = section.blocks | where: 'type', 'social_icon' -%}
-    {%- assign has_social_icons = false -%}
-    {%- if social_blocks.size > 0 or section.settings.facebook_icon != blank or section.settings.instagram_icon != blank or section.settings.youtube_icon != blank or section.settings.linkedin_icon != blank or section.settings.x_icon != blank -%}
-      {%- assign has_social_icons = true -%}
-    {%- endif -%}
+    <!-- Bottom Bar -->
+    <div class="vaidyam-footer-bottom-bar">
+      <span>© 2003–2026 Kerala Ayurveda Limited — Publication Division. All Rights Reserved.</span>
+      <span>Indexed under ICMJE, CARE &amp; Vancouver Publishing Guidelines.</span>
+    </div>
 
-    {%- if has_social_icons -%}
-      <div class="theme-footer-social-wrapper">
-        <div class="theme-footer-social-empty"></div>
-        <div class="theme-footer-social-content">
-          {%- if section.settings.social_label != blank -%}
-            <div class="theme-footer-social__label">{{ section.settings.social_label }}</div>
-          {%- endif -%}
-          <div class="theme-footer-social__icons">
-            {%- if social_blocks.size > 0 -%}
-              {%- for block in social_blocks -%}
-                {%- if block.settings.image != blank -%}
-                  {%- if block.settings.link != blank -%}
-                    <a href="{{ block.settings.link }}" aria-label="{{ block.settings.alt_text | default: 'Social link' }}" class="theme-footer-social__icon footer-social" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
-                  {%- else -%}
-                    <span aria-label="{{ block.settings.alt_text | default: 'Social link' }}" class="theme-footer-social__icon footer-social theme-footer-social__icon--static" {{ block.shopify_attributes }}>
-                  {%- endif -%}
-                    {{ block.settings.image | image_url: width: 60 | image_tag: class: 'theme-footer-social__icon-img', loading: 'lazy' }}
-                  {%- if block.settings.link != blank -%}
-                    </a>
-                  {%- else -%}
-                    </span>
-                  {%- endif -%}
-                {%- endif -%}
-              {%- endfor -%}
-            {%- else -%}
-              {%- comment -%} Facebook {%- endcomment -%}
-              {%- if section.settings.facebook_icon != blank -%}
-                {%- if section.settings.facebook_link != blank -%}<a href="{{ section.settings.facebook_link }}" aria-label="Facebook" class="theme-footer-social__icon footer-social" target="_blank" rel="noopener">{%- else -%}<span aria-label="Facebook" class="theme-footer-social__icon footer-social theme-footer-social__icon--static">{%- endif -%}
-                  {{ section.settings.facebook_icon | image_url: width: 60 | image_tag: class: 'theme-footer-social__icon-img', loading: 'lazy' }}
-                {%- if section.settings.facebook_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
-              {%- endif -%}
-
-              {%- comment -%} X / Twitter {%- endcomment -%}
-              {%- if section.settings.x_icon != blank -%}
-                {%- if section.settings.x_link != blank -%}<a href="{{ section.settings.x_link }}" aria-label="X / Twitter" class="theme-footer-social__icon footer-social" target="_blank" rel="noopener">{%- else -%}<span aria-label="X / Twitter" class="theme-footer-social__icon footer-social theme-footer-social__icon--static">{%- endif -%}
-                  {{ section.settings.x_icon | image_url: width: 60 | image_tag: class: 'theme-footer-social__icon-img', loading: 'lazy' }}
-                {%- if section.settings.x_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
-              {%- endif -%}
-
-              {%- comment -%} Instagram {%- endcomment -%}
-              {%- if section.settings.instagram_icon != blank -%}
-                {%- if section.settings.instagram_link != blank -%}<a href="{{ section.settings.instagram_link }}" aria-label="Instagram" class="theme-footer-social__icon footer-social" target="_blank" rel="noopener">{%- else -%}<span aria-label="Instagram" class="theme-footer-social__icon footer-social theme-footer-social__icon--static">{%- endif -%}
-                  {{ section.settings.instagram_icon | image_url: width: 60 | image_tag: class: 'theme-footer-social__icon-img', loading: 'lazy' }}
-                {%- if section.settings.instagram_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
-              {%- endif -%}
-
-              {%- comment -%} YouTube {%- endcomment -%}
-              {%- if section.settings.youtube_icon != blank -%}
-                {%- if section.settings.youtube_link != blank -%}<a href="{{ section.settings.youtube_link }}" aria-label="YouTube" class="theme-footer-social__icon footer-social" target="_blank" rel="noopener">{%- else -%}<span aria-label="YouTube" class="theme-footer-social__icon footer-social theme-footer-social__icon--static">{%- endif -%}
-                  {{ section.settings.youtube_icon | image_url: width: 60 | image_tag: class: 'theme-footer-social__icon-img', loading: 'lazy' }}
-                {%- if section.settings.youtube_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
-              {%- endif -%}
-
-              {%- comment -%} LinkedIn {%- endcomment -%}
-              {%- if section.settings.linkedin_icon != blank -%}
-                {%- if section.settings.linkedin_link != blank -%}<a href="{{ section.settings.linkedin_link }}" aria-label="LinkedIn" class="theme-footer-social__icon footer-social" target="_blank" rel="noopener">{%- else -%}<span aria-label="LinkedIn" class="theme-footer-social__icon footer-social theme-footer-social__icon--static">{%- endif -%}
-                  {{ section.settings.linkedin_icon | image_url: width: 60 | image_tag: class: 'theme-footer-social__icon-img', loading: 'lazy' }}
-                {%- if section.settings.linkedin_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
-              {%- endif -%}
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    {%- endif -%}
-
-    {%- assign footer_tagline = section.settings.tagline -%}
-    {%- if footer_tagline != blank -%}
-      <div class="theme-footer-tagline-wrapper">
-        <div class="theme-footer-tagline-empty"></div>
-        <div class="theme-footer-tagline-content">
-          <p class="theme-footer-tagline-p">{{ footer_tagline | newline_to_br }}</p>
-        </div>
-      </div>
-    {%- endif -%}
-
-  </div>
-  <div class="theme-footer-decoration" aria-hidden="true">
-    <img
-      src="{{ 'footer-decoration.svg' | asset_url }}"
-      class="theme-footer-decoration__svg"
-      loading="eager"
-      alt=""
-      width="1440"
-      height="107"
-    >
   </div>
 </footer>
 
 {% schema %}
 {
-  "name": "footer",
-  "tag": "section",
-  "class": "section theme-footer",
-  "settings": [
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "text",
-      "id": "social_label",
-      "label": "Social label",
-      "default": "Follow Us"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo_image",
-      "label": "Logo image"
-    },
-    {
-      "type": "text",
-      "id": "logo_alt",
-      "label": "Logo alt text",
-      "default": "Kerala Ayurveda"
-    },
-    {
-      "type": "textarea",
-      "id": "tagline",
-      "label": "Tagline"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "default": 40,
-      "label": "Top padding"
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "default": 40,
-      "label": "Bottom padding"
-    },
-    {
-      "type": "header",
-      "content": "Social Media Links"
-    },
-    {
-      "type": "image_picker",
-      "id": "facebook_icon",
-      "label": "Facebook Icon Image"
-    },
-    {
-      "type": "url",
-      "id": "facebook_link",
-      "label": "Facebook Link"
-    },
-    {
-      "type": "image_picker",
-      "id": "instagram_icon",
-      "label": "Instagram Icon Image"
-    },
-    {
-      "type": "url",
-      "id": "instagram_link",
-      "label": "Instagram Link"
-    },
-    {
-      "type": "image_picker",
-      "id": "youtube_icon",
-      "label": "YouTube Icon Image"
-    },
-    {
-      "type": "url",
-      "id": "youtube_link",
-      "label": "YouTube Link"
-    },
-    {
-      "type": "image_picker",
-      "id": "linkedin_icon",
-      "label": "LinkedIn Icon Image"
-    },
-    {
-      "type": "url",
-      "id": "linkedin_link",
-      "label": "LinkedIn Link"
-    },
-    {
-      "type": "image_picker",
-      "id": "x_icon",
-      "label": "X (Twitter) Icon Image"
-    },
-    {
-      "type": "url",
-      "id": "x_link",
-      "label": "X (Twitter) Link"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "link_column",
-      "name": "Link column",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Quick Links"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu",
-          "default": "footer"
-        }
-      ]
-    },
-    {
-      "type": "social_icon",
-      "name": "Social Icon",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Icon Image"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
-        },
-        {
-          "type": "text",
-          "id": "alt_text",
-          "label": "Alt text",
-          "default": "Social Media Link"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "footer",
-      "blocks": [
-        {
-          "type": "link_column",
-          "settings": {
-            "heading": "Quick Links"
-          }
-        },
-        {
-          "type": "link_column",
-          "settings": {
-            "heading": "Policies"
-          }
-        },
-        {
-          "type": "link_column",
-          "settings": {
-            "heading": "Our Network"
-          }
-        }
-      ]
-    }
-  ]
+  "name": "Academic Journal Footer",
+  "settings": []
 }
 {% endschema %}

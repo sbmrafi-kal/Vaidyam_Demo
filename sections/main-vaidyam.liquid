@@ -1,1115 +1,1116 @@
-{%- comment -%} theme-check-disable ContentForHeaderModification, UnusedAssign {%- endcomment -%}
 {% comment %}
-  main-vaidyam.liquid — Vaidyam Magazine Landing Page
-  Includes: Hero, About, Current Edition, Care Paths, Topics, Through The Pages, All 18 Sections, By Concern, Video, Testimonials, Legacy, Contact
+  main-vaidyam.liquid — Standalone Editorial Architecture
+  Vaidyam: A Journal on Evolving Ayurveda
+  Complete Sections:
+  1. Hero Broadheader with 3D Diabetes Bumper Cover
+  2. Editorial Philosophy (#philosophy)
+  3. Core Clinical Care Pathways (#care-pathways)
+  4. The 18 Recurring Columns Dossier Spread (#departments)
+  5. CARE Clinical Case Monograph (#care-report)
+  6. Working Audiovisual Roundtable Video Player (#video)
+  7. Accurate Editorial Board & Patrons (#editorial-board)
+  8. Physician Endorsements & Social Proof
+  9. Historical Archival Exhibition Retrospective (1997–2026) (#archival-museum)
+  10. Annual Subscription Checkout (#subscribe-plan)
+  11. Look Inside Spread Modal (#look-inside-modal)
 {% endcomment %}
 
+{{ 'vaidyam-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'vaidyam-font' -%}
 
-{{ 'vaidyam-landing.css' | asset_url | stylesheet_tag }}
+<div class="vaidyam-editorial-universe">
 
-<div class="vaidyam-landing">
+  <!-- ================= 1. HERO BROADHEADER WITH DIABETES BUMPER COVER ================= -->
+  <section class="vaidyam-hero-section" id="hero">
+    <div class="page-width vaidyam-container">
+      <div class="vaidyam-hero-grid">
+        
+        <!-- Left Column: Editorial Callout (7 Cols) -->
+        <div class="vaidyam-hero-content">
+          <div class="vaidyam-hero-badge">
+            <span>Special Bumper Edition • Diabetes &amp; Metabolism</span>
+          </div>
 
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
+          <h1 class="vaidyam-hero-title">
+            The Peer-Reviewed Voice of <span class="serif-italic-emerald">Evolving Ayurveda.</span>
+          </h1>
 
-      {%- when 'hero' -%}
-      {%- comment -%} ============ HERO (SENIOR APPROVED) ============ {%- endcomment -%}
-      <section class="vaidyam-hero" id="overview" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-hero__grid">
-            <div class="vaidyam-hero__content">
-              <p class="vaidyam-eyebrow">{{ section.settings.hero_eyebrow | default: 'KERALA AYURVEDA · SINCE 2003' }}</p>
-              <h1 class="vaidyam-hero__title">{{ section.settings.hero_title | default: 'A quarterly journal on evolving Ayurveda, for practitioners and students.' }}</h1>
-              <p class="vaidyam-hero__subtitle">{{ section.settings.hero_subtitle | default: 'Vaidyam connects classical Ayurvedic scholarship with contemporary clinical practice — published quarterly by Kerala Ayurveda Limited, reviewed by practicing BAMS and MD physicians.' }}</p>
+          <p class="vaidyam-hero-lead">
+            Bridging classical Sanskrit treatises with modern clinical validation. Published quarterly by Kerala Ayurveda Limited since 2003 — featuring physician-reviewed monographs, CARE-compliant case trials, and clinical casuistry.
+          </p>
+
+          <!-- Current Issue Lead Feature Box -->
+          <div class="vaidyam-issue-highlight-card">
+            <div class="highlight-header">
+              <span>CURRENT ISSUE LEAD FEATURE</span>
+              <span>VOL. VIII • ISSUE 4</span>
+            </div>
+            <h2 class="highlight-title">
+              Multidisciplinary Management of Diabetes, Endocrine Srotas &amp; Metabolic Endotoxemia
+            </h2>
+            <div class="highlight-topics-grid">
+              <div>✦ <strong>Triphala &amp; SCFA:</strong> Gut-Metabolic Synergy</div>
+              <div>✦ <strong>Murivenna:</strong> Acute Sports Trauma Care</div>
+              <div>✦ <strong>Śāstramathanam:</strong> Dr. K. Rajagopalan Papers</div>
+              <div>✦ <strong>Vancouver Bibliography:</strong> Audited Citations</div>
+            </div>
+          </div>
+
+          <!-- Action CTAs -->
+          <div class="vaidyam-hero-ctas">
+            <a href="#subscribe-plan" class="btn-hero-primary">
+              <span>Get Single Issue (₹700) / Annual (₹1,200)</span>
+              <span class="cta-arrow">→</span>
+            </a>
+            <button onclick="toggleModal('look-inside-modal', true)" type="button" class="btn-hero-secondary">
+              <svg class="w-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              <span>Look Inside Spread (Preview)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: High-Clarity 3D Book (Diabetes Bumper Cover Reproduction) -->
+        <div class="vaidyam-hero-book-wrap">
+          <div class="perspective-1200">
+            <div class="book-container relative" onclick="toggleModal('look-inside-modal', true)" role="button" tabindex="0" aria-label="Look inside magazine spread">
               
-              <div class="vaidyam-hero__actions">
-                <a class="vaidyam-btn vaidyam-btn--primary" href="#current-edition">Subscribe to Vaidyam &rarr;</a>
-                <a class="vaidyam-btn vaidyam-btn--outline" href="/blogs/ayurveda">Read free articles</a>
+              <!-- Realistic Spine -->
+              <div class="book-spine">
+                <span class="spine-text">VAIDYAM JOURNAL • VOL VIII</span>
+                <span class="spine-star">✦</span>
               </div>
 
-              <div class="vaidyam-hero__trust">
-                <span><strong>80+ years</strong> of Kerala Ayurveda</span>
-                <span class="vaidyam-hero__trust-dot">·</span>
-                <span><strong>Quarterly since 2003</strong></span>
-                <span class="vaidyam-hero__trust-dot">·</span>
-                <span>Reviewed by practicing physicians</span>
-              </div>
-            </div>
+              <!-- Cover Art Face -->
+              <div class="book-face">
+                <div class="specular-sheen"></div>
 
-            <div class="vaidyam-hero__cover">
-              <div class="vaidyam-hero__cover-frame">
-                {%- assign cover_image = section.settings.cover_image -%}
-                {%- if cover_image != blank -%}
-                  {{ cover_image | image_url: width: 600 | image_tag: class: 'vaidyam-hero__cover-img', loading: 'eager', alt: 'Vaidyam Magazine - Current Issue' }}
-                {%- else -%}
-                  <div class="vaidyam-hero__magazine-card">
-                    <div class="vaidyam-magazine-header">
-                      <span class="vaidyam-mag-vol">Vol VIII · Issue 4</span>
-                      <span class="vaidyam-mag-brand">kerala ayurveda<br><strong>vaidyam</strong></span>
-                      <span class="vaidyam-mag-tag">A Journal on Evolving Ayurveda</span>
-                    </div>
-                    <div class="vaidyam-magazine-artwork">
-                      <div class="vaidyam-artwork-visual">
-                        <svg viewBox="0 0 100 100" class="vaidyam-artwork-leaf" fill="none">
-                          <circle cx="50" cy="50" r="45" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3 3"/>
-                          <path d="M50 20 C35 35 25 55 50 80 C75 55 65 35 50 20 Z" fill="#2D6A4F" opacity="0.85"/>
-                          <path d="M50 20 L50 78" stroke="#E4C264" stroke-width="1.5"/>
-                          <path d="M50 35 C42 42 38 48 35 55" stroke="#E4C264" stroke-width="1"/>
-                          <path d="M50 45 C58 52 62 58 65 65" stroke="#E4C264" stroke-width="1"/>
-                        </svg>
-                      </div>
-                      <div class="vaidyam-artwork-caption">
-                        <span>Thyroid Health &amp; Multidisciplinary Ayurveda</span>
-                      </div>
-                    </div>
+                <!-- Cover Header -->
+                <div class="book-cover-masthead">
+                  <span class="cover-pub-tag">PUBLISHED BY KERALA AYURVEDA LIMITED</span>
+                  <div class="cover-brand-row">
+                    <span class="brand-kerala">kerala</span>
+                    <h2 class="brand-vaidyam">VAIDYAM</h2>
                   </div>
-                {%- endif -%}
-              </div>
-              <div class="vaidyam-hero__stat-badge">
-                <span class="vaidyam-hero__stat-num">18</span>
-                <span class="vaidyam-hero__stat-label">recurring sections every issue</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                  <p class="cover-brand-sub">A Journal on Evolving Ayurveda</p>
+                </div>
 
-      {%- when 'about' -%}
-      {%- comment -%} ============ ABOUT VAIDYAM ============ {%- endcomment -%}
-      <section class="vaidyam-about" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <h2 class="vaidyam-section-title">About Kerala Ayurveda Vaidyam</h2>
-          <p class="vaidyam-section-subtitle">A quarterly journal on evolving Ayurveda, published by Kerala Ayurveda Limited since 2003 — practitioner-focused, physician-reviewed, and grounded in classical scholarship.</p>
-          
-          <div class="vaidyam-about__cards">
-            <div class="vaidyam-about__card">
-              <div class="vaidyam-about__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              </div>
-              <h3>Expert Insights</h3>
-              <p>Written and reviewed by a real editorial board of practicing BAMS and MD physicians.</p>
-            </div>
-            
-            <div class="vaidyam-about__card">
-              <div class="vaidyam-about__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              </div>
-              <h3>Curated Diversity</h3>
-              <p>Clinical and Foundational content side by side — the Readometer system practitioners and students already rely on.</p>
-            </div>
-            
-            <div class="vaidyam-about__card">
-              <div class="vaidyam-about__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </div>
-              <h3>Practical Wisdom</h3>
-              <p>Practice-ready guidance across 18 recurring sections — Popular Science depth, not academic-journal density.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+                <!-- Cover Medical Art: Kidney Metabolism & Glucose Cascades -->
+                <div class="cover-illustration-wrap">
+                  <svg class="cover-med-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Kidneys -->
+                    <path d="M60 45 C40 45 35 75 45 95 C55 115 75 110 70 85 C68 65 75 45 60 45 Z" fill="#A8583B" stroke="#662B16" stroke-width="2"/>
+                    <path d="M140 45 C160 45 165 75 155 95 C145 115 125 110 130 85 C132 65 125 45 140 45 Z" fill="#A8583B" stroke="#662B16" stroke-width="2"/>
+                    <!-- Metabolism Funnel -->
+                    <ellipse cx="100" cy="55" rx="22" ry="7" fill="#E67E22" stroke="#B95C00" stroke-width="1.5"/>
+                    <rect x="85" y="68" width="30" height="10" rx="3" fill="#D35400"/>
+                    <!-- Flask -->
+                    <path d="M85 85 L115 85 L130 135 C130 155 70 155 70 135 Z" fill="#C0392B" opacity="0.85" stroke="#962215" stroke-width="2"/>
+                    <!-- Glucose Overflow -->
+                    <path d="M60 145 C60 145 100 175 140 145 C150 170 50 170 60 145 Z" fill="#F1C40F" opacity="0.9"/>
+                    <!-- Glucometer Sensor -->
+                    <rect x="135" y="145" width="28" height="18" rx="4" fill="#2C3E50" stroke="#1A252F" stroke-width="1.5"/>
+                    <circle cx="149" cy="154" r="4" fill="#E74C3C"/>
+                    <!-- Ants (Prameha sign) -->
+                    <circle cx="50" cy="160" r="2" fill="#111"/><circle cx="53" cy="162" r="1.5" fill="#111"/>
+                    <circle cx="75" cy="172" r="2" fill="#111"/><circle cx="78" cy="174" r="1.5" fill="#111"/>
+                    <circle cx="115" cy="168" r="2" fill="#111"/><circle cx="118" cy="170" r="1.5" fill="#111"/>
+                  </svg>
+                </div>
 
-      {%- when 'current_edition' -%}
-      {%- comment -%} ============ CURRENT EDITION ============ {%- endcomment -%}
-      <section class="vaidyam-current" id="current-edition" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-current__header">
-            <h2 class="vaidyam-section-title">Current Edition</h2>
-            <p class="vaidyam-section-subtitle">Discover our latest issue filled with expert insights and practical Ayurvedic wisdom.</p>
-          </div>
-          
-          <div class="vaidyam-current__grid">
-            <div class="vaidyam-current__cover">
-              <span class="vaidyam-current__badge">New Issue</span>
-              {%- assign cover_image = section.settings.cover_image -%}
-              {%- if cover_image != blank -%}
-                {{ cover_image | image_url: width: 600 | image_tag: class: 'vaidyam-current__cover-img', loading: 'lazy', alt: 'Vaidyam Vol VIII Issue 4' }}
-              {%- else -%}
-                <div class="vaidyam-magazine-edition-card">
-                  <div class="vaidyam-mag-top-strip">
-                    <span>Vol VIII · Issue 4 · Oct - Dec 2025</span>
-                    <span>Published by Kerala Ayurveda Limited</span>
+                <!-- Cover Footer -->
+                <div class="cover-bottom-row">
+                  <div>
+                    <span class="cover-issn">ISSN 2394-4323</span>
+                    <span class="cover-theme-note">Prameha &amp; Clinical Trials</span>
                   </div>
-                  <div class="vaidyam-mag-title-bar">
-                    <span class="vaidyam-mag-logo-sm">kerala<br>ayurveda</span>
-                    <span class="vaidyam-mag-main-title">vaidyam</span>
-                    <span class="vaidyam-mag-subtitle">A Journal on Evolving Ayurveda</span>
-                  </div>
-                  <div class="vaidyam-mag-graphic">
-                    <svg viewBox="0 0 160 160" class="vaidyam-mag-center-art">
-                      <rect width="160" height="160" fill="#FBF8F2" rx="8"/>
-                      <circle cx="80" cy="80" r="65" fill="#EAE2CF" opacity="0.6"/>
-                      <path d="M80 30 C55 50 40 85 80 130 C120 85 105 50 80 30 Z" fill="#2D6A4F"/>
-                      <path d="M80 30 L80 128" stroke="#E4C264" stroke-width="2"/>
-                      <circle cx="80" cy="80" r="15" fill="#C9A84C" opacity="0.8"/>
-                    </svg>
-                  </div>
-                  <div class="vaidyam-mag-bottom-bar">
-                    <span>Theme: Multidisciplinary Management of Thyroid Conditions</span>
+                  <div class="bumper-issue-badge">
+                    <span class="badge-sub">SPECIAL</span>
+                    <span class="badge-main">Bumper Issue</span>
                   </div>
                 </div>
-              {%- endif -%}
-            </div>
-            
-            <div class="vaidyam-current__details">
-              <p class="vaidyam-current__meta">Vol VIII issue 4, Oct - Dec 2025</p>
-              <h2 class="vaidyam-current__title">Vaidyam - A Journal on Evolving Ayurveda</h2>
-              
-              <div class="vaidyam-current__highlights">
-                <p class="vaidyam-current__highlights-title">In This Issue:</p>
-                <ul>
-                  <li><strong>Special Feature:</strong> Exploring multispeciality approaches in the management of thyroid conditions</li>
-                  <li><strong>Futuristic &amp; Thought-Provoking articles:</strong> For the evolution of evidence-based Ayurveda</li>
-                  <li><strong>Words of Wisdom:</strong> Insights from doyens of Ayurveda, guiding the next generation of practitioners</li>
-                  <li><strong>Clinical Focus:</strong> Practice-oriented, clinically relevant guidance in managing thyroid conditions</li>
-                </ul>
+
               </div>
-              
-              <div class="vaidyam-current__price">
-                <span class="vaidyam-current__price-amount">Rs. 700</span>
-                <span class="vaidyam-current__price-note">Print Only · Delivered to your doorstep</span>
-              </div>
-              
-              <div class="vaidyam-current__action-row">
-                <a class="vaidyam-btn vaidyam-btn--primary" href="mailto:vaidyam@keralaayurveda.biz?subject=Purchase%20Current%20Edition%20Vol%20VIII%20Issue%204">Get This Issue &rarr;</a>
-                <a class="vaidyam-btn vaidyam-btn--outline" href="mailto:vaidyam@keralaayurveda.biz?subject=Annual%20Subscription%20Inquiry">Annual Subscription (₹1200/yr)</a>
-              </div>
+
             </div>
           </div>
         </div>
-      </section>
 
-      {%- when 'care_paths' -%}
-      {%- comment -%} ============ CARE PATHS (SENIOR APPROVED) ============ {%- endcomment -%}
-      <section class="ka-blog-section vaidyam-carepaths-section" id="care-paths" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="ka-blog-section-head">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. EDITORIAL PHILOSOPHY ================= -->
+  <section class="vaidyam-philosophy-section" id="philosophy">
+    <div class="page-width vaidyam-container">
+      <div class="philosophy-masthead">
+        <span class="philosophy-subtag">EDITORIAL PHILOSOPHY • SINCE 2003</span>
+        <h2 class="philosophy-title">Bridging Classical Shastra with Contemporary Science</h2>
+        <p class="philosophy-lead">
+          Vaidyam addresses a fundamental need in integrative healthcare: providing practicing physicians and scholars with rigorous clinical casuistry without sacrificing the timeless depth of classical treatises.
+        </p>
+      </div>
+
+      <div class="philosophy-tri-grid">
+        <div class="philosophy-card">
+          <span class="card-roman">01</span>
+          <h3>Physician-Reviewed Rigour</h3>
+          <p>Every paper, clinical case, and botanical analysis is evaluated by an active board of BAMS, MD, and PhD practitioners across premier Ayurvedic medical colleges.</p>
+        </div>
+
+        <div class="philosophy-card">
+          <span class="card-roman">02</span>
+          <h3>The Readometer Metric</h3>
+          <p>Articles are graded across three clear tiers: Level 1 (Foundational &amp; Lifestyle), Level 2 (Applied Pharmacology &amp; Formulations), and Level 3 (Classical Sanskrit Shastra Textual Exegesis).</p>
+        </div>
+
+        <div class="philosophy-card">
+          <span class="card-roman">03</span>
+          <h3>CARE-Standard Casuistry</h3>
+          <p>Moving beyond anecdotal claims to international CARE-guideline single-patient reports with audited laboratory parameters, Bristol Stool scores, and explicit dosage protocols.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. CORE CLINICAL CARE PATHWAYS ================= -->
+  <section class="vaidyam-carepaths-section" id="care-pathways">
+    <div class="page-width vaidyam-container">
+      <div class="carepaths-header-bar">
+        <span class="carepaths-super-tag">BOTANICAL SPECIMEN PATHWAYS</span>
+        <h2 class="carepaths-heading">Core Clinical Care Paths</h2>
+        <p class="carepaths-header-desc">
+          Evidence-informed therapeutic regimens bridging classical Shastra with modern clinical validation.
+        </p>
+      </div>
+
+      <div class="carepaths-cards-grid">
+        <!-- Path 1 -->
+        <div class="carepath-card">
+          <div class="carepath-card-top">
+            <div class="carepath-meta-row">
+              <span class="carepath-tag tag-digestive">DIGESTIVE SYSTEM</span>
+              <span class="carepath-doshic">Samāna Vāta / Pāchaka Pitta</span>
+            </div>
+            <h3 class="carepath-title">Agni &amp; Gut Health Care Path</h3>
+            <p class="carepath-desc">
+              Protocols for Grahani, IBS, hyperacidity, metabolic endotoxemia (Ama), and Srotoshodhana cleansing.
+            </p>
+          </div>
+          <div class="carepath-card-bottom">
+            <span class="carepath-ref">Caraka Saṃhitā • Cikitsā</span>
+            <span class="carepath-link">Explore Protocol →</span>
+          </div>
+        </div>
+
+        <!-- Path 2 -->
+        <div class="carepath-card">
+          <div class="carepath-card-top">
+            <div class="carepath-meta-row">
+              <span class="carepath-tag tag-hair">HAIR &amp; SCALP</span>
+              <span class="carepath-doshic">Bhrājaka Pitta</span>
+            </div>
+            <h3 class="carepath-title">Keshya &amp; Scalp Health Pathway</h3>
+            <p class="carepath-desc">
+              Classical Shiroabhyanga, Neelibhringadi oil regimens, and root-cause nutrition for premature greying and hair loss.
+            </p>
+          </div>
+          <div class="carepath-card-bottom">
+            <span class="carepath-ref">Sahasrayogam • Taila</span>
+            <span class="carepath-link">Explore Protocol →</span>
+          </div>
+        </div>
+
+        <!-- Path 3 -->
+        <div class="carepath-card">
+          <div class="carepath-card-top">
+            <div class="carepath-meta-row">
+              <span class="carepath-tag tag-neuro">NEUROLOGY</span>
+              <span class="carepath-doshic">Prāṇa Vāta / Tarpaka Kapha</span>
+            </div>
+            <h3 class="carepath-title">Manas, Stress &amp; Nidra Pathway</h3>
+            <p class="carepath-desc">
+              Medhya Rasayana therapeutics, circadian sleep synchronization, and autonomic balance for anxiety resilience.
+            </p>
+          </div>
+          <div class="carepath-card-bottom">
+            <span class="carepath-ref">Aṣṭāṅga Hṛdayam • Sūtra</span>
+            <span class="carepath-link">Explore Protocol →</span>
+          </div>
+        </div>
+
+        <!-- Path 4 -->
+        <div class="carepath-card">
+          <div class="carepath-card-top">
+            <div class="carepath-meta-row">
+              <span class="carepath-tag tag-joints">JOINTS &amp; MARMA</span>
+              <span class="carepath-doshic">Apāna Vāta / Śleṣmaka Kapha</span>
+            </div>
+            <h3 class="carepath-title">Sandhi, Asthi &amp; Sports Trauma</h3>
+            <p class="carepath-desc">
+              Targeted rehabilitation for Sandhivata, ligament tears, spondylosis, and sports-related musculoskeletal injuries with Murivenna.
+            </p>
+          </div>
+          <div class="carepath-card-bottom">
+            <span class="carepath-ref">Suśruta Saṃhitā • Śārīra</span>
+            <span class="carepath-link">Explore Protocol →</span>
+          </div>
+        </div>
+
+        <!-- Path 5 -->
+        <div class="carepath-card">
+          <div class="carepath-card-top">
+            <div class="carepath-meta-row">
+              <span class="carepath-tag tag-metabolic">METABOLIC HEALTH</span>
+              <span class="carepath-doshic">Kapha-Vāta • Medovaha</span>
+            </div>
+            <h3 class="carepath-title">Thyroid &amp; Endocrine Health</h3>
+            <p class="carepath-desc">
+              Multidisciplinary approaches to Galaganda, Kantha Roga, and metabolic balance through classical formulations.
+            </p>
+          </div>
+          <div class="carepath-card-bottom">
+            <span class="carepath-ref">Bhaiṣajya Ratnāvalī</span>
+            <span class="carepath-link">Explore Protocol →</span>
+          </div>
+        </div>
+
+        <!-- Path 6 -->
+        <div class="carepath-card">
+          <div class="carepath-card-top">
+            <div class="carepath-meta-row">
+              <span class="carepath-tag tag-women">WOMEN'S HEALTH</span>
+              <span class="carepath-doshic">Apāna Vāta • Artavavaha</span>
+            </div>
+            <h3 class="carepath-title">Stree Roga &amp; Hormone Balance</h3>
+            <p class="carepath-desc">
+              Holistic Ayurvedic protocols for PCOS, menstrual irregularities, menopause transition, and postnatal rejuvenation.
+            </p>
+          </div>
+          <div class="carepath-card-bottom">
+            <span class="carepath-ref">Kāśyapa Saṃhitā</span>
+            <span class="carepath-link">Explore Protocol →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. THE 18 RECURRING COLUMNS DOSSIER SPREAD ================= -->
+  <section class="vaidyam-columns-section" id="departments">
+    <div class="page-width vaidyam-container">
+      
+      <div class="columns-header-bar">
+        <div>
+          <span class="columns-super-tag">MASTER ARCHITECTURE • 18 COLUMNS</span>
+          <h2 class="columns-heading">Curated Departmental Index</h2>
+        </div>
+        <p class="columns-header-desc">
+          Hover over or click any department to review its clinical scope, target audience, and editorial methodology.
+        </p>
+      </div>
+
+      <!-- 2-Page Folio Workstation -->
+      <div class="vaidyam-folio-desk">
+        
+        <!-- Left Pane: 18 Departments Scroll (7 Cols) -->
+        <div class="folio-left-register">
+          <div class="folio-items-scroll editorial-scrollbar">
+            
+            <!-- Item 01 -->
+            <div class="folio-entry active"
+                 onmouseenter="updatePreview('01', 'Spotlight', 'CLINICAL RESEARCH', 'Curated selection of news articles, updates, and research studies that reinforce classical textbook principles with contemporary evidence.', '4 Min Read', 'Dr. Saranya K. (Sub Editor)', 'Vancouver Style Citations')">
+              <div class="folio-entry-left">
+                <span class="entry-num">01</span>
+                <h3 class="entry-title">Spotlight</h3>
+              </div>
+              <span class="entry-pill pill-clinical">Clinical</span>
+            </div>
+
+            <!-- Item 02 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('02', 'Vox-Populi', 'PUBLIC DISCOURSE', 'Dedicated to highlighting insights from non-practitioners with a deep understanding of Ayurveda, promoting societal perspectives.', '5 Min Read', 'Dr. Amrutha Vijay (Content Creator)', 'Qualitative Survey')">
+              <div class="folio-entry-left">
+                <span class="entry-num">02</span>
+                <h3 class="entry-title">Vox-Populi</h3>
+              </div>
+              <span class="entry-pill pill-discourse">Discourse</span>
+            </div>
+
+            <!-- Item 03 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('03', 'Words, Cords, and Screwdrivers', 'MED-TECH &amp; INSTRUMENTS', 'Pillar 1: Words (manuscripts analysis), Pillar 2: Cords (science &amp; health apps), Pillar 3: Screwdrivers (biomedical machines &amp; clinical apparatus).', '6 Min Read', 'Dr. Nimin Sreedhar (Chief of Med-Tech)', 'Apparatus Review')">
+              <div class="folio-entry-left">
+                <span class="entry-num">03</span>
+                <h3 class="entry-title">Words, Cords, and Screwdrivers</h3>
+              </div>
+              <span class="entry-pill pill-medtech">Med-Tech</span>
+            </div>
+
+            <!-- Item 04 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('04', 'Plantscape', 'BOTANICAL GAṆA TAXONOMY', 'Spreads detailing the Gaṇa (ingredient groupings for common indications), featuring botanical gradient infographics.', '7 Min Read', 'Dr. Sarala Samuel (GM - R&amp;D Botanist)', 'Botanical Monograph')">
+              <div class="folio-entry-left">
+                <span class="entry-num">04</span>
+                <h3 class="entry-title">Plantscape</h3>
+              </div>
+              <span class="entry-pill pill-botany">Botany</span>
+            </div>
+
+            <!-- Item 05 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('05', 'Resonance', 'LEGACY MEMOIRS', 'A narrative of heritage passed down from founder Vaidya K.G.K. Panicker, narrated by Executive Director Dr. K. Anilkumar.', '5 Min Read', 'Dr. K. Anilkumar (Executive Director)', 'Historical Exegesis')">
+              <div class="folio-entry-left">
+                <span class="entry-num">05</span>
+                <h3 class="entry-title">Resonance</h3>
+              </div>
+              <span class="entry-pill pill-legacy">Legacy</span>
+            </div>
+
+            <!-- Item 06 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('06', 'Śāstramathanam', 'TEXTUAL CHURNING', 'Documented transcripts of clinical knowledge-churning assemblies hosted by Late Padmasree Dr. K. Rajagopalan to solve difficult cases.', '8 Min Read', 'Dr. Sreevaths N. V. (Chief Editor)', 'Classical Assembly')">
+              <div class="folio-entry-left">
+                <span class="entry-num">06</span>
+                <h3 class="entry-title">Śāstramathanam</h3>
+              </div>
+              <span class="entry-pill pill-shastra">Shastra</span>
+            </div>
+
+            <!-- Item 07 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('07', 'Dravya Diaries', 'PHARMACOLOGY', 'Dedicated exploration of history, pharmacological significance, Rasapanchaka, and individual remedies of a single drug.', '6 Min Read', 'Dr. Mahesh Sujan (Content Creator)', 'Single Drug Profile')">
+              <div class="folio-entry-left">
+                <span class="entry-num">07</span>
+                <h3 class="entry-title">Dravya Diaries</h3>
+              </div>
+              <span class="entry-pill pill-pharma">Pharmacology</span>
+            </div>
+
+            <!-- Item 08 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('08', 'Vaidya Voce', 'DOCTOR INTERVIEWS', 'Voice of the Vaidya. In-depth clinical dialogues, panel surveys, and specialty management protocols with senior physicians.', '9 Min Read', 'Dr. J. S. S. Dev (Medical Content Creator)', 'Clinical Dialogue')">
+              <div class="folio-entry-left">
+                <span class="entry-num">08</span>
+                <h3 class="entry-title">Vaidya Voce</h3>
+              </div>
+              <span class="entry-pill pill-pharma">Interviews</span>
+            </div>
+
+            <!-- Item 09 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('09', 'Pathya Platters', 'THERAPEUTIC DIETETICS', 'Healthy Ayurvedic delicacies described with preparation and clinical benefits linked to specific disease indications and classical literature.', '4 Min Read', 'Dr. Maya M. (Physician &amp; Psychologist)', 'Dietetic Nutrition')">
+              <div class="folio-entry-left">
+                <span class="entry-num">09</span>
+                <h3 class="entry-title">Pathya Platters</h3>
+              </div>
+              <span class="entry-pill pill-ahara">Ahara</span>
+            </div>
+
+            <!-- Item 10 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('10', 'Timeless Blends', 'FORMULATION ANATOMY', 'Comprehensive analysis of classical polyherbal formulations at pharmacology and clinical consultation levels.', '7 Min Read', 'Editorial Pharmacognosy Desk', 'Polyherbal Formulation')">
+              <div class="folio-entry-left">
+                <span class="entry-num">10</span>
+                <h3 class="entry-title">Timeless Blends</h3>
+              </div>
+              <span class="entry-pill pill-legacy">Yogas</span>
+            </div>
+
+            <!-- Item 11 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('11', 'Ready, Steady, Yoga', 'THERAPEUTIC YOGA', 'Condition-specific yoga asana and pranayama utility, moving beyond general wellness into targeted therapy.', '5 Min Read', 'Ayur Yoga Research Desk', 'Yoga Therapy')">
+              <div class="folio-entry-left">
+                <span class="entry-num">11</span>
+                <h3 class="entry-title">Ready, Steady, Yoga</h3>
+              </div>
+              <span class="entry-pill pill-botany">Therapy</span>
+            </div>
+
+            <!-- Item 12 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('12', 'Out Of Syllabus', 'STUDENT INNOVATIONS', 'Dedicated to BAMS student growth: non-medical campus insights, senior mentor wisdom, and collegiate events.', '6 Min Read', 'Dr. Amrutha Vijay (Student Cell)', 'Student Corner')">
+              <div class="folio-entry-left">
+                <span class="entry-num">12</span>
+                <h3 class="entry-title">Out Of Syllabus</h3>
+              </div>
+              <span class="entry-pill pill-shastra">Student</span>
+            </div>
+
+            <!-- Item 13 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('13', 'In Focus', 'RESEARCH &amp; TRIALS', 'Discovering benefits and clinical applications of KAL products, chromatographic fingerprinting, and theme-based studies.', '5 Min Read', 'R&amp;D Quality Cell', 'QC &amp; Trials')">
+              <div class="folio-entry-left">
+                <span class="entry-num">13</span>
+                <h3 class="entry-title">In Focus</h3>
+              </div>
+              <span class="entry-pill pill-medtech">Lab &amp; QC</span>
+            </div>
+
+            <!-- Item 14 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('14', 'Applied Ayurveda', 'PANCHAKARMA PROTOCOLS', 'Procedures, snehana-svedana nuances, and clinical therapies in Ayurveda, highlighting modern practical relevance.', '8 Min Read', 'Dr. Sreevaths N. V. (Marma Specialist)', 'Clinical Procedures')">
+              <div class="folio-entry-left">
+                <span class="entry-num">14</span>
+                <h3 class="entry-title">Applied Ayurveda</h3>
+              </div>
+              <span class="entry-pill pill-clinical">Panchakarma</span>
+            </div>
+
+            <!-- Item 15 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('15', 'Case of the trimonth', 'CARE-COMPLIANT CLINICAL REPORT', 'Single-case clinical trials strictly following international CARE guidelines, complete with diagnostic timelines and lab deltas.', '10 Min Read', 'Dr. Neethu C. Mohan (Associate Editor)', 'Audited Case Study')">
+              <div class="folio-entry-left">
+                <span class="entry-num">15</span>
+                <h3 class="entry-title">Case of the trimonth</h3>
+              </div>
+              <span class="entry-pill pill-care">CARE Case</span>
+            </div>
+
+            <!-- Item 16 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('16', 'The Itinerant Vaidya', 'HEALER TRAILS', 'Field travelogues honoring traditional healer lineages, sacred groves, herb-foraging journeys, and heritage centers.', '6 Min Read', 'Editorial Field Unit', 'Heritage Travel')">
+              <div class="folio-entry-left">
+                <span class="entry-num">16</span>
+                <h3 class="entry-title">The Itinerant Vaidya</h3>
+              </div>
+              <span class="entry-pill pill-legacy">Heritage</span>
+            </div>
+
+            <!-- Item 17 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('17', 'Art-a-Śāstra', 'CENTERFOLD INFOGRAPHICS', 'Double-page center spread featuring visual infographics, anatomical cross-sections, and theme-based diagrams.', '5 Min Read', 'Medical Art Division', 'Visual Art')">
+              <div class="folio-entry-left">
+                <span class="entry-num">17</span>
+                <h3 class="entry-title">Art-a-Śāstra</h3>
+              </div>
+              <span class="entry-pill pill-discourse">Visual</span>
+            </div>
+
+            <!-- Item 18 -->
+            <div class="folio-entry"
+                 onmouseenter="updatePreview('18', 'KALeidoscope', 'COMMUNITY &amp; TRIBUTES', 'Heartfelt chronicle of KAL fraternity accomplishments, clinical memories, and milestones united by compassion.', '4 Min Read', 'KAL Editorial Family', 'Fraternity')">
+              <div class="folio-entry-left">
+                <span class="entry-num">18</span>
+                <h3 class="entry-title">KALeidoscope</h3>
+              </div>
+              <span class="entry-pill pill-clinical">Community</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Pane: Dynamic Live Centerfold Window (5 Cols) -->
+        <div class="folio-right-window">
+          <span id="prev-num" class="window-watermark-num">01</span>
+
+          <div>
+            <div class="window-top-meta">
+              <span id="prev-tag" class="window-tag-badge">CLINICAL RESEARCH</span>
+              <span id="prev-read" class="window-read-badge">4 Min Read</span>
+            </div>
+
+            <span id="prev-format" class="window-format-tag">Vancouver Style Citations</span>
+            <h3 id="prev-title" class="window-title">Spotlight</h3>
+            <p id="prev-desc" class="window-desc">
+              Curated selection of news articles, updates, and research studies that reinforce classical textbook principles with contemporary evidence.
+            </p>
+          </div>
+
+          <div class="window-bottom-row">
+            <div class="window-author-flex">
+              <span class="lbl">LEAD CURATOR</span>
+              <span id="prev-author" class="val">Dr. Saranya K. (Sub Editor)</span>
+            </div>
+            <button onclick="toggleModal('look-inside-modal', true)" type="button" class="btn-window-explore">
+              Preview Issue Spread ➔
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 5. CARE CLINICAL CASE MONOGRAPH ================= -->
+  <section class="vaidyam-care-monograph-section" id="care-report">
+    <div class="page-width vaidyam-container">
+      
+      <div class="monograph-masthead">
+        <div class="monograph-chips-row">
+          <span class="mono-chip chip-dark">DOI: 10.5281/vaidyam.2026.084</span>
+          <span class="mono-chip chip-green">CARE GUIDELINES ADHERENT</span>
+          <span class="mono-chip">READOMETER: LEVEL 2 (CLINICAL)</span>
+          <span class="mono-chip">CASE REPORT #CR-2026-09</span>
+        </div>
+        <h2 class="monograph-title">
+          Triphala &amp; Rasapanchaka Synergy in Metabolic Endotoxemia: A 90-Day Clinical Case Audit on Srotas Purification
+        </h2>
+        <div class="monograph-authors">
+          <span><strong>Author:</strong> Dr. Nimin Sreedhar, BAMS, MD (Ay) (Chief of Medical Technology)</span>
+          <span>• <strong>Audited by:</strong> Dr. M. R. Vasudevan Nampoothiri, MD (Ay), PhD (Former Director of DME Kerala)</span>
+        </div>
+      </div>
+
+      <div class="monograph-split-grid">
+        <!-- Left: Baseline Casuistry -->
+        <div class="monograph-pane left-pane">
+          <span class="pane-tag">● SECTION I: BASELINE DIAGNOSTIC CASUISTRY</span>
+          
+          <div class="pane-content-block">
+            <h4>Patient Presentation</h4>
+            <p>48-year-old male corporate executive presenting with chronic <em>Vibandha</em> (Constipation, Bristol Scale Type 2), postprandial abdominal heaviness (<em>Adhmana</em>), and borderline dyslipidemia.</p>
+          </div>
+
+          <div class="doshic-matrix-card">
+            <h4>Doshic Diagnostic Matrix</h4>
+            <div class="doshic-2x2-grid">
+              <div><span class="lbl">DŌṢA IMBALANCE</span><strong>Vāta-Kapha in Pitta Manda</strong></div>
+              <div><span class="lbl">DUṢYA TISSUE</span><strong>Rasa, Medas, Purīṣa</strong></div>
+              <div><span class="lbl">SROTAS CHANNEL</span><strong>Annavaha Srotorodha</strong></div>
+              <div><span class="lbl">AGNI STATE</span><strong>Mandāgni with Sāma Condition</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: 90-Day Lab Telemetry -->
+        <div class="monograph-pane right-pane">
+          <span class="pane-tag tag-green">● SECTION II: 90-DAY AUDITED BIOLOGICAL DELTAS</span>
+          
+          <div class="delta-bars-stack">
+            <div class="delta-bar-card">
+              <div class="delta-head">
+                <div>
+                  <span class="lbl-small">Bristol Stool Scale</span>
+                  <strong>Type 2 (Severe) ➔ Type 4 (Normalized)</strong>
+                </div>
+                <span class="badge-status status-optimal">Optimal</span>
+              </div>
+              <div class="delta-track">
+                <div class="delta-fill fill-green" style="width: 85%;"></div>
+              </div>
+            </div>
+
+            <div class="delta-bar-card">
+              <div class="delta-head">
+                <div>
+                  <span class="lbl-small">Serum Total Cholesterol</span>
+                  <strong>248 mg/dL ➔ 198 mg/dL</strong>
+                </div>
+                <span class="badge-status status-optimal">-20.1% Delta</span>
+              </div>
+              <div class="delta-track">
+                <div class="delta-fill fill-gold" style="width: 78%;"></div>
+              </div>
+            </div>
+
+            <div class="delta-bar-card">
+              <div class="delta-head">
+                <div>
+                  <span class="lbl-small">Glycated HbA1c</span>
+                  <strong>6.6% (Pre-Diabetic) ➔ 5.8%</strong>
+                </div>
+                <span class="badge-status status-optimal">Full Reversal</span>
+              </div>
+              <div class="delta-track">
+                <div class="delta-fill fill-green" style="width: 90%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="monograph-cta-row">
+            <span class="protocol-note">Protocol: Triphala Cūrṇa (3g BD) with Kōṣṇa Jala + Takra Pathya</span>
+            <button onclick="alert('Downloading Full CARE-Compliant Case Report PDF: Case #CR-2026-09 [Triphala in Metabolic Endotoxemia]')" class="btn-download-care">Download Complete CARE Report (PDF) ➔</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 6. WORKING AUDIOVISUAL ROUNDTABLE ================= -->
+  <section class="vaidyam-video-section" id="video">
+    <div class="page-width vaidyam-container">
+      
+      <div class="video-section-header">
+        <span class="video-super-tag">AUDIOVISUAL SERIES • 14:20 MIN CLINICAL DIALOGUE</span>
+        <h2 class="video-title">
+          Is Ayurveda a Pseudoscience? Classical Rigour Meets Evidence-Based Medicine
+        </h2>
+        <p class="video-desc">
+          Executive Director Dr. K. Anilkumar and Chief of Medical Technology Dr. Nimin Sreedhar on grading Sanskrit literature and conducting CARE-format clinical trials.
+        </p>
+      </div>
+
+      <!-- Functional Video Stage Container -->
+      <div class="video-stage-chassis">
+        <img id="video-poster-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80" alt="Clinical Video Panel" class="video-poster-img">
+        
+        <div id="video-embed-frame" class="video-iframe-wrap hidden">
+          <iframe id="video-player-iframe" class="video-iframe-embed" src="" title="Vaidyam Clinical Dialogue" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div id="video-play-btn" class="video-play-overlay" onclick="playJournalVideo()">
+          <div class="play-disc-btn">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="#0C0A09"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="play-disc-label">
+            Watch Full Discussion (YouTube @KALVaidyam)
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 7. ACCURATE EDITORIAL BOARD & PATRONS ================= -->
+  <section class="vaidyam-board-section" id="editorial-board">
+    <div class="page-width vaidyam-container">
+      
+      <div class="board-header-bar">
+        <div>
+          <span class="board-super-tag">GOVERNANCE &amp; PEER REVIEW</span>
+          <h2 class="board-heading">Editorial Leadership &amp; Board</h2>
+        </div>
+        <p class="board-sub-text">CCIM Apex Body Members • Former Govt. Medical Directors • University Chairs</p>
+      </div>
+
+      <!-- Core Leadership Grid -->
+      <div class="board-primary-grid">
+        
+        <!-- CARD 1: Dr. K. Anilkumar -->
+        <div class="board-physician-card">
+          <div class="physician-photo-frame">
+            {%- render 'editorial-image', asset_name: 'dr-anilkumar.jpg', class_names: 'physician-img', alt_text: 'Dr. K. Anilkumar' -%}
+            <span class="physician-cred-pill">CCIM APEX BODY MEMBER</span>
+          </div>
+          <div class="physician-content">
+            <h3 class="physician-name">Dr. K. Anilkumar</h3>
+            <p class="physician-title">Managing Editor • Executive Director, Kerala Ayurveda Ltd</p>
+            <p class="physician-bio">
+              Elected member on the Central Council of Indian Medicine (CCIM) – the Apex Body of Govt. of India; Former President of the Ayurvedic Medical Association of India (AMAI).
+            </p>
+            <div class="physician-footer">
+              <span class="affil">Managing Editor</span>
+              <a href="https://linkedin.com" target="_blank" class="link-bio">LinkedIn Bio ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: Dr. Sreevaths N. V. -->
+        <div class="board-physician-card">
+          <div class="physician-photo-frame">
+            {%- render 'editorial-image', asset_name: 'dr-sreevaths.jpg', class_names: 'physician-img', alt_text: 'Dr. Sreevaths N. V.' -%}
+            <span class="physician-cred-pill cred-green">MARMA SPECIALIST • MD (AY)</span>
+          </div>
+          <div class="physician-content">
+            <h3 class="physician-name">Dr. Sreevaths N. V.</h3>
+            <p class="physician-title">Chief Editor • Chief Physician, Svasthyakshetram</p>
+            <p class="physician-bio">
+              Former Principal of Ayurveda College Coimbatore and Professor at Santhigiri Ayurveda Medical College; specialist in Salyatantra and Marma Chikitsa with 20+ specialized formulations.
+            </p>
+            <div class="physician-footer">
+              <span class="affil">Palakkad, Kerala</span>
+              <a href="https://linkedin.com" target="_blank" class="link-bio">Clinical Profile ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: Dr. Nimin Sreedhar -->
+        <div class="board-physician-card">
+          <div class="physician-photo-frame">
+            {%- render 'editorial-image', asset_name: 'dr-nimin.jpg', class_names: 'physician-img', alt_text: 'Dr. Nimin Sreedhar' -%}
+            <span class="physician-cred-pill cred-sky">CHIEF OF MED-TECH • DRAVYA FOUNDER</span>
+          </div>
+          <div class="physician-content">
+            <h3 class="physician-name">Dr. Nimin Sreedhar</h3>
+            <p class="physician-title">Executive Editor • BAMS</p>
+            <p class="physician-bio">
+              Founder of Dravya.app and Chief of Medical Technology at Kerala Ayurveda; pioneering digital transformations of ancient Sanskrit texts and pharmacognosy databases.
+            </p>
+            <div class="physician-footer">
+              <span class="affil">Kochi, Kerala</span>
+              <a href="https://dravya.app" target="_blank" rel="noopener noreferrer" class="link-bio">Explore Dravya.app ➔</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Additional Board Tier: Associate Editors & Advisors -->
+      <div class="board-secondary-grid">
+        
+        <div class="secondary-editor-card">
+          <h4 class="editor-name">Dr. Neethu C. Mohan</h4>
+          <p class="editor-role role-amber">Associate Editor • MD (Ay)</p>
+          <p class="editor-desc">Gastroenterology &amp; Neurology Specialist with 15+ years of clinical casuistry.</p>
+        </div>
+
+        <div class="secondary-editor-card">
+          <h4 class="editor-name">Dr. Sarala Samuel</h4>
+          <p class="editor-role role-green">Editorial Advisor • GM, R&amp;D</p>
+          <p class="editor-desc">Botanist and pharmacognosy researcher specializing in plant-based therapeutics.</p>
+        </div>
+
+        <div class="secondary-editor-card">
+          <h4 class="editor-name">Dr. Saranya K.</h4>
+          <p class="editor-role role-stone">Sub Editor • Assistant Professor</p>
+          <p class="editor-desc">Faculty at PNNM Ayurveda Medical College; Kayachikitsa specialist.</p>
+        </div>
+
+        <div class="secondary-editor-card">
+          <h4 class="editor-name">Dr. M. R. Vasudevan Nampoothiri</h4>
+          <p class="editor-role role-purple">Patron • Former Director DME Kerala</p>
+          <p class="editor-desc">40+ years in medical education; Best Doctor Awardee (Govt. of Kerala).</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 8. PHYSICIAN ENDORSEMENTS & SOCIAL PROOF ================= -->
+  <section class="vaidyam-testimonials-section">
+    <div class="page-width vaidyam-container">
+      <div class="testimonials-header-bar">
+        <span class="testimonials-super-tag">PHYSICIAN ENDORSEMENTS</span>
+        <h2 class="testimonials-heading">What Our Clinicians &amp; Scholars Say</h2>
+      </div>
+
+      <div class="testimonials-tri-grid">
+        <!-- Review 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-body">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">
+              "The cover page is attractive, and the overall content is highly professional. The 'Simple to Complex – Readometer' is especially helpful, and the editorial quality reflects a strong and relevant editing team. Vaidyam serves as a practical clinical guide."
+            </p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">RB</div>
             <div>
-              <p class="ka-blog-eyebrow">CLINICAL PATHWAYS <span class="ka-hindi">· चिकित्सा मार्ग</span></p>
-              <h2>Specialized Ayurvedic Care Paths</h2>
-            </div>
-          </div>
-
-          <div class="ka-blog-care-panel">
-            <div class="ka-blog-care-intro">
-              <h3>Structured Clinical Pathways for Common Conditions</h3>
-              <p class="ka-blog-lead">Each care path integrates classical Ahara (diet), Vihara (lifestyle), and Aushadha (evidence-based formulation) protocols developed by Kerala Ayurveda physicians.</p>
-            </div>
-            
-            <div class="ka-blog-path-list">
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">DIGESTIVE SYSTEM</span>
-                  <h4 class="ka-care-card__title">Agni &amp; Gut Health Care Path</h4>
-                  <p class="ka-care-card__desc">Protocols for restoring metabolic fire, managing Grahani, IBS, hyperacidity, and chronic constipation.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Explore Pathway</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">HAIR &amp; SCALP</span>
-                  <h4 class="ka-care-card__title">Keshya &amp; Scalp Health Pathway</h4>
-                  <p class="ka-care-card__desc">Classical Shiroabhyanga, Neelibhringadi regimens, and root-cause solutions for premature greying and hair thinning.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Explore Pathway</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">NERVOUS SYSTEM</span>
-                  <h4 class="ka-care-card__title">Manas, Stress &amp; Nidra Pathway</h4>
-                  <p class="ka-care-card__desc">Medhya Rasayanas, sleep hygiene protocols, and Vata-pacifying therapies for neurological resilience and calm.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Explore Pathway</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">JOINTS &amp; BONES</span>
-                  <h4 class="ka-care-card__title">Sandhi &amp; Asthi Care Pathway</h4>
-                  <p class="ka-care-card__desc">Targeted management of Sandhivata, Amavata, spondylosis, and sports-related musculoskeletal strain.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Explore Pathway</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">METABOLIC HEALTH</span>
-                  <h4 class="ka-care-card__title">Thyroid &amp; Endocrine Health</h4>
-                  <p class="ka-care-card__desc">Multidisciplinary approaches to Galaganda, Kantha Roga, and metabolic balance through classical formulations.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Explore Pathway</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">WOMEN'S HEALTH</span>
-                  <h4 class="ka-care-card__title">Stree Roga &amp; Hormone Balance</h4>
-                  <p class="ka-care-card__desc">Holistic Ayurvedic protocols for PCOS, menstrual irregularities, menopause transition, and postnatal rejuvenation.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Explore Pathway</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
+              <h4 class="author-name">Dr. Rajesh B.</h4>
+              <p class="author-sub">Consultant, Anaril Vaidyasala, Alappuzha</p>
             </div>
           </div>
         </div>
-      </section>
 
-      {%- when 'topics' -%}
-      {%- comment -%} ============ TOPICS GRID (SENIOR APPROVED) ============ {%- endcomment -%}
-      <section class="ka-blog-section vaidyam-topics-section" id="topics" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="ka-blog-section-head">
+        <!-- Review 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-body">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">
+              "I truly appreciate the efforts of the Vaidyam Team in bringing out the special issue on Sports Ayurveda. It highlights how Ayurveda enhances performance and prevents injury among athletes by blending classical wisdom with sports science."
+            </p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">AP</div>
             <div>
-              <p class="ka-blog-eyebrow">EXPLORE BY DOMAIN <span class="ka-hindi">· आयुर्वेद विषय</span></p>
-              <h2>Ayurvedic Knowledge Domains</h2>
-            </div>
-          </div>
-
-          <div class="ka-blog-topic-grid">
-            {%- render 'vaidyam-topic-card', fallback_title: 'Digestion & Gut Health', fallback_image: '02_digestion_gut_health.png', fallback_tag: 'digestion' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Skin Glow & Dermatology', fallback_image: '14_skin_glow.png', fallback_tag: 'skin' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Hair & Scalp Health', fallback_image: '15_hair_scalp.png', fallback_tag: 'hair' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Mind Calm & Sleep', fallback_image: '04_mind_calm.png', fallback_tag: 'mind' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Pain & Joint Care', fallback_image: '06_pain_joint_care.png', fallback_tag: 'pain-joints' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Immunity & Ojas', fallback_image: '07_immunity.png', fallback_tag: 'immunity' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Women’s Health & Care', fallback_image: '12_womens_health.png', fallback_tag: 'womens-health' -%}
-            {%- render 'vaidyam-topic-card', fallback_title: 'Seasons & Daily Routine', fallback_image: '01_seasons_routine.png', fallback_tag: 'ritucharya' -%}
-          </div>
-        </div>
-      </section>
-
-      {%- when 'through_pages' -%}
-      {%- comment -%} ============ THROUGH THE PAGES (DOCX CONTENT) ============ {%- endcomment -%}
-      <section class="vaidyam-pages" id="through-the-pages" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-pages__header">
-            <h2 class="vaidyam-section-title">Through The Pages</h2>
-            <p class="vaidyam-section-subtitle">Each issue of Vaidyam brings you in-depth articles across these essential categories</p>
-          </div>
-          
-          <div class="vaidyam-pages__grid">
-            <div class="vaidyam-pages__card">
-              <div class="vaidyam-pages__card-image">
-                <div class="vaidyam-pages__card-placeholder" style="background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); color: #E4C264;">
-                  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                </div>
-              </div>
-              <div class="vaidyam-pages__card-body">
-                <h3>Vaidya Voice</h3>
-                <p>"The voice of the vaidya." This section focuses on interviews, panel discussions, surveys, and focal discussions regarding specific clinical topics, highlighting experts or clinicians along with their specialties, clinical experiences, and practical applications.</p>
-                <a href="#all-sections" class="vaidyam-pages__readmore">Learn more &rarr;</a>
-              </div>
-            </div>
-
-            <div class="vaidyam-pages__card">
-              <div class="vaidyam-pages__card-image">
-                <div class="vaidyam-pages__card-placeholder" style="background: linear-gradient(135deg, #122C21 0%, #1B4332 100%); color: #E4C264;">
-                  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-                </div>
-              </div>
-              <div class="vaidyam-pages__card-body">
-                <h3>Case of the trimonth</h3>
-                <p>To effectively present findings from single-case reports, it's essential to follow the CARE (Case Report) format properly. By adhering to the CARE guidelines, we document the clinical details, interventions, and outcomes of individual cases for practitioner learning.</p>
-                <a href="#all-sections" class="vaidyam-pages__readmore">Learn more &rarr;</a>
-              </div>
-            </div>
-
-            <div class="vaidyam-pages__card">
-              <div class="vaidyam-pages__card-image">
-                <div class="vaidyam-pages__card-placeholder" style="background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%); color: #E4C264;">
-                  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                </div>
-              </div>
-              <div class="vaidyam-pages__card-body">
-                <h3>Śāstramathanam</h3>
-                <p>The academic involvement of Kerala Ayurveda in the past led to many programs, including the Śāstramathanam (venue for churning of knowledge), hosted by Late Padmasree Dr. K. Rajagopalan. Documented discussions are published as a narrative series.</p>
-                <a href="#all-sections" class="vaidyam-pages__readmore">Learn more &rarr;</a>
-              </div>
-            </div>
-
-            <div class="vaidyam-pages__card">
-              <div class="vaidyam-pages__card-image">
-                <div class="vaidyam-pages__card-placeholder" style="background: linear-gradient(135deg, #1B4332 0%, #52B788 100%); color: #FAF8F4;">
-                  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-              </div>
-              <div class="vaidyam-pages__card-body">
-                <h3>Vox-Populi</h3>
-                <p>Vox Populi, meaning "voice of the people," is dedicated to highlighting the thoughts, ideas, and insights from individuals who are not Ayurvedic practitioners but have engaged with or possess a strong understanding of Ayurveda.</p>
-                <a href="#all-sections" class="vaidyam-pages__readmore">Learn more &rarr;</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="vaidyam-pages__footer">
-            <p>And much more in every issue, including expert interviews, reader questions, and product reviews.</p>
-            <a class="vaidyam-btn vaidyam-btn--primary" href="#all-sections">See all 18 categories &darr;</a>
-          </div>
-        </div>
-      </section>
-
-            {%- when 'all_sections' -%}
-      {%- comment -%} ============ ALL 18 RECURRING SECTIONS GRID ============ {%- endcomment -%}
-      <section class="vaidyam-sections-full" id="all-sections" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-section-header-center">
-            <p class="vaidyam-eyebrow">EDITORIAL ARCHITECTURE · 18 COLUMNS</p>
-            <h2 class="vaidyam-section-title">All 18 Recurring Sections</h2>
-            <p class="vaidyam-section-subtitle">Every quarterly issue is curated across these specialized columns — blending classical textual purity with modern clinical evidence.</p>
-          </div>
-
-          <div class="vaidyam-sections-grid">
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">01</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">1. Spotlight</h4>
-              <p class="vaidyam-section-item__desc">A curated selection of news articles, updates, and research studies that reinforce the principles of Ayurveda, connecting classical concepts with new findings.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">02</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">2. Vox-Populi</h4>
-              <p class="vaidyam-section-item__desc">"Voice of the people" highlighting thoughts and insights from non-practitioners who engage with Ayurveda, promoting societal perspective.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">03</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">3. Words, Cords, and Screwdrivers</h4>
-              <p class="vaidyam-section-item__desc">Explores textual manuscript analysis ("Words"), health tech apps ("Cords"), and modern scientific equipment supporting Ayurveda ("Screwdrivers").</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">04</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-7 7-7 4 0 7 3 7 7a7 7 0 0 1-7 7Z"/><path d="M11 6v14"/><path d="M11 10a4 4 0 0 1 4 4"/><path d="M11 14a4 4 0 0 0-4 4"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">4. Plantscape</h4>
-              <p class="vaidyam-section-item__desc">A visual infographic spread detailing the Gaṇa (group of ingredients for a common indication), illustrating botanicals with high precision.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">05</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">5. Resonance</h4>
-              <p class="vaidyam-section-item__desc">A narrative of legacy passed down from Kerala Ayurveda founder Vaidya K.G.K. Panicker, authored by Executive Director Dr. K. Anilkumar.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">06</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">6. Śāstramathanam</h4>
-              <p class="vaidyam-section-item__desc">The "churning of knowledge" series hosted by Late Padmasree Dr. K. Rajagopalan, turning complex academic dilemmas into clinical clarity.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">07</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">7. Dravya Dairies</h4>
-              <p class="vaidyam-section-item__desc">A dedicated exploration of history, pharmacological significance, and clinical formulations of a single classical drug.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">08</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">8. Vaidya Voce</h4>
-              <p class="vaidyam-section-item__desc">"Voice of the vaidya." Clinical interviews and panel discussions with seasoned practitioners on complex therapeutic protocols.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">09</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2v20"/><path d="M14 2v6a4 4 0 0 0 4 4v10"/><path d="M6 2v20"/><path d="M2 2v6a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">9. Pathya Platters</h4>
-              <p class="vaidyam-section-item__desc">Dietary Ayurvedic recipes with condition-specific benefits, linking therapeutic kitchen menus with classical literature.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">10</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2v7.31M14 2v7.31"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">10. Timeless Blends</h4>
-              <p class="vaidyam-section-item__desc">In-depth analysis of classical polyherbal formulations at pharmacology and consultation levels for clinician reference.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">11</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="4" r="2"/><path d="M4 18c0-3 3-5 8-5s8 2 8 5"/><path d="M12 13v7"/><path d="M7 21h10"/><path d="M4 14l3-3"/><path d="M20 14l-3-3"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">11. Ready, Steady, Yoga</h4>
-              <p class="vaidyam-section-item__desc">Practical therapeutic yoga postures for medical conditions, moving beyond generic wellness into targeted clinical therapy.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">12</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">12. Out Of Syllabus</h4>
-              <p class="vaidyam-section-item__desc">Dedicated to Ayurveda students: academic advice, campus experiences, inspiring professor stories, and student innovations.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">13</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">13. In Focus</h4>
-              <p class="vaidyam-section-item__desc">Discovering the benefits, pharmacological studies, and research-backed clinical applications of KAL formulations.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">14</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/><path d="M8 14c-3 1-5 4-5 8h18c0-4-2-7-5-8"/><path d="M4 8l3 1"/><path d="M20 8l-3 1"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">14. Applied Ayurveda</h4>
-              <p class="vaidyam-section-item__desc">Panchakarma techniques, procedural nuances, and clinical therapies in contemporary practice.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">15</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="14" y2="15"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">15. Case of the trimonth</h4>
-              <p class="vaidyam-section-item__desc">Single-case clinical findings documented strictly under the CARE format, illustrating diagnostic logic and patient recovery.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">16</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">16. The Itinerant Vaidya</h4>
-              <p class="vaidyam-section-item__desc">A travelogue honoring traditional healer lineages, herb-foraging trails, and Ayurvedic centers of excellence.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">17</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">17. Art-a-Śāstra</h4>
-              <p class="vaidyam-section-item__desc">A center-spread featuring visual diagrams, anatomical correlations, and image-oriented Ayurvedic wisdom.</p>
-            </div>
-
-            <div class="vaidyam-section-item">
-              <div class="vaidyam-section-item__top">
-                <span class="vaidyam-section-item__badge">18</span>
-                <div class="vaidyam-section-item__icon">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                </div>
-              </div>
-              <h4 class="vaidyam-section-item__title">18. KALeidoscope</h4>
-              <p class="vaidyam-section-item__desc">Research milestones, clinical memories, practitioner achievements, and the compassion uniting the Kerala Ayurveda family.</p>
+              <h4 class="author-name">Dr. Arun P. V.</h4>
+              <p class="author-sub">Senate Member, KUHS • State Secretary, AMAI</p>
             </div>
           </div>
         </div>
-      </section>
 
-            {%- when 'by_concern' -%}
-      {%- comment -%} ============ BROWSE BY CLINICAL CONCERN (MATCHING CARE PATHS UI) ============ {%- endcomment -%}
-      <section class="vaidyam-carepaths-section vaidyam-concern-section" id="by-concern" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-section-header-center">
-            <p class="vaidyam-eyebrow">CLINICAL REVIEWS · FREE OPEN ACCESS</p>
-            <h2 class="vaidyam-section-title">Browse By Clinical Concern</h2>
-            <p class="vaidyam-section-subtitle">Every clinical monograph below is standalone, physician-reviewed, and free to access for practitioners and scholars.</p>
+        <!-- Review 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-body">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">
+              "Without depriving stress on the central theme, various aspects of Sastra have been dealt with beautifully. Expository on Murivenna by Dr. Ajayan and conversations with doyens were exceptional. A must read for upcoming Vaidyas."
+            </p>
           </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">AR</div>
+            <div>
+              <h4 class="author-name">Dr. Anand R. V.</h4>
+              <p class="author-sub">Chief Physician, Vaishnavam Vaidyasala, Thrissur</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <div class="ka-blog-care-panel">
-            <div class="ka-blog-care-intro">
-              <h3>Physician-Reviewed Clinical Monographs</h3>
-              <p class="ka-blog-lead">Explore practitioner-oriented reviews, formulation breakdowns, and CARE-format clinical case studies across core therapeutic specialties.</p>
+  <!-- ================= 9. HISTORICAL ARCHIVAL EXHIBITION RETROSPECTIVE (1997–2026) ================= -->
+  <section class="vaidyam-archive-section" id="archival-museum">
+    <div class="page-width vaidyam-container">
+      
+      <div class="archive-header-bar">
+        <span class="archive-super-tag">HISTORICAL RETROSPECTIVE (1997–2026)</span>
+        <h2 class="archive-title">Evolution of an Ayurvedic Medical Journal</h2>
+        <p class="archive-lead">From a private Malayalam clinical bulletin in 1997 to an internationally indexed, peer-reviewed quarterly journal.</p>
+      </div>
+
+      <div class="archive-triptych-grid">
+        
+        <!-- Era 1: 1997 Newspaper Bulletin -->
+        <div class="archive-card">
+          <div class="archive-card-inner">
+            <div class="archive-card-top-meta">
+              <span class="era-tag">1997 • INCEPTION</span>
+              <span class="era-vol">Vol. 1 • Issue 1</span>
             </div>
             
-            <div class="ka-blog-path-list">
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">DIGESTIVE SYSTEM · CLINICAL</span>
-                  <h4 class="ka-care-card__title">Triphala in Clinical Practice</h4>
-                  <p class="ka-care-card__desc">Rasapanchaka synergy, prebiotic SCFA modulation, Srotoshodhana, and a 90-day metabolic CARE case report.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Read Free Manuscript</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
+            <div class="archive-newspaper-frame">
+              <div class="newspaper-header">
+                <span class="newspaper-masthead">KAPL NEWS</span>
+                <span class="newspaper-date">May-Jun 1997 • Private Circulation</span>
               </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">THYROID &amp; METABOLISM</span>
-                  <h4 class="ka-care-card__title">Multidisciplinary Thyroid Management</h4>
-                  <p class="ka-care-card__desc">Integrative approaches to Galaganda and Hypothyroidism combining classical Panchakarma with modern endocrinology.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Read Free Manuscript</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">SPORTS MEDICINE · TRAUMA</span>
-                  <h4 class="ka-care-card__title">Sports Injury Recovery with Murivenna</h4>
-                  <p class="ka-care-card__desc">Evidence-based acute trauma management, ligament recovery, and Marma therapy protocols for athletes.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Read Free Manuscript</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">DERMATOLOGY &amp; VARNYA</span>
-                  <h4 class="ka-care-card__title">Classical Protocols for Dermatitis</h4>
-                  <p class="ka-care-card__desc">Raktaprasadana therapeutics, topical herbal Lepas, and gut-skin axis modulation in refractory eczema.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Read Free Manuscript</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">MANAS &amp; NEUROLOGY</span>
-                  <h4 class="ka-care-card__title">Medhya Rasayanas in Stress Resilience</h4>
-                  <p class="ka-care-card__desc">Pharmacological actions of Brahmi, Shankhapushpi, and Ashwagandha in autonomic regulation and cognitive health.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Read Free Manuscript</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="ka-care-card">
-                <div class="ka-care-card__content">
-                  <span class="ka-care-card__badge">STRI ROGA · HORMONES</span>
-                  <h4 class="ka-care-card__title">Integrative PCOD &amp; Artava Protocols</h4>
-                  <p class="ka-care-card__desc">Metabolic correction, Sukumaram Kashayam therapeutics, and classical dietary Pathya for endocrine balance.</p>
-                  <a href="/blogs/ayurveda" class="ka-care-card__link">
-                    <span>Read Free Manuscript</span>
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                  </a>
-                </div>
+              <p class="newspaper-snippet">
+                "ആധുനിക സാങ്കേതികവിദ്യയും പൗരാണികതയും തമ്മിൽ സമന്വയിപ്പിച്ചുകൊണ്ട് ഔഷധനിർമ്മാണരംഗത്ത്..." — Managing Director's Message by S.V.S. Raghavan honoring founder Vaidya K.G.K. Panicker.
+              </p>
+              <div class="newspaper-footer">
+                Head Office: Aluva, Ernakulam, Kerala
               </div>
             </div>
+
+            <h4 class="archive-issue-title">The KAPL News Gazette</h4>
+            <p class="archive-issue-desc">
+              The historic founding bilingual newsletter providing valuable formulation insights and internal clinical updates.
+            </p>
           </div>
         </div>
-      </section>
 
-      {%- when 'video' -%}
-      {%- comment -%} ============ AYURVEDA IN ACTION ============ {%- endcomment -%}
-      <section class="vaidyam-video-section" id="video-showcase" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-section-header-center">
-            <p class="vaidyam-eyebrow">AUDIOVISUAL SERIES · CLINICAL ROUNDTABLE</p>
-            <h2 class="vaidyam-section-title">Ayurveda in Action</h2>
-            <p class="vaidyam-section-subtitle">Watch our executive director and clinical editors explain how Vaidyam connects ancient scholarship with modern medical science.</p>
-          </div>
-          
-          <div class="vaidyam-video-showcase">
-            <div class="vaidyam-video-stage">
-              <div class="vaidyam-video-stage__bg"></div>
-              <div class="vaidyam-video-stage__content">
-                <div class="vaidyam-video-stage__top-bar">
-                  <span class="vaidyam-video-stage__chip">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                    SPECIAL INTERVIEW · 14:20 MIN
-                  </span>
-                  <span class="vaidyam-video-stage__series">KERALA AYURVEDA VAIDYAM DIALOGUES</span>
-                </div>
-
-                <div class="vaidyam-video-stage__center">
-                  <button class="vaidyam-video-play-btn" aria-label="Play video interview" type="button" onclick="this.parentElement.innerHTML='<iframe src='https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0' allow='autoplay; encrypted-media' allowfullscreen style='position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:16px;'></iframe>'">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="#1B4332"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                  </button>
-                  <h3 class="vaidyam-video-stage__title">Is Ayurveda a Pseudoscience? Classical Rigour Meets Evidence-Based Medicine</h3>
-                  <p class="vaidyam-video-stage__speakers">Executive Director Dr. K. Anilkumar in conversation with Chief of Medical Technology Dr. Nimin Sreedhar</p>
-                </div>
-
-                <div class="vaidyam-video-stage__bottom-grid">
-                  <div class="vaidyam-video-point">
-                    <strong>01 · Readometer System</strong>
-                    <span>Grading classical Sanskrit literature into 3 distinct comprehension tiers.</span>
-                  </div>
-                  <div class="vaidyam-video-point">
-                    <strong>02 · CARE Case Reporting</strong>
-                    <span>Publishing single-patient clinical outcomes according to global guidelines.</span>
-                  </div>
-                  <div class="vaidyam-video-point">
-                    <strong>03 · Integrative Dialogue</strong>
-                    <span>Connecting Ayurvedic dravyaguna with contemporary biochemistry.</span>
-                  </div>
-                </div>
+        <!-- Era 2: 2003 Inaugural Journal -->
+        <div class="archive-card">
+          <div class="archive-card-inner">
+            <div class="archive-card-top-meta">
+              <span class="era-tag">2003 • PEER REVIEW</span>
+              <span class="era-vol">Inaugural Issue</span>
+            </div>
+            
+            <div class="archive-inaugural-frame">
+              <div class="inaugural-header">
+                <span class="inaugural-masthead">VAIDYAM</span>
+                <span class="inaugural-date">A QUARTERLY JOURNAL ON AAYURVEDA</span>
+              </div>
+              <div class="inaugural-dedication-box">
+                <span class="dedication-text">Classical Guru-Śiṣya Dedication</span>
+              </div>
+              <div class="inaugural-footer">
+                Editorial: Late Padmasree Dr. K. Rajagopalan
               </div>
             </div>
+
+            <h4 class="archive-issue-title">Inaugural Vaidyam Journal</h4>
+            <p class="archive-issue-desc">
+              Launched by patron Dr. K. Anilkumar and Prof. C. R. Agniveś as a scholarly platform for clinical consultations.
+            </p>
           </div>
         </div>
-      </section>
 
-      {%- when 'testimonials' -%}
-      {%- comment -%} ============ WHAT OUR READERS SAY ============ {%- endcomment -%}
-      <section class="vaidyam-testimonials-section" id="testimonials" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-section-header-center">
-            <p class="vaidyam-eyebrow">PEER FEEDBACK &amp; REVIEWS</p>
-            <h2 class="vaidyam-section-title">What Our Readers Say</h2>
-            <p class="vaidyam-section-subtitle">Trusted by practicing Ayurvedic physicians, medical college professors, and BAMS scholars across India.</p>
-          </div>
-          
-          <div class="vaidyam-testimonials-card-suite">
-            <div class="vaidyam-testimonials__carousel" role="group" aria-label="Testimonials carousel">
-              <div class="vaidyam-quote-watermark" aria-hidden="true">“</div>
-              <div class="vaidyam-testimonials__track">
-
-                <div class="vaidyam-testimonials__slide active" role="tabpanel">
-                  <div class="vaidyam-testimonial-rating-row">
-                    <div class="vaidyam-testimonials__stars" aria-label="5 out of 5">★★★★★</div>
-                    <span class="vaidyam-verified-badge">VERIFIED CLINICIAN</span>
-                  </div>
-                  <blockquote class="vaidyam-testimonials__quote">
-                    <p>"The cover page is attractive, and the overall content is highly professional. The <em>'Simple to Complex – Readometer'</em> is especially helpful, and the editorial quality reflects a strong editing team. Vaidyam serves as a practical guide for BAMS students and doctors, with insightful interviews and well-structured treatment protocols. I found the <em>'Spotlight'</em> section concise and engaging, while features like the <em>'Floral Trail of Rama'</em> bring creativity to the magazine. The inclusion of QR codes makes access quick and easy. Overall, Vaidyam is readable, interesting, and professionally laid out."</p>
-                  </blockquote>
-                  <div class="vaidyam-testimonial-doctor-profile">
-                    <div class="vaidyam-doctor-avatar">RB</div>
-                    <div class="vaidyam-doctor-info">
-                      <h4>Dr. Rajesh B.</h4>
-                      <p class="vaidyam-doctor-role">Consultant Physician</p>
-                      <span class="vaidyam-doctor-clinic">Anaril Vaidyasala, Thrikunnapuzha, Alappuzha, Kerala</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="vaidyam-testimonials__slide" role="tabpanel">
-                  <div class="vaidyam-testimonial-rating-row">
-                    <div class="vaidyam-testimonials__stars" aria-label="5 out of 5">★★★★★</div>
-                    <span class="vaidyam-verified-badge">ACADEMIC SENATE</span>
-                  </div>
-                  <blockquote class="vaidyam-testimonials__quote">
-                    <p>"I truly appreciate the efforts of the Kerala Ayurveda Vaidyam Team in bringing out this special issue on Sports Ayurveda. The magazine beautifully highlights how Ayurveda can play a vital role in enhancing sports performance, ensuring quicker recovery, and preventing lifestyle-related injuries among athletes. By blending classical Ayurvedic wisdom with modern sports science, this issue provides valuable insights for practitioners, students, and the general public alike."</p>
-                  </blockquote>
-                  <div class="vaidyam-testimonial-doctor-profile">
-                    <div class="vaidyam-doctor-avatar">AP</div>
-                    <div class="vaidyam-doctor-info">
-                      <h4>Dr. Arun P. V.</h4>
-                      <p class="vaidyam-doctor-role">Senate Member, KUHS · State Secretary, AMAI</p>
-                      <span class="vaidyam-doctor-clinic">Ayurveda Medical Association of India</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="vaidyam-testimonials__slide" role="tabpanel">
-                  <div class="vaidyam-testimonial-rating-row">
-                    <div class="vaidyam-testimonials__stars" aria-label="5 out of 5">★★★★★</div>
-                    <span class="vaidyam-verified-badge">CHIEF PHYSICIAN</span>
-                  </div>
-                  <blockquote class="vaidyam-testimonials__quote">
-                    <p>"I find Vaidyam magazine very interesting and informative. The issue focusing on Sports Ayurveda has been a captivating experience for me as a reader. Without depriving stress on the central theme, various aspects of Sastra have been dealt with beautifully. Conversations with Dr Mathews Vempilli and the expository on Murivenna by Dr Ajayan Sadanandan were exceptionally practical. Overall the Quarterly is a must read for all upcoming Vaidyas and Sasthrarthis."</p>
-                  </blockquote>
-                  <div class="vaidyam-testimonial-doctor-profile">
-                    <div class="vaidyam-doctor-avatar">AR</div>
-                    <div class="vaidyam-doctor-info">
-                      <h4>Dr. Anand R. V.</h4>
-                      <p class="vaidyam-doctor-role">Chief Physician</p>
-                      <span class="vaidyam-doctor-clinic">Vaishnavam Vaidyasala, Velur, Thrissur, Kerala</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="vaidyam-testimonials__slide" role="tabpanel">
-                  <div class="vaidyam-testimonial-rating-row">
-                    <div class="vaidyam-testimonials__stars" aria-label="5 out of 5">★★★★★</div>
-                    <span class="vaidyam-verified-badge">PROFESSOR &amp; RESEARCHER</span>
-                  </div>
-                  <blockquote class="vaidyam-testimonials__quote">
-                    <p>"The revamped version of Kerala Ayurveda's Vaidyam magazine stands out with its diverse features and engaging sections that blend traditional Ayurveda with contemporary research, insightful interviews, and showcases from premier institutions. While maintaining traditional purity, the magazine adds vibrant colors with new columns such as book reviews, formulation analyses, and interviews with luminaries."</p>
-                  </blockquote>
-                  <div class="vaidyam-testimonial-doctor-profile">
-                    <div class="vaidyam-doctor-avatar">AM</div>
-                    <div class="vaidyam-doctor-info">
-                      <h4>Dr. Arjun M.</h4>
-                      <p class="vaidyam-doctor-role">Assistant Professor, Dept of Rasasastra &amp; Bhaishajya Kalpana</p>
-                      <span class="vaidyam-doctor-clinic">Vaidyaratnam Ayurveda College, Ollur, Thrissur</span>
-                    </div>
-                  </div>
-                </div>
-
+        <!-- Era 3: 2026 Present Modern Volume -->
+        <div class="archive-card">
+          <div class="archive-card-inner">
+            <div class="archive-card-top-meta">
+              <span class="era-tag tag-present">PRESENT DAY</span>
+              <span class="era-vol">Vol. VIII • Issue 4</span>
+            </div>
+            
+            <div class="archive-modern-frame">
+              <div class="modern-header">
+                <span class="modern-masthead">VAIDYAM</span>
+                <span class="modern-issn">ISSN 2394-4323</span>
               </div>
-
-              <div class="vaidyam-testimonials-controls">
-                <button class="vaidyam-carousel-arrow prev" aria-label="Previous testimonial" type="button">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
-                <div class="vaidyam-testimonials__nav" role="tablist" aria-label="Select testimonial">
-                  <button class="vaidyam-testimonials__dot active" role="tab" aria-selected="true" aria-label="Go to testimonial 1" data-slide="0"></button>
-                  <button class="vaidyam-testimonials__dot" role="tab" aria-selected="false" aria-label="Go to testimonial 2" data-slide="1"></button>
-                  <button class="vaidyam-testimonials__dot" role="tab" aria-selected="false" aria-label="Go to testimonial 3" data-slide="2"></button>
-                  <button class="vaidyam-testimonials__dot" role="tab" aria-selected="false" aria-label="Go to testimonial 4" data-slide="3"></button>
-                </div>
-                <button class="vaidyam-carousel-arrow next" aria-label="Next testimonial" type="button">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
+              <div class="modern-center-body">
+                <span class="modern-bumper-lbl">Special Bumper Issue</span>
+                <span class="modern-theme-title">Diabetes &amp; Metabolism</span>
+              </div>
+              <div class="modern-footer">
+                <span>CARE Formatted</span>
+                <span>18 Columns</span>
               </div>
             </div>
+
+            <h4 class="archive-issue-title">Evolving Ayurveda Quarterly</h4>
+            <p class="archive-issue-desc">
+              Global distribution covering Med-Tech, R&amp;D chromatographic trials, and practitioner interviews.
+            </p>
           </div>
         </div>
-      </section>
 
-      {%- when 'our_legacy' -%}
-      {%- comment -%} ============ OUR LIVING LEGACY ============ {%- endcomment -%}
-      <section class="vaidyam-legacy" id="legacy" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-legacy-hero-card">
-            <div class="vaidyam-legacy-hero-left">
-              <div class="vaidyam-heritage-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span>ESTABLISHED 1945 · VAIDYAM JOURNAL SINCE 2003</span>
-              </div>
-              <h2 class="vaidyam-legacy-title">Our Living Legacy</h2>
-              <p class="vaidyam-legacy-quote">"Conceived as a trusted forum where classical Ayurvedic wisdom meets present-day scientific inquiry, empowering physicians with clarity, integrity, and clinical efficacy."</p>
-              <p class="vaidyam-legacy-body">Founded on the vision of our patron, Dr. K. Anilkumar, and nurtured by the scholarly rigour of Prof. C. R. Agniveś and Late Padmasree Dr. K. Rajagopalan, Vaidyam continues to evolve with purpose. We work on careful interpretation of the classics, encourage critical dialogue, and publish refined clinical insights that help readers translate ancient theory into direct patient practice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10. ANNUAL SUBSCRIPTION SECTION ================= -->
+  <section class="vaidyam-subscription-section" id="subscribe-plan">
+    <div class="page-width vaidyam-container">
+      <div class="subscription-master-card">
+        
+        <div class="subscription-pitch">
+          <span class="pitch-super-tag">ANNUAL CLINICAL SUBSCRIPTION</span>
+          <h2 class="pitch-heading">Receive All 4 Quarterly Editions Delivered to Your Clinic Doorstep</h2>
+          <p class="pitch-lead">
+            Join over 15,000 Ayurvedic physicians, professors, and BAMS students who rely on Vaidyam for clinical casuistry and formulation science.
+          </p>
+
+          <ul class="pitch-features-list">
+            <li>
+              <span class="feat-star">✦</span>
+              <span><strong>4 High-Grade Print Copies:</strong> Couriered quarterly across India</span>
+            </li>
+            <li>
+              <span class="feat-star">✦</span>
+              <span><strong>Full Digital Archive Access:</strong> Search all 18 recurring columns (2003–2026)</span>
+            </li>
+            <li>
+              <span class="feat-star">✦</span>
+              <span><strong>Exclusive CME Invitations:</strong> Clinical roundtables with senior doyens</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subscription-pricing-card">
+          <div class="pricing-header">
+            <span class="pricing-tier-tag">ANNUAL PRACTITIONER PLAN</span>
+            <div class="pricing-val-row">
+              <span class="pricing-num">₹1,200</span>
+              <span class="pricing-per">/ year (4 Issues)</span>
             </div>
+            <span class="pricing-free-badge">Free Courier Delivery Across India</span>
+          </div>
 
-            <div class="vaidyam-legacy-hero-right">
-              <div class="vaidyam-legacy-pillars-vertical">
-                <div class="vaidyam-pillar-card">
-                  <div class="vaidyam-pillar-num">01</div>
-                  <div class="vaidyam-pillar-info">
-                    <h4>Impart Clinical Skills</h4>
-                    <p>Igniting inquiring minds through deep diagnostic casuistry, treatment algorithms, and therapeutic pearls from clinical masters.</p>
-                  </div>
-                </div>
+          <div class="pricing-cta-stack">
+            <a href="https://wa.me/919048033348?text=Hello%20Vaidyam%20Team,%20I%20want%20to%20subscribe%20to%20Vaidyam%20Journal" target="_blank" rel="noopener" class="btn-subscribe-whatsapp">
+              Order via WhatsApp (+91 9048033348) ➔
+            </a>
+            <a href="mailto:vaidyam@keralaayurveda.biz?subject=Annual%20Subscription%20Order" class="btn-subscribe-invoice">
+              Pay Online / Institutional Invoice
+            </a>
+          </div>
 
-                <div class="vaidyam-pillar-card">
-                  <div class="vaidyam-pillar-num">02</div>
-                  <div class="vaidyam-pillar-info">
-                    <h4>Contextualise Research</h4>
-                    <p>Framing contemporary botanical pharmacology and randomized trials squarely within classical Ayurvedic doshic principles.</p>
-                  </div>
-                </div>
+          <p class="pricing-intl-note">
+            For international global dispatch: <a href="mailto:vaidyam@keralaayurveda.biz">vaidyam@keralaayurveda.biz</a>
+          </p>
+        </div>
 
-                <div class="vaidyam-pillar-card">
-                  <div class="vaidyam-pillar-num">03</div>
-                  <div class="vaidyam-pillar-info">
-                    <h4>Support Ethical Care</h4>
-                    <p>Fostering patient-centred, evidence-informed, and compassionate healing practices for lasting global wellness.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 11. LOOK INSIDE SPREAD MODAL ================= -->
+  <div id="look-inside-modal" class="vaidyam-spread-modal-overlay hidden" onclick="if(event.target === this) toggleModal('look-inside-modal', false)">
+    <div class="spread-modal-chassis">
+      
+      <!-- Modal Header -->
+      <div class="spread-modal-top-bar">
+        <div class="spread-modal-title-flex">
+          <span class="spread-tag">VAIDYAM JOURNAL DOUBLE SPREAD PREVIEW</span>
+          <span class="spread-vol">• Vol. VIII Issue 4</span>
+        </div>
+        <button onclick="toggleModal('look-inside-modal', false)" type="button" class="spread-close-btn">
+          ✕ CLOSE
+        </button>
+      </div>
+
+      <!-- Spread Body (Double Page Simulation) -->
+      <div class="spread-double-page-grid">
+        
+        <!-- Left Page: Table of Contents -->
+        <div class="spread-page-sheet">
+          <div class="page-sheet-header">
+            <span class="sheet-kicker">TABLE OF CONTENTS</span>
+            <h3 class="sheet-title">Vol. VIII • Issue 4 Index</h3>
+          </div>
+          <ul class="sheet-toc-list">
+            <li><span><strong>01. Spotlight:</strong> Clinical Updates</span><span class="p-num">p. 04</span></li>
+            <li><span><strong>04. Plantscape:</strong> Botanical Gaṇa</span><span class="p-num">p. 12</span></li>
+            <li><span><strong>06. Śāstramathanam:</strong> Dr. K. Rajagopalan</span><span class="p-num">p. 18</span></li>
+            <li><span><strong>09. Pathya Platters:</strong> Diabetic Dietetics</span><span class="p-num">p. 26</span></li>
+            <li><span><strong>15. Case of the trimonth:</strong> CARE Report</span><span class="p-num">p. 34</span></li>
+          </ul>
+        </div>
+
+        <!-- Right Page: Editorial Letter Spread -->
+        <div class="spread-page-sheet">
+          <div class="page-sheet-header">
+            <span class="sheet-kicker kicker-green">EDITORIAL NOTE</span>
+            <h3 class="sheet-title">From the Chief Editor's Desk</h3>
+          </div>
+          <p class="sheet-editorial-quote">
+            "Translating centuries of clinical experience into verifiable protocols requires careful adherence to classical treatises without ignoring modern pathophysiology..."
+          </p>
+          <div class="sheet-signature-block">
+            <span class="sig-name">— Dr. Sreevaths N. V.</span>
+            <span class="sig-title">Chief Editor, Vaidyam Journal</span>
           </div>
         </div>
-      </section>
 
-      {%- when 'contact_info' -%}
-      {%- comment -%} ============ SUBSCRIBE TO VAIDYAM MAGAZINE ============ {%- endcomment -%}
-      <section class="vaidyam-subscribe-cta-section" id="subscribe" {{ block.shopify_attributes }}>
-        <div class="page-width vaidyam-container">
-          <div class="vaidyam-subscribe-box">
-            <div class="vaidyam-subscribe-box__grid">
-              <div class="vaidyam-subscribe-box__info">
-                <div class="vaidyam-subscribe-eyebrow">QUARTERLY CLINICAL SUBSCRIPTION</div>
-                <h2 class="vaidyam-subscribe-heading">Subscribe to Vaidyam Magazine</h2>
-                <p class="vaidyam-subscribe-subhead">Join thousands of practicing Vaidyas, medical college researchers, and BAMS students receiving our quarterly print &amp; digital editions.</p>
-                
-                <ul class="vaidyam-subscribe-perks">
-                  <li>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#E4C264"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span><strong>4 High-Grade Print Editions</strong> delivered to your clinic doorstep across India</span>
-                  </li>
-                  <li>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#E4C264"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span><strong>Complete Digital Archive Access</strong> to all 18 recurring columns and case studies</span>
-                  </li>
-                  <li>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#E4C264"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span><strong>ICMJE &amp; CARE Standard</strong> physician-reviewed manuscripts</span>
-                  </li>
-                  <li>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#E4C264"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span><strong>Exclusive CME Webinar Invites</strong> with senior doyens of Kerala Ayurveda</span>
-                  </li>
-                </ul>
+      </div>
 
-                <div class="vaidyam-subscribe-contact-strip">
-                  <div><strong>Phone / WhatsApp:</strong> +91 9048033348</div>
-                  <div><strong>Editorial Desk:</strong> vaidyam@keralaayurveda.biz</div>
-                  <div style="font-size: 12px; opacity: 0.85; margin-top: 4px;">Publication Division: Kerala Ayurveda Ltd., Head Office, Athani Post, Aluva, Ernakulam, Kerala - 683585</div>
-                </div>
-              </div>
+      <!-- Modal Footer -->
+      <div class="spread-modal-footer">
+        <span class="footer-note">Subscribe today to receive the full 68-page quad-color print edition.</span>
+        <a href="#subscribe-plan" onclick="toggleModal('look-inside-modal', false)" class="btn-modal-subscribe">
+          Subscribe Now (₹1,200) ➔
+        </a>
+      </div>
 
-              <div class="vaidyam-subscribe-box__card-wrap">
-                <div class="vaidyam-pricing-plan-card">
-                  <div class="vaidyam-plan-top-ribbon">★ ANNUAL PRACTITIONER PLAN</div>
-                  <div class="vaidyam-plan-body">
-                    <span class="vaidyam-plan-title">Vaidyam Print + Digital Edition</span>
-                    <div class="vaidyam-plan-price-row">
-                      <span class="vaidyam-plan-currency">₹</span>
-                      <span class="vaidyam-plan-amount">1,200</span>
-                      <span class="vaidyam-plan-period">/ year (4 Issues)</span>
-                    </div>
-                    <div class="vaidyam-plan-savings">Just ₹300 per issue · Free Pan-India Courier Delivery</div>
-
-                    <div class="vaidyam-plan-actions">
-                      <a class="vaidyam-btn vaidyam-btn--gold-full" href="mailto:vaidyam@keralaayurveda.biz?subject=Annual%20Subscription%20Order%20-%20Rs.1200">Subscribe Now (₹1,200/yr) &rarr;</a>
-                      <a class="vaidyam-btn vaidyam-btn--whatsapp-full" href="https://api.whatsapp.com/send?phone=919048033348&text=Hi%20Vaidyam%20Team%2C%20I%20would%20like%20to%20subscribe%20to%20Vaidyam%20Magazine%20(Annual%20Plan%20Rs.1200)" target="_blank" rel="noopener">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
-                        Order via WhatsApp Desk
-                      </a>
-                    </div>
-
-                    <div class="vaidyam-plan-socials">
-                      <span>Connect with Vaidyam:</span>
-                      <div class="vaidyam-plan-social-icons">
-                        <a href="https://www.instagram.com/keralaayurvedavaidyam" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg></a>
-                        <a href="https://open.spotify.com/show/keralaayurvedapodcast" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02z"/></svg></a>
-                        <a href="https://www.youtube.com/@KALVaidyam" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/></svg></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    {%- endcase -%}
-  {%- endfor -%}
+    </div>
+  </div>
 
 </div>
 
+<!-- ==========================================================================
+     INTERACTIVE JAVASCRIPT CONTROLLERS
+     ========================================================================== -->
 <script>
-  /* Testimonials Carousel */
-  document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.querySelector('.vaidyam-testimonials__carousel');
-    if (!carousel) return;
+  // 1. Interactive 18 Columns Live Preview Controller
+  function updatePreview(num, title, tag, desc, read, author, format) {
+    const pNum = document.getElementById('prev-num');
+    const pTitle = document.getElementById('prev-title');
+    const pTag = document.getElementById('prev-tag');
+    const pDesc = document.getElementById('prev-desc');
+    const pRead = document.getElementById('prev-read');
+    const pAuthor = document.getElementById('prev-author');
+    const pFormat = document.getElementById('prev-format');
 
-    const slides = carousel.querySelectorAll('.vaidyam-testimonials__slide');
-    const dots = carousel.querySelectorAll('.vaidyam-testimonials__dot');
-    let currentSlide = 0;
-    let autoplayTimer;
+    if (pNum) pNum.innerText = num;
+    if (pTitle) pTitle.innerText = title;
+    if (pTag) pTag.innerText = tag;
+    if (pDesc) pDesc.innerText = desc;
+    if (pRead) pRead.innerText = read;
+    if (pAuthor) pAuthor.innerText = author;
+    if (pFormat) pFormat.innerText = format;
 
-    function goToSlide(index) {
-      if (!slides.length) return;
-      slides.forEach(s => s.classList.remove('active'));
-      dots.forEach(d => { d.classList.remove('active'); d.setAttribute('aria-selected', 'false'); });
-      slides[index].classList.add('active');
-      if (dots[index]) {
-        dots[index].classList.add('active');
-        dots[index].setAttribute('aria-selected', 'true');
-      }
-      currentSlide = index;
+    document.querySelectorAll('.folio-entry').forEach(entry => entry.classList.remove('active'));
+    if (event && event.currentTarget) {
+      event.currentTarget.classList.add('active');
     }
+  }
 
-    function nextSlide() {
-      goToSlide((currentSlide + 1) % slides.length);
+  // 2. Video Player Embed Controller
+  function playJournalVideo() {
+    const container = document.getElementById('video-embed-frame');
+    const iframe = document.getElementById('video-player-iframe');
+    const btn = document.getElementById('video-play-btn');
+    const poster = document.getElementById('video-poster-img');
+
+    if (iframe) iframe.src = "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0";
+    if (container) container.classList.remove('hidden');
+    if (btn) btn.classList.add('hidden');
+    if (poster) poster.classList.add('hidden');
+  }
+
+  // 3. Modal Toggle Controller
+  function toggleModal(modalId, show) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    if (show) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     }
-
-    const prevBtn = carousel.querySelector('.vaidyam-carousel-arrow.prev');
-    const nextBtn = carousel.querySelector('.vaidyam-carousel-arrow.next');
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function() {
-        goToSlide((currentSlide - 1 + slides.length) % slides.length);
-        clearInterval(autoplayTimer);
-        autoplayTimer = setInterval(nextSlide, 6000);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function() {
-        nextSlide();
-        clearInterval(autoplayTimer);
-        autoplayTimer = setInterval(nextSlide, 6000);
-      });
-    }
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', function() {
-        goToSlide(parseInt(this.dataset.slide));
-        clearInterval(autoplayTimer);
-        autoplayTimer = setInterval(nextSlide, 6000);
-      });
-    });
-
-    autoplayTimer = setInterval(nextSlide, 6000);
-
-    /* Concern filter pill switcher */
-    const concernPills = document.querySelectorAll('.vaidyam-concern-pill');
-    concernPills.forEach(pill => {
-      pill.addEventListener('click', function() {
-        concernPills.forEach(p => p.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-  });
+  }
 </script>
 
 {% schema %}
 {
-  "name": "Vaidyam Landing Page",
-  "tag": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "hero_eyebrow",
-      "label": "Hero Eyebrow",
-      "default": "KERALA AYURVEDA · SINCE 2003"
-    },
-    {
-      "type": "text",
-      "id": "hero_title",
-      "label": "Hero Heading",
-      "default": "A quarterly journal on evolving Ayurveda, for practitioners and students."
-    },
-    {
-      "type": "textarea",
-      "id": "hero_subtitle",
-      "label": "Hero Subtitle",
-      "default": "Vaidyam connects classical Ayurvedic scholarship with contemporary clinical practice — published quarterly by Kerala Ayurveda Limited, reviewed by practicing BAMS and MD physicians."
-    },
-    {
-      "type": "image_picker",
-      "id": "cover_image",
-      "label": "Magazine cover image"
-    },
-    {
-      "type": "text",
-      "id": "youtube_id",
-      "label": "YouTube Video ID",
-      "default": "dQw4w9WgXcQ"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "hero",
-      "name": "Hero Section"
-    },
-    {
-      "type": "about",
-      "name": "About Vaidyam"
-    },
-    {
-      "type": "current_edition",
-      "name": "Current Edition"
-    },
-    {
-      "type": "care_paths",
-      "name": "Care Paths"
-    },
-    {
-      "type": "topics",
-      "name": "Knowledge Domains"
-    },
-    {
-      "type": "through_pages",
-      "name": "Through The Pages"
-    },
-    {
-      "type": "all_sections",
-      "name": "All 18 Sections"
-    },
-    {
-      "type": "by_concern",
-      "name": "Browse By Concern"
-    },
-    {
-      "type": "video",
-      "name": "Ayurveda in Action"
-    },
-    {
-      "type": "testimonials",
-      "name": "Testimonials"
-    },
-    {
-      "type": "our_legacy",
-      "name": "Our Legacy"
-    },
-    {
-      "type": "contact_info",
-      "name": "Subscribe CTA"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Vaidyam Magazine Landing"
-    }
-  ]
+  "name": "Vaidyam Journal Page",
+  "settings": []
 }
 {% endschema %}
