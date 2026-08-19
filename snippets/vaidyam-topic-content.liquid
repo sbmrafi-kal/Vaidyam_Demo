@@ -441,14 +441,7 @@
                   {%- assign pe_pt3 = prod_entry.desc_point_3.value | default: prod_entry.desc_point_3 -%}
                   {%- assign pe_prod = prod_entry.product.value | default: prod_entry.product -%}
 
-                  {%- render 'product-card',
-                    product: prod_entry,
-                    title: pe_title,
-                    tag_text: pe_tag,
-                    pt_1: pe_pt1,
-                    pt_2: pe_pt2,
-                    pt_3: pe_pt3
-                  -%}
+                  
                 {%- endfor -%}
               </div>
               <button class="ka-product-grid-arrow ka-product-grid-arrow--prev" type="button" aria-label="Previous product" disabled>
@@ -985,7 +978,7 @@
           </div>
         {%- when 'consult' -%}
           <div {{ block.shopify_attributes }}>
-            {%- render 'ka-consult-cta', blog: selected_blog, section: section -%}
+            
           </div>
         {%- when 'disclaimer' -%}
           <div class="page-width ka-blog-container" {{ block.shopify_attributes }}>
@@ -1010,12 +1003,12 @@
       {{ topic_hero_html }}
       {{ care_path_journey_html }}
       {{ articles_grid_html }}
-      {%- render 'ka-consult-cta', blog: selected_blog, section: section -%}
+      
     {%- endif -%}
   {%- endif -%}
 
   {%- comment -%} ============ CHATBOT ============ {%- endcomment -%}
-  {%- render 'ka-chatbot', blog: selected_blog -%}
+  
 </div>
 
 <script src="{{ 'vaidyam.js' | asset_url }}" defer></script>

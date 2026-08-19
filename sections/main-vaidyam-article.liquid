@@ -196,7 +196,7 @@
   {%- endcapture -%}
 
   {%- capture breaker_5_html -%}
-    {%- render 'ka-consult-breaker', article: article, breakers_meta: breakers_metaobject -%}
+    
   {%- endcapture -%}
 
   {%- capture toc_items_html -%}
@@ -359,7 +359,7 @@
               </div>
             {%- when 'products' -%}
               <div {{ block.shopify_attributes }}>
-                {%- render 'ka-product-recommendations', article: article, blog: blog, block: block -%}
+                
               </div>
             {%- when 'glossary' -%}
               <div {{ block.shopify_attributes }}>
@@ -443,7 +443,7 @@
   {%- endif -%}
 
   {%- render 'vaidyam-read-aloud', article: article, blog: blog -%}
-  {%- render 'ka-chatbot', blog: blog -%}
+  
 
 </div>
 
