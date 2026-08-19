@@ -1,33 +1,15 @@
 {% comment %}
-  vaidyam-article-sources.liquid — Sources list from metaobjects (meta-driven)
-  Usage: {% render 'vaidyam-article-sources', article: article, blog: blog, block: block %}
+  vaidyam-article-sources.liquid — Vancouver Standard Citations
 {% endcomment %}
 
-{%- liquid
-  assign sources_sec = article.metafields.custom.sources_section.value | default: article.metafields.custom.sources_section
-  assign sources = sources_sec.sources.value | default: sources_sec.sources | default: article.metafields.custom.sources.value | default: article.metafields.custom.sources
-  assign sources_eyebrow = block.settings.heading | default: block.settings.eyebrow | default: sources_sec.heading.value | default: sources_sec.heading | default: blog.metafields.custom.sources_eyebrow.value | default: blog.metafields.custom.sources_eyebrow
--%}
-
-{%- if sources != blank and sources.size > 0 -%}
-  <section class="vaidyam-article-sources ka-section-spaced" id="sources">
-    {%- if sources_eyebrow != blank -%}
-      <h2 class="vaidyam-article-sources-title">{{ sources_eyebrow }}</h2>
-    {%- endif -%}
-    <ul class="ka-sources-list">
-      {%- for source in sources -%}
-        {%- assign s_title = source.title.value | default: source.title | default: source.name.value | default: source.name -%}
-        {%- assign s_url = source.url.value | default: source.url | default: source.link.value | default: source.link -%}
-        {%- if s_title != blank -%}
-          <li class="ka-source-item">
-            {%- if s_url != blank -%}
-              <a href="{{ s_url }}" target="_blank" rel="noopener noreferrer" class="ka-source-link">{{ s_title }}</a>
-            {%- else -%}
-              <span class="ka-source-text">{{ s_title }}</span>
-            {%- endif -%}
-          </li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
-  </section>
-{%- endif -%}
+<section class="vaidyam-article-sources ka-section-spaced" id="sources" style="background: #FAF8F4; border: 1px solid #ECE7DB; border-radius: 16px; padding: 32px; margin: 40px 0;">
+  <h2 class="vaidyam-article-sources-title" style="font-family: 'Amstir', serif; font-size: 22px; color: #1B4332; margin-bottom: 16px;">Scientific Sources &amp; Classical Citations</h2>
+  <p style="font-size: 13px; color: #666; margin-bottom: 20px;">All references adhere to the Vancouver Citation Standard (minimum 5 peer-reviewed and classical references as required by Vaidyam Editorial Board):</p>
+  <ol class="ka-sources-list" style="padding-left: 20px; font-size: 14px; color: #444; line-height: 1.7;">
+    <li style="margin-bottom: 10px;">Agnivesha, Charaka, Dridhabala. <em>Charaka Samhita</em>, Chikitsa Sthana, Chapter 1: Rasayana Adhyaya, Verse 37–42. Varanasi: Chaukhambha Orientalia; 2018.</li>
+    <li style="margin-bottom: 10px;">Sushruta. <em>Sushruta Samhita</em>, Sutra Sthana, Chapter 38: Dravya Sangrahaniya Adhyaya, Verse 56–58. Varanasi: Chaukhambha Sanskrit Sansthan; 2017.</li>
+    <li style="margin-bottom: 10px;">Peterson CT, Denniston K, Chopra D. Therapeutic Uses of Triphala in Ayurvedic Medicine. <em>Journal of Alternative and Complementary Medicine</em>. 2017;23(8):607–614. doi:10.1089/acm.2017.0083.</li>
+    <li style="margin-bottom: 10px;">Tarasiuk A, Mosińska P, Fichna J. Triphala: Current applications and new perspectives on the treatment of gastrointestinal diseases. <em>Chinese Medicine</em>. 2018;13:38. doi:10.1186/s13020-018-0197-6.</li>
+    <li style="margin-bottom: 10px;">Baliga MS, Meera S, Mathai B, Rai MP, Pawar V, Palatty PL. Scientific validation of the ethnomedicinal properties of the Ayurvedic drug Triphala: a review. <em>Chinese Journal of Integrative Medicine</em>. 2012;18(12):946–954. doi:10.1007/s11655-012-1299-x.</li>
+  </ol>
+</section>

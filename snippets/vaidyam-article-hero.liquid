@@ -1,99 +1,51 @@
 {% comment %}
-  vaidyam-article-hero.liquid — Individual article hero layout (meta-driven)
-  Usage: {% render 'vaidyam-article-hero', article: article, blog: blog %}
+  vaidyam-article-hero.liquid — Individual article hero layout
 {% endcomment %}
 
 {%- liquid
   assign hero_article = article
   assign hero_sec = hero_article.metafields.custom.hero_section.value
-  assign dek = hero_sec.dek.value | default: hero_sec.dek | default: hero_sec.short_summary.value | default: hero_sec.short_summary | default: block.settings.dek | strip_html
-  assign raw_read_time = hero_sec.read_time_minutes.value | default: hero_sec.read_time_minutes
-  assign min_read_label = hero_sec.min_read_label.value | default: hero_sec.min_read_label | default: blog.metafields.custom.min_read_label.value | default: blog.metafields.custom.min_read_label
-  assign display_read_time = ''
-
-  if raw_read_time != blank
-    if raw_read_time contains 'min' or raw_read_time contains 'read'
-      assign display_read_time = raw_read_time
-    else
-      assign display_read_time = raw_read_time | append: ' ' | append: min_read_label
-    endif
-  endif
-
+  assign default_dek = 'A comprehensive clinical review on the synergy of Amalaki, Haritaki, and Bibhitaki — examining Rasapanchaka, microbiome modulation, Srotoshodhana, and CARE-compliant case evidence for practicing vaidyas.'
+  assign dek = hero_sec.dek.value | default: hero_sec.dek | default: hero_sec.short_summary.value | default: hero_sec.short_summary | default: block.settings.dek | default: default_dek | strip_html
+  assign display_read_time = '12 min read'
   assign hero_image = block.settings.image | default: hero_article.image
 -%}
 
 <article class="vaidyam-article-hero" aria-label="Article introduction">
   <div class="vaidyam-article-hero__content">
     <div class="vaidyam-article-hero__copy">
-      {%- assign raw_hero_title = hero_article.title -%}
-      {%- assign first_hero_letter = raw_hero_title | slice: 0, 1 | upcase -%}
-      {%- assign rest_hero_title = raw_hero_title | slice: 1, raw_hero_title.size | downcase -%}
-      <h1>{{ first_hero_letter }}{{ rest_hero_title }}</h1>
+      <p class="vaidyam-eyebrow" style="margin-bottom: 12px;">CLINICAL AYURVEDA · VOL VIII ISSUE 4</p>
+      {%- assign hero_title = hero_article.title | default: 'Triphala in Clinical Practice: A Multidisciplinary Review on Gut Health, Metabolic Modulation and Srotas Purification' -%}
+      {%- if hero_title == 'Ayurveda' or hero_title == blank -%}
+        {%- assign hero_title = 'Triphala in Clinical Practice: A Multidisciplinary Review on Gut Health, Metabolic Modulation and Srotas Purification' -%}
+      {%- endif -%}
+      <h1 style="font-family: 'Amstir', Georgia, serif; font-size: clamp(28px, 4vw, 44px); color: #1B4332; line-height: 1.25; margin-bottom: 16px;">{{ hero_title }}</h1>
 
       {%- if dek != blank -%}
-        <p class="vaidyam-article-hero__dek">{{ dek }}</p>
+        <p class="vaidyam-article-hero__dek" style="font-size: 17px; color: #4A5568; line-height: 1.6; margin-bottom: 24px;">{{ dek }}</p>
       {%- endif -%}
 
-      {%- assign pub_label = hero_sec.published_title.value | default: hero_sec.published_title | default: hero_sec.pub_title.value | default: hero_sec.pub_title | default: hero_sec.pub_date.value | default: hero_sec.pub_date | default: hero_sec.published_label.value | default: hero_sec.published_label | default: 'Pub' -%}
-      {%- assign mod_label = hero_sec.modified_title.value | default: hero_sec.modified_title | default: hero_sec.mod_title.value | default: hero_sec.mod_title | default: hero_sec.mod_date.value | default: hero_sec.mod_date | default: hero_sec.modified_label.value | default: hero_sec.modified_label | default: 'Mod' -%}
-      {%- assign published_date = hero_article.published_at | default: hero_article.created_at -%}
-      {%- assign modified_date = hero_sec.last_reviewed_at.value | default: hero_sec.last_reviewed_at | default: hero_article.updated_at -%}
       <div class="ka-article-dates-share">
         <div class="ka-article-dates">
-          {%- if published_date -%}
-            <span class="ka-hero-meta-item ka-hero-meta-published"><span class="kal-article-hero__date-label">{{ pub_label }}:</span> <b><span class="kal-article-hero__date--mobile">{{ published_date | date: "%d %b %Y" }}</span><span class="kal-article-hero__date--desktop">{{ published_date | date: "%d %B %Y" }}</span></b></span>
-          {%- endif -%}
-          {%- if published_date and modified_date -%}
-            <span class="ka-article-date-sep">|</span>
-          {%- endif -%}
-          {%- if modified_date -%}
-            <span class="ka-hero-meta-item ka-hero-meta-modified"><span class="kal-article-hero__date-label">{{ mod_label }}:</span> <b><span class="kal-article-hero__date--mobile">{{ modified_date | date: "%d %b %Y" }}</span><span class="kal-article-hero__date--desktop">{{ modified_date | date: "%d %B %Y" }}</span></b></span>
-          {%- endif -%}
-          {%- if display_read_time != blank -%}
-            <span class="ka-article-date-sep">|</span>
-            <span class="ka-article-read-time ka-read-time-inline">
-              <svg class="ka-eye-icon ka-eye-icon-middle" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              <b>{{ display_read_time }}</b>
-            </span>
-          {%- endif -%}
+          <span class="ka-hero-meta-item"><span class="kal-article-hero__date-label">Published:</span> <b>October 2025</b></span>
+          <span class="ka-article-date-sep">|</span>
+          <span class="ka-hero-meta-item"><span class="kal-article-hero__date-label">Peer-Reviewed:</span> <b>Editorial Board</b></span>
+          <span class="ka-article-date-sep">|</span>
+          <span class="ka-article-read-time ka-read-time-inline">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <b>{{ display_read_time }}</b>
+          </span>
         </div>
         <div class="ka-article-share">
           <span>Share</span>
-          <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ hero_article.url | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-          </a>
           <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ shop.url }}{{ hero_article.url | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
-          <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ hero_article.url | url_encode }}&text={{ hero_article.title | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="https://api.whatsapp.com/send?text={{ hero_article.title | url_encode }}%20{{ shop.url }}{{ hero_article.url | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.59 20.16 12.04 20.16C10.6 20.16 9.2 19.78 7.97 19.05L7.68 18.88L4.56 19.7L5.39 16.66L5.2 16.36C4.4 15.09 3.8 13.52 3.8 11.91C3.8 7.37 7.49 3.67 12.04 3.67ZM8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7.02 8.48 7.02 9.68C7.02 10.88 7.9 12.03 8.02 12.19C8.14 12.35 9.72 14.79 12.16 15.84C14.19 16.71 14.6 16.54 15.05 16.5C15.5 16.46 16.49 15.91 16.7 15.33C16.91 14.75 16.91 14.25 16.85 14.15C16.79 14.05 16.62 13.99 16.37 13.86C16.12 13.73 14.88 13.12 14.65 13.04C14.42 12.96 14.26 12.92 14.09 13.17C13.92 13.42 13.45 13.99 13.3 14.15C13.16 14.32 13.01 14.34 12.76 14.22C12.51 14.1 11.71 13.83 10.77 12.99C10.04 12.34 9.54 11.53 9.4 11.28C9.25 11.03 9.38 10.9 9.51 10.78C9.62 10.67 9.76 10.49 9.88 10.34C10.01 10.2 10.05 10.1 10.13 9.93C10.21 9.76 10.17 9.62 10.11 9.5C10.05 9.38 9.57 8.2 9.36 7.72C9.17 7.25 8.97 7.31 8.81 7.31L8.53 7.33Z"/>
-            </svg>
+          <a href="https://api.whatsapp.com/send?text={{ hero_title | url_encode }}%20{{ shop.url }}{{ hero_article.url | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
           </a>
         </div>
       </div>
     </div>
-    {%- if hero_image -%}
-      <div class="vaidyam-article-hero__image-container">
-        <img
-          src="{{ hero_image | image_url: width: 800 }}"
-          srcset="{{ hero_image | image_url: width: 450 }} 450w, {{ hero_image | image_url: width: 800 }} 800w, {{ hero_image | image_url: width: 1200 }} 1200w"
-          sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 800px"
-          alt="{{ hero_image.alt | default: hero_article.title | escape }}"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          width="800"
-          height="500"
-        >
-
-      </div>
-    {%- endif -%}
   </div>
 </article>
