@@ -1,0 +1,93 @@
+{% comment %}
+  vaidyam-font.liquid
+  Brand typography declarations for Amstir serif and Avenir
+  Uses strictly Shopify asset URLs with zero external or mock fonts
+{% endcomment %}
+<style>
+  @font-face {
+    font-family: 'Amstir';
+    src: url("{{ 'Amstir-Regular.woff2' | asset_url }}") format("woff2"),
+         url("{{ 'Amstir-Regular.woff' | asset_url }}") format("woff"),
+         url("{{ 'Amstir Regular.ttf' | asset_url }}") format("truetype"),
+         url("{{ 'Amstir.otf' | asset_url }}") format("opentype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Amstir';
+    src: url("{{ 'Amstir-Italic.woff2' | asset_url }}") format("woff2"),
+         url("{{ 'Amstir-Italic.woff' | asset_url }}") format("woff"),
+         url("{{ 'Amstir Italic.ttf' | asset_url }}") format("truetype"),
+         url("{{ 'Amstir Italic.otf' | asset_url }}") format("opentype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Avenir-Roman';
+    src: url("{{ 'Avenir-Roman.ttf' | asset_url }}") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Avenir Roman';
+    src: url("{{ 'Avenir-Roman.ttf' | asset_url }}") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Avenir';
+    src: url("{{ 'Avenir-Roman.ttf' | asset_url }}") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Avenir-Medium';
+    src: url("{{ 'Avenir-Medium.ttf' | asset_url }}") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Avenir-Heavy';
+    src: url("{{ 'Avenir-Heavy.ttf' | asset_url }}") format("truetype");
+    font-weight: 700 800;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Avenir Heavy';
+    src: url("{{ 'Avenir-Heavy.ttf' | asset_url }}") format("truetype");
+    font-weight: 700 800;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* Standard Brand Typography Tokens */
+    --font-amstir: 'Amstir', serif;
+    --font-avenir: 'Avenir-Roman', 'Avenir Roman', 'Avenir', sans-serif;
+    --font-family-serif: 'Amstir', serif;
+    --font-family-sans: 'Avenir-Roman', 'Avenir Roman', 'Avenir', sans-serif;
+    --font-family-sans-medium: 'Avenir-Medium', 'Avenir Medium', 'Avenir', sans-serif;
+    --font-family-sans-heavy: 'Avenir-Heavy', 'Avenir Heavy', 'Avenir', sans-serif;
+
+    /* Legacy Compatibility Aliases — Amstir strictly for article title, all other headings use Avenir */
+    --ka-font-heading: var(--font-family-sans);
+    --ka-font-article-title: var(--font-family-serif);
+    --ka-font-body: var(--font-family-sans);
+    --ka-font-medium: var(--font-family-sans-medium);
+    --ka-font-heavy: var(--font-family-sans-heavy);
+  }
+</style>

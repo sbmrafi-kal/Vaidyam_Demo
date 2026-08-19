@@ -1,0 +1,74 @@
+{% comment %}
+  main-blog-topic-redesign.liquid — Topic/category page section (meta-driven)
+  Renders when current_tags is present (tag-filtered blog view)
+  Template: blog.ayurveda.json
+{% endcomment %}
+
+{%- render 'vaidyam-topic-content', section: section -%}
+
+{% schema %}
+{
+  "name": "Blog Topic — Redesign",
+  "tag": "section",
+  "class": "ka-blog-topic-section",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog to fetch articles from"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Topic Hero",
+      "limit": 1
+    },
+    {
+      "type": "care_path",
+      "name": "Care Path Journey",
+      "limit": 1
+    },
+    {
+      "type": "lifestyle",
+      "name": "Ahara & Vihara Cards",
+      "limit": 1
+    },
+    {
+      "type": "products",
+      "name": "Bespoke Formulations",
+      "limit": 1
+    },
+    {
+      "type": "experts",
+      "name": "Clinical Care Team",
+      "limit": 1
+    },
+    {
+      "type": "faqs",
+      "name": "Pathway FAQs",
+      "limit": 1
+    },
+    {
+      "type": "grid",
+      "name": "Articles Grid",
+      "limit": 1
+    },
+    {
+      "type": "consult",
+      "name": "WhatsApp Consult CTA",
+      "limit": 1
+    },
+    {
+      "type": "disclaimer",
+      "name": "Health Disclaimer Box",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Topic Redesign"
+    }
+  ]
+}
+{% endschema %}

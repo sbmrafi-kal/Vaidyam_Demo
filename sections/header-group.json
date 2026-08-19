@@ -1,0 +1,26 @@
+{
+  "name": "Header Group",
+  "type": "header",
+  "sections": {
+    "header": {
+      "type": "header-vaidyam",
+      "settings": {
+        "nav_1_title": "Articles",
+        "nav_1_url": "/blogs/ayurveda",
+        "nav_2_title": "About",
+        "nav_2_url": "/pages/about",
+        "nav_3_title": "Editorial Board",
+        "nav_3_url": "/pages/editorial-board",
+        "nav_4_title": "Submit",
+        "nav_4_url": "/pages/guidelines",
+        "nav_5_title": "Subscribe",
+        "nav_5_url": "#current-edition",
+        "logo_image": "shopify://shop_images/logo-kerala.png",
+        "logo_alt": "Vaidyam — Kerala Ayurveda"
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

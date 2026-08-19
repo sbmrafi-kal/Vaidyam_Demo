@@ -1,0 +1,21 @@
+# Shopify Theme Ignore
+# Patterns listed here are ignored when syncing the theme with Shopify via GitHub integration
+Irr/
+Migration/
+tools/
+articles/
+Articles/
+Articles_Formatted/
+docs/
+scratch/
+Insertion/
+Ref/
+Current/
+.agents/
+.shopify/
+__pycache__/
+*.log
+*.md
+.DS_Store
+deploy_shopify_blog_schema.py
+shopify_blog_schema_graphql_mutations.json

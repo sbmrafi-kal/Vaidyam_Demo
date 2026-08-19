@@ -1,0 +1,69 @@
+{%- comment -%} theme-check-disable ContentForHeaderModification {%- endcomment -%}
+{%- capture content_header -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign header_lower = content_header | downcase -%}
+{%- assign req_path_lower = request.path | downcase -%}
+{%- if req_path_lower contains '/blogs' or req_path_lower contains '/tagged' or header_lower contains 'blogs' or header_lower contains 'tagged' or header_lower contains 'topic' or header_lower contains 'care_path' or header_lower contains 'news' -%}
+  {%- render 'vaidyam-topic-content', section: section -%}
+{%- else -%}
+  <style type="text/css">
+    .template-404 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 52vh;
+      text-align: center;
+      padding: 80px 20px;
+      background-color: #FDFFFB;
+      font-family: 'Avenir', sans-serif;
+    }
+    .template-404 p {
+      font-size: 15px;
+      color: #D27449;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin: 0 0 12px 0;
+    }
+    .template-404 h1.title {
+      font-family: 'Amstir';
+      font-size: clamp(36px, 5vw, 56px);
+      color: #1e4b3c;
+      margin: 0 0 32px 0;
+      font-weight: normal;
+      line-height: 1.2;
+    }
+    .template-404 .button {
+      display: inline-block;
+      background-color: #1e4b3c;
+      color: #FDFFFB;
+      font-family: 'Avenir', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 8px 24px rgba(30, 75, 60, 0.15);
+      border: 0;
+    }
+    .template-404 .button:hover {
+      background-color: #D27449;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(210, 116, 73, 0.22);
+      color: #FDFFFB;
+    }
+  </style>
+
+  <div class="template-404 page-width page-margin center">
+    <p>
+      {{ 'templates.404.subtext' | t }}
+    </p>
+    <h1 class="title">
+      {{ 'templates.404.title' | t }}
+    </h1>
+    <a href="{{ routes.all_products_collection_url }}" class="button">
+      {{ 'general.continue_shopping' | t }}
+    </a>
+  </div>
+{%- endif -%}

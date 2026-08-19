@@ -1,0 +1,26 @@
+{% comment %}
+  vaidyam-key-takeaways-card.liquid — Key takeaways component rendering Rich Text AST
+  Usage: {% render 'vaidyam-key-takeaways-card', article: article, block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign kt_sec = article.metafields.custom.key_takeaways_section.value | default: article.metafields.custom.key_takeaways_section | default: article.metafields.custom.at_a_glance_section.value | default: article.metafields.custom.at_a_glance_section
+  assign takeaways_drop = kt_sec.takeaways_content | default: article.metafields.custom.key_takeaways_content
+  assign glance_eyebrow = block.settings.heading | default: kt_sec.heading.value | default: kt_sec.heading | default: kt_sec.section_heading.value | default: kt_sec.section_heading | default: blog.metafields.custom.at_a_glance_eyebrow
+-%}
+
+{%- if takeaways_drop != blank -%}
+  <section class="ka-key-takeaways-wrapper reveal-on-scroll" id="at-a-glance">
+    {%- if glance_eyebrow != blank -%}
+      <h2 class="ka-key-takeaways-heading">{{ glance_eyebrow }}</h2>
+    {%- endif -%}
+
+    <div class="rte ka-key-takeaways-rte">
+      {%- if takeaways_drop.value != blank -%}
+        {{ takeaways_drop | metafield_tag }}
+      {%- else -%}
+        {{ takeaways_drop }}
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}

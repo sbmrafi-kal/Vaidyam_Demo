@@ -1,0 +1,35 @@
+{% comment %}
+  vaidyam-care-path-card.liquid — Care path card for Vaidyam / Kerala Ayurveda
+{% endcomment %}
+
+{%- liquid
+  assign title = care_path.title.value | default: care_path.title | default: care_path.name
+  assign desc = care_path.description.value | default: care_path.description | default: care_path.subtitle
+  assign tag = care_path.tag.value | default: care_path.tag | default: care_path.category
+  assign url = care_path.url.value | default: care_path.url
+  if url == blank and blog != blank and care_path.handle != blank
+    assign url = blog.url | append: '?care_path=' | append: care_path.handle
+  endif
+  if url == blank
+    assign url = '/blogs/ayurveda'
+  endif
+  assign cta_label = section_cta_label | default: 'Explore Path'
+-%}
+
+<div class="ka-care-card">
+  <div class="ka-care-card__content">
+    {%- if tag != blank -%}
+      <span class="ka-care-card__badge">{{ tag }}</span>
+    {%- endif -%}
+    <h4 class="ka-care-card__title">{{ title }}</h4>
+    {%- if desc != blank -%}
+      <p class="ka-care-card__desc">{{ desc }}</p>
+    {%- endif -%}
+    <a href="{{ url }}" class="ka-care-card__link">
+      <span>{{ cta_label }}</span>
+      <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+  </div>
+</div>

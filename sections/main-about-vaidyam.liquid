@@ -1,0 +1,214 @@
+{%- render 'vaidyam-font' -%}
+{{ 'vaidyam-landing.css' | asset_url | stylesheet_tag }}
+
+<div class="vaidyam-static-page">
+  <div class="page-width vaidyam-container">
+    <div class="vaidyam-static-header">
+      <p class="vaidyam-eyebrow">ABOUT VAIDYAM · OUR HERITAGE</p>
+      <h1 class="vaidyam-static-title">Our Legacy &amp; Vision</h1>
+      <p class="vaidyam-static-lead">Kerala Ayurveda Vaidyam stands as a pioneering voice in Ayurveda—honouring tradition while advancing contemporary scientific understanding.</p>
+    </div>
+
+    <div class="vaidyam-static-content">
+      <div class="vaidyam-static-section">
+        <h2>Our Legacy</h2>
+        <p>Founded on the vision of our patron, <strong>Dr. K. Anilkumar</strong>, and nurtured by the scholarly rigour of <strong>Prof. C. R. Agniveś</strong> and <strong>Dr. K. Rajagopalan</strong>, the magazine was conceived as a trusted forum where classical ayurvedic wisdom could meet present-day scientific inquiry. Their groundwork established Vaidyam as a credible, practitioner-focused platform committed to clarity, integrity, and impact.</p>
+        <p>Ever since its inception, Vaidyam continues to evolve with purpose. We work on careful interpretation of the classics, encourage critical dialogue, and publish refined insights that help readers translate theory into practice. Our pages feature thoughtful perspectives on Ayurvedic diagnostics, formulations, clinical observations, education, and community health—crafted for aspiring practitioners, academics, and enthusiasts alike.</p>
+        <p>What began as a commitment to preserve knowledge has become a living legacy of dissemination and discovery. Today, Vaidyam is a towering presence in the 'Popular Science' genre in publications on Ayurveda.</p>
+      </div>
+
+      <div class="vaidyam-static-pillars-grid">
+        <div class="vaidyam-static-pillar-card">
+          <div class="vaidyam-pillar-icon">01</div>
+          <h3>Clinical Skill &amp; Enquiry</h3>
+          <p>Impart clinical skills and ignite the intriguing minds of Ayurveda students and doctors through real-world case analysis.</p>
+        </div>
+        <div class="vaidyam-static-pillar-card">
+          <div class="vaidyam-pillar-icon">02</div>
+          <h3>Evidence &amp; Context</h3>
+          <p>Contextualise modern clinical research and pharmacology within the classical Ayurvedic framework.</p>
+        </div>
+        <div class="vaidyam-static-pillar-card">
+          <div class="vaidyam-pillar-icon">03</div>
+          <h3>Ethical Excellence</h3>
+          <p>Support ethical, patient-centred care and foster lifelong peer learning across generations of Vaidyas.</p>
+        </div>
+      </div>
+
+      <div class="vaidyam-static-section">
+        <h2>Focus Themes of Team Vaidyam</h2>
+        <div class="vaidyam-themes-grid">
+          <div class="vaidyam-theme-item">
+            <h4>Content-Centric</h4>
+            <p>We deep dive into the original literature of Ayurveda (some are over 2000 years old) and the latest research to create databases and knowledge banks that other departments and projects can utilize.</p>
+          </div>
+          <div class="vaidyam-theme-item">
+            <h4>Med-Tech</h4>
+            <p>We integrate the information we mine from content-centric projects with technology to build software, apps, and digital solutions (Dravya App, Dosha Finder, etc.).</p>
+          </div>
+          <div class="vaidyam-theme-item">
+            <h4>Outreach</h4>
+            <p>Using the mined information and digital tools, we engage with students, practitioners, and researchers to build awareness, develop clinical skills, and collaborate globally.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="vaidyam-vision-mission-box">
+        <div class="vaidyam-vm-block">
+          <h3>Our Vision</h3>
+          <p>To incorporate Ayurvedic wisdom with modern technology, creating authentic, accessible, and personalized solutions that empower Ayurveda students, practitioners, and researchers to learn more, grow confidently, and make a greater impact on global wellness.</p>
+          <p class="vaidyam-goal-tag"><strong>Our Goal:</strong> To BE THE FINAL WORD IN AYURVEDA</p>
+        </div>
+        <div class="vaidyam-vm-block">
+          <h3>Our Mission</h3>
+          <p>To serve as a trusted knowledge platform that preserves the timeless wisdom of Ayurveda while embracing modern research and technology. We are committed to making authentic content, developing innovative digital tools, and fostering meaningful outreach, thereby empowering students, Ayurvedic practitioners, and researchers to advance Ayurveda and contribute to global health and well-being.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.vaidyam-static-page {
+  padding: 64px 0 96px;
+  background: #FFFFFF;
+  font-family: 'Avenir', sans-serif;
+  color: #222;
+}
+.vaidyam-static-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 56px;
+}
+.vaidyam-static-title {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #1B4332;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.vaidyam-static-lead {
+  font-size: 19px;
+  color: #555;
+  line-height: 1.6;
+}
+.vaidyam-static-content {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.vaidyam-static-section {
+  margin-bottom: 48px;
+}
+.vaidyam-static-section h2 {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1B4332;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #EAE5D9;
+  padding-bottom: 10px;
+}
+.vaidyam-static-section p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 18px;
+}
+.vaidyam-static-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 40px 0 56px;
+}
+.vaidyam-static-pillar-card {
+  background: #FAF8F4;
+  border: 1px solid #ECE7DB;
+  border-radius: 14px;
+  padding: 28px 24px;
+}
+.vaidyam-pillar-icon {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #C9A84C;
+  margin-bottom: 8px;
+}
+.vaidyam-static-pillar-card h3 {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #1B4332;
+  margin-bottom: 10px;
+}
+.vaidyam-static-pillar-card p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.55;
+  margin: 0;
+}
+.vaidyam-themes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+.vaidyam-theme-item {
+  background: #F4F8F5;
+  padding: 24px;
+  border-radius: 12px;
+  border-left: 4px solid #1B4332;
+}
+.vaidyam-theme-item h4 {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1B4332;
+  margin-bottom: 8px;
+}
+.vaidyam-theme-item p {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+  margin: 0;
+}
+.vaidyam-vision-mission-box {
+  background: #FAF8F4;
+  border: 1px solid #ECE7DB;
+  border-radius: 16px;
+  padding: 40px;
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.vaidyam-vm-block h3 {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1B4332;
+  margin-bottom: 12px;
+}
+.vaidyam-vm-block p {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.65;
+}
+.vaidyam-goal-tag {
+  color: #1B4332 !important;
+  font-weight: 600;
+  margin-top: 12px;
+}
+@media (max-width: 768px) {
+  .vaidyam-static-pillars-grid, .vaidyam-themes-grid, .vaidyam-vision-mission-box {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "About Vaidyam",
+  "settings": []
+}
+{% endschema %}

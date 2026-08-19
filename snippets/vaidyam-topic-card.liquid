@@ -1,0 +1,44 @@
+{% comment %}
+  vaidyam-topic-card.liquid — Full-image topic card with robust fallback support
+  Usage: {% render 'vaidyam-topic-card', topic: topic, blog: blog, index: index, fallback_title: fallback_title, fallback_image: fallback_image, fallback_tag: fallback_tag %}
+{% endcomment %}
+
+{%- liquid
+  assign topic_title = topic.title.value | default: topic.title | default: fallback_title
+  assign topic_image = topic.image.value | default: topic.image | default: fallback_image
+  assign topic_tag = topic.article_filter_tag.value | default: topic.article_filter_tag | default: fallback_tag | default: topic_title
+  assign topic_handle = topic.system.handle | default: topic.handle | default: topic_tag | handleize
+  assign topic_count_label = topic.cta_label.value | default: topic.cta_label | default: 'Explore topic'
+  
+  if topic_image != blank
+    if topic_image contains '.png' or topic_image contains '.jpg' or topic_image contains '.webp'
+      assign topic_img_url = topic_image | asset_url
+    else
+      assign topic_img_url = topic_image | image_url: width: 600
+    endif
+  else
+    assign topic_img_url = ''
+  endif
+  
+  assign target_url = '/blogs/ayurveda/tagged/' | append: topic_handle
+  if blog != blank and blog.url != blank
+    assign target_url = blog.url | append: '/tagged/' | append: topic_handle | append: '?topic=' | append: topic_handle
+  endif
+-%}
+
+{%- if topic_title != blank -%}
+  <a class="ka-blog-image-card" href="{{ target_url }}">
+    {%- if topic_img_url != blank -%}
+      <img class="ka-blog-image-card__bg" src="{{ topic_img_url }}" alt="{{ topic_title | escape }}" loading="lazy" width="600" height="400">
+    {%- else -%}
+      <div class="ka-blog-image-card__placeholder-bg" style="background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); width: 100%; height: 100%; position: absolute; top:0; left:0;"></div>
+    {%- endif -%}
+    <div class="ka-blog-image-card__overlay" aria-hidden="true"></div>
+    <div class="ka-blog-image-card__content">
+      <h3>{{ topic_title }}</h3>
+      {%- if topic_count_label != blank -%}
+        <span class="ka-blog-read-more">{{ topic_count_label }} &rarr;</span>
+      {%- endif -%}
+    </div>
+  </a>
+{%- endif -%}

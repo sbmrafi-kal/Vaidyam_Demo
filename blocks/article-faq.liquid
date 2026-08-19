@@ -1,0 +1,7 @@
+{% doc %}
+Renders frequently asked questions for the current article.
+{% enddoc %}
+<div class="ka-blog-container" {{ block.shopify_attributes }}>{%- render 'vaidyam-article-faqs', article: article, blog: blog -%}</div>
+{% schema %}
+{"name":"Article FAQ","settings":[],"presets":[{"name":"Article FAQ"}]}
+{% endschema %}

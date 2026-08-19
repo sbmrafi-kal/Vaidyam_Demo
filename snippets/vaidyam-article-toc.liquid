@@ -1,0 +1,38 @@
+{% comment %}
+  vaidyam-article-toc.liquid — Desktop sticky + mobile accordion TOC (meta-driven)
+  Usage: {% render 'vaidyam-article-toc', blog: blog %}
+{% endcomment %}
+
+{%- liquid
+  assign toc_heading = blog.metafields.custom.toc_heading.value | default: blog.metafields.custom.toc_heading
+  assign toc_mobile_label = blog.metafields.custom.toc_mobile_label.value | default: blog.metafields.custom.toc_mobile_label
+-%}
+
+<aside class="ka-article-sidebar" aria-label="Article table of contents">
+  {%- if toc_heading != blank -%}
+    <h3>{{ toc_heading }}</h3>
+  {%- endif -%}
+  <ul class="ka-article-sidebar__list">
+    {%- comment -%} Links built dynamically by ka-blog-redesign.js {%- endcomment -%}
+  </ul>
+</aside>
+
+<div class="vaidyam-article-toc-mobile">
+  <button
+    class="vaidyam-article-toc-mobile__toggle"
+    aria-expanded="false"
+    aria-controls="vaidyam-mobile-toc-content"
+  >
+    {%- if toc_mobile_label != blank -%}
+      <span>{{ toc_mobile_label }}</span>
+    {%- endif -%}
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div id="vaidyam-mobile-toc-content" class="vaidyam-article-toc-mobile__content">
+    <ul class="vaidyam-article-toc-mobile__list">
+      {%- comment -%} Links built dynamically by ka-blog-redesign.js {%- endcomment -%}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{% comment %}
+  vaidyam-article-sources.liquid — Sources list from metaobjects (meta-driven)
+  Usage: {% render 'vaidyam-article-sources', article: article, blog: blog, block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign sources_sec = article.metafields.custom.sources_section.value | default: article.metafields.custom.sources_section
+  assign sources = sources_sec.sources.value | default: sources_sec.sources | default: article.metafields.custom.sources.value | default: article.metafields.custom.sources
+  assign sources_eyebrow = block.settings.heading | default: block.settings.eyebrow | default: sources_sec.heading.value | default: sources_sec.heading | default: blog.metafields.custom.sources_eyebrow.value | default: blog.metafields.custom.sources_eyebrow
+-%}
+
+{%- if sources != blank and sources.size > 0 -%}
+  <section class="vaidyam-article-sources ka-section-spaced" id="sources">
+    {%- if sources_eyebrow != blank -%}
+      <h2 class="vaidyam-article-sources-title">{{ sources_eyebrow }}</h2>
+    {%- endif -%}
+    <ul class="ka-sources-list">
+      {%- for source in sources -%}
+        {%- assign s_title = source.title.value | default: source.title | default: source.name.value | default: source.name -%}
+        {%- assign s_url = source.url.value | default: source.url | default: source.link.value | default: source.link -%}
+        {%- if s_title != blank -%}
+          <li class="ka-source-item">
+            {%- if s_url != blank -%}
+              <a href="{{ s_url }}" target="_blank" rel="noopener noreferrer" class="ka-source-link">{{ s_title }}</a>
+            {%- else -%}
+              <span class="ka-source-text">{{ s_title }}</span>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </section>
+{%- endif -%}

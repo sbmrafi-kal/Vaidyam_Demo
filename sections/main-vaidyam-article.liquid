@@ -1,0 +1,579 @@
+{% comment %}
+  main-article-redesign.liquid — Full redesigned article section (meta-driven)
+  Renders: hero, two-column layout (content + TOC sidebar), at-a-glance, article body, products, glossary, sources, disclaimer, FAQ, author/reviewer, related articles, share, comments
+  Template: article.ayurveda.json
+{% endcomment %}
+
+{{ 'vaidyam-article.css' | asset_url | stylesheet_tag }}
+{%- render 'vaidyam-font' -%}
+
+{%- liquid
+  assign hero_sec = article.metafields.custom.hero_section.value
+  assign body_sec = article.metafields.custom.body_section.value
+  assign breakers_meta = body_sec.breakers.value
+  assign author_profile = breakers_meta.written_by.value | default: hero_sec.written_by_profile.value
+  assign reviewer_profile = breakers_meta.reviewed_by.value | default: hero_sec.reviewed_by.value
+
+  assign body_toc_title = body_sec.toc_title.value | default: body_sec.toc_title | default: body_sec.table_of_contents_title.value | default: body_sec.table_of_contents_title
+  assign toc_heading = body_toc_title | default: blog.metafields.custom.toc_heading.value | default: blog.metafields.custom.toc_heading
+  assign toc_mobile_label = body_toc_title | default: blog.metafields.custom.toc_mobile_label.value | default: blog.metafields.custom.toc_mobile_label
+  assign written_by_label = blog.metafields.custom.written_by_label
+  assign reviewed_by_label = blog.metafields.custom.reviewed_by_label
+-%}
+
+
+
+<script id="ka-glossary-data" type="application/json">
+  {%- assign glossary_sec = article.metafields.custom.glossary_section.value | default: article.metafields.custom.glossary_section -%}
+  {%- assign glossary = glossary_sec.glossary_terms.value | default: glossary_sec.glossary_terms | default: article.metafields.custom.glossary_terms.value | default: article.metafields.custom.glossary_terms | default: blog.metafields.custom.glossary_terms.value -%}
+  {%- if glossary != blank and glossary.size > 0 -%}
+    [
+      {%- for term in glossary -%}
+        {%- assign t_term = term.term.value | default: term.term | default: '' -%}
+        {%- assign t_def = term.short_definition.value | default: term.short_definition | default: '' -%}
+        {
+          "term": {{ t_term | json }},
+          "definition": {{ t_def | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  {%- else -%}
+    []
+  {%- endif -%}
+</script>
+
+<div class="ka-blog-wrapper ka-blog-wrapper--article">
+  {%- liquid
+    assign body_sec = article.metafields.custom.body_section.value | default: article.metafields.custom.body_section
+    assign breakers_metaobject = body_sec.breakers.value | default: article.metafields.custom.breakers.value
+    assign has_sections = false
+    if body_sec != blank and body_sec.sections.value != blank
+      assign has_sections = true
+    endif
+
+    assign did_you_know = breakers_metaobject.did_you_know.value | default: breakers_metaobject.did_you_know | default: body_sec.did_you_know.value | default: body_sec.did_you_know | default: article.metafields.custom.did_you_know.value
+    assign is_dyk_read_disabled = false
+    assign dyk_flag = breakers_metaobject.did_you_know_read_aloud.value | default: breakers_metaobject.did_you_know_read_aloud | default: breakers_metaobject.did_you_know_read.value | default: breakers_metaobject.did_you_know_read | default: article.metafields.custom.did_you_know_read_aloud.value | default: article.metafields.custom.did_you_know_read_aloud | default: article.metafields.custom.did_you_know_read.value | default: article.metafields.custom.did_you_know_read
+    if dyk_flag == false or dyk_flag == 'false' or dyk_flag == 'False'
+      assign is_dyk_read_disabled = true
+    endif
+
+    assign infographic_data = nil
+    if breakers_metaobject != blank
+      assign infographic_data = breakers_metaobject.infographic_media.value | default: breakers_metaobject.infographic_media | default: breakers_metaobject.infographics.value | default: breakers_metaobject.infographics | default: breakers_metaobject.infographic.value | default: breakers_metaobject.infographic
+    endif
+    if infographic_data == blank and body_sec != blank
+      assign infographic_data = body_sec.infographic_media.value | default: body_sec.infographic_media | default: body_sec.infographics.value | default: body_sec.infographics | default: body_sec.infographic.value | default: body_sec.infographic
+    endif
+    if infographic_data == blank
+      assign infographic_data = article.metafields.custom.infographic_media.value | default: article.metafields.custom.infographic_media | default: article.metafields.custom.infographics.value | default: article.metafields.custom.infographics | default: article.metafields.custom.infographic.value | default: article.metafields.custom.infographic | default: article.metafields.custom.breaker_infographic.value | default: article.metafields.custom.breaker_infographic
+    endif
+  -%}
+
+  {%- capture breaker_1_html -%}
+    {%- if author_profile != blank or reviewer_profile != blank -%}
+      {%- render 'vaidyam-author-reviewer-combined', article: article, blog: blog, author_profile: author_profile, reviewer_profile: reviewer_profile, written_by_label: written_by_label, reviewed_by_label: reviewed_by_label, breakers_meta: breakers_metaobject -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture breaker_2_html -%}
+    {%- if did_you_know != blank -%}
+      {%- assign dyk_title = breakers_metaobject.did_you_know_quote_title.value | default: breakers_metaobject.did_you_know_quote_title | default: breakers_metaobject.did_you_know_title.value | default: breakers_metaobject.did_you_know_title | default: 'Did You Know?' -%}
+      <div class="ka-article-did-you-know"{% if is_dyk_read_disabled %} data-read-aloud="false"{% endif %}>
+        <p class="ka-blog-eyebrow" style="color: #E4C264;">{{ dyk_title }}</p>
+        <p class="ka-article-did-you-know-text">"{{ did_you_know }}"</p>
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture breaker_3_html -%}
+    {%- if infographic_data != blank -%}
+      <div class="ka-infographic-breaker-container ka-infographic-mobile-layout">
+        <div class="ka-infographic-breaker-square">
+          <div class="ka-infographic-carousel-shell">
+            <div class="ka-infographic-carousel">
+              {%- for item in infographic_data -%}
+                {%- assign item_url = item.url | default: item -%}
+                {%- assign item_is_video = false -%}
+                {%- if item.media_type == 'video' or item_url contains '.mp4' or item_url contains '.mov' or item_url contains '.webm' -%}
+                  {%- assign item_is_video = true -%}
+                {%- endif -%}
+                {%- if item_is_video -%}
+                  <div class="ka-infographic-carousel-slide" data-media-type="video">
+                    {%- if item.media_type == 'video' -%}
+                      {{ item | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '800x', class: 'ka-article-video-player' }}
+                    {%- else -%}
+                      <video class="ka-article-video-player" controls playsinline preload="metadata"><source src="{{ item_url }}" type="video/mp4"></video>
+                    {%- endif -%}
+                  </div>
+                {%- else -%}
+                  {%- assign slide_url = item | image_url: width: 800 -%}
+                  <div class="ka-infographic-carousel-slide" data-media-type="image">
+                    <img src="{{ slide_url }}" alt="Infographic slide" loading="lazy" width="800" height="800">
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <button class="ka-blog-topic-arrow ka-infographic-carousel-arrow ka-infographic-carousel-arrow--prev" type="button" aria-label="Previous image">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12L4 8L10 4"/>
+              </svg>
+            </button>
+            <button class="ka-blog-topic-arrow ka-infographic-carousel-arrow ka-infographic-carousel-arrow--next" type="button" aria-label="Next image">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 12L12 8L6 4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ka-infographic-breaker-container ka-infographic-desktop-layout">
+        {%- assign has_desktop_video = false -%}
+        {%- for item in infographic_data -%}
+          {%- assign item_url = item.url | default: item -%}
+          {%- if item.media_type == 'video' or item_url contains '.mp4' or item_url contains '.mov' or item_url contains '.webm' -%}
+            {%- assign has_desktop_video = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if has_desktop_video -%}
+          <div class="ka-infographic-breaker-video-col">
+            {%- for item in infographic_data -%}
+              {%- assign item_url = item.url | default: item -%}
+              {%- assign item_is_video = false -%}
+              {%- if item.media_type == 'video' or item_url contains '.mp4' or item_url contains '.mov' or item_url contains '.webm' -%}
+                {%- assign item_is_video = true -%}
+              {%- endif -%}
+              {%- if item_is_video -%}
+                {%- if item.media_type == 'video' -%}
+                  {{ item | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '800x', class: 'ka-article-video-player' }}
+                {%- else -%}
+                  <video class="ka-article-video-player" controls playsinline preload="metadata"><source src="{{ item_url }}" type="video/mp4"></video>
+                {%- endif -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="ka-infographic-breaker-image-col{% unless has_desktop_video %} ka-infographic-breaker-image-col--single{% endunless %}">
+          <div class="ka-infographic-carousel-shell">
+            <div class="ka-infographic-carousel">
+              {%- for item in infographic_data -%}
+                {%- assign item_url = item.url | default: item -%}
+                {%- assign item_is_video = false -%}
+                {%- if item.media_type == 'video' or item_url contains '.mp4' or item_url contains '.mov' or item_url contains '.webm' -%}
+                  {%- assign item_is_video = true -%}
+                {%- endif -%}
+                {%- unless item_is_video -%}
+                  {%- assign slide_url = item | image_url: width: 800 -%}
+                  <div class="ka-infographic-carousel-slide" data-media-type="image">
+                    <img src="{{ slide_url }}" alt="Infographic slide" loading="lazy" width="800" height="800">
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+            <button class="ka-blog-topic-arrow ka-infographic-carousel-arrow ka-infographic-carousel-arrow--prev" type="button" aria-label="Previous image">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12L4 8L10 4"/>
+              </svg>
+            </button>
+            <button class="ka-blog-topic-arrow ka-infographic-carousel-arrow ka-infographic-carousel-arrow--next" type="button" aria-label="Next image">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 12L12 8L6 4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture breaker_4_html -%}
+    {%- render 'vaidyam-trust-breaker', article: article, breakers_meta: breakers_metaobject -%}
+  {%- endcapture -%}
+
+  {%- capture breaker_5_html -%}
+    {%- render 'ka-consult-breaker', article: article, breakers_meta: breakers_metaobject -%}
+  {%- endcapture -%}
+
+  {%- capture toc_items_html -%}
+    {%- assign manual_toc = body_sec.table_of_contents_manual.value | default: body_sec.table_of_contents_manual -%}
+    {%- if manual_toc != blank and manual_toc.size > 0 -%}
+      {%- for entry in manual_toc -%}
+        {%- assign e_title = entry.title.value | default: entry.title | default: entry.heading.value | default: entry.heading -%}
+        {%- assign e_target = entry.heading_target.value | default: entry.heading_target | default: entry.target.value | default: entry.target -%}
+        {%- if e_target == blank -%}
+          {%- assign e_target = e_title | handleize -%}
+        {%- endif -%}
+        {%- if e_title != blank -%}
+          <li><a href="#{{ e_target }}">{{ e_title }}</a></li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- elsif body_sec != blank and body_sec.sections.value != blank -%}
+      {%- for sec in body_sec.sections.value -%}
+        {%- assign s_title = sec.title.value | default: sec.title -%}
+        {%- if s_title != blank -%}
+          <li><a href="#{{ s_title | handleize }}">{{ s_title }}</a></li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture body_content_html -%}
+    {%- if has_sections -%}
+      {%- assign section_idx = 0 -%}
+      {%- assign author_reviewer_rendered = false -%}
+      {%- assign did_you_know_rendered = false -%}
+      {%- assign infographic_rendered = false -%}
+      {%- assign why_trust_rendered = false -%}
+      {%- assign e_consultation_rendered = false -%}
+
+      {%- for sec in body_sec.sections.value -%}
+        {%- assign section_idx = section_idx | plus: 1 -%}
+        {%- assign s_title = sec.title.value | default: sec.title -%}
+        {%- if s_title != blank -%}
+          <h2 id="{{ s_title | handleize }}">{{ s_title }}</h2>
+        {%- endif -%}
+
+        {%- if sec.section_content != blank -%}
+          <div class="rte">{{ sec.section_content | metafield_tag }}</div>
+        {%- elsif sec.section_html != blank -%}
+          <div class="rte">{{ sec.section_html | metafield_tag }}</div>
+        {%- elsif sec.content != blank -%}
+          <div class="rte">{{ sec.content | metafield_tag }}</div>
+        {%- endif -%}
+
+        {%- assign selected_breaker = sec.breaker_after_this.value | default: sec.breaker_after_this | downcase -%}
+        {%- assign is_author_breaker = false -%}
+        {%- assign is_dyk_breaker = false -%}
+        {%- assign is_infographic_breaker = false -%}
+        {%- assign is_trust_breaker = false -%}
+        {%- assign is_consult_breaker = false -%}
+
+        {%- if selected_breaker contains 'reviewed' or selected_breaker contains 'profile' or selected_breaker contains 'author' -%}
+          {%- assign is_author_breaker = true -%}
+        {%- elsif selected_breaker contains 'did you know' or selected_breaker contains 'know' -%}
+          {%- assign is_dyk_breaker = true -%}
+        {%- elsif selected_breaker contains 'infographic' or selected_breaker contains 'graphic' or selected_breaker contains 'media' -%}
+          {%- assign is_infographic_breaker = true -%}
+        {%- elsif selected_breaker contains 'trust' -%}
+          {%- assign is_trust_breaker = true -%}
+        {%- elsif selected_breaker contains 'consultation' or selected_breaker contains 'consult' -%}
+          {%- assign is_consult_breaker = true -%}
+        {%- elsif selected_breaker == blank -%}
+          {%- if section_idx == 1 -%}
+            {%- assign is_author_breaker = true -%}
+          {%- elsif section_idx == 2 -%}
+            {%- assign is_dyk_breaker = true -%}
+          {%- elsif section_idx == 3 -%}
+            {%- assign is_infographic_breaker = true -%}
+          {%- elsif section_idx == 4 -%}
+            {%- assign is_trust_breaker = true -%}
+          {%- elsif section_idx == 5 -%}
+            {%- assign is_consult_breaker = true -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if is_author_breaker -%}
+          {%- if author_reviewer_rendered == false and breaker_1_html != blank -%}
+            {{ breaker_1_html }}
+            {%- assign author_reviewer_rendered = true -%}
+          {%- endif -%}
+        {%- elsif is_dyk_breaker -%}
+          {%- if did_you_know_rendered == false and breaker_2_html != blank -%}
+            {{ breaker_2_html }}
+            {%- assign did_you_know_rendered = true -%}
+          {%- endif -%}
+        {%- elsif is_infographic_breaker -%}
+          {%- if infographic_rendered == false and breaker_3_html != blank -%}
+            {{ breaker_3_html }}
+            {%- assign infographic_rendered = true -%}
+          {%- endif -%}
+        {%- elsif is_trust_breaker -%}
+          {%- if why_trust_rendered == false and breaker_4_html != blank -%}
+            {{ breaker_4_html }}
+            {%- assign why_trust_rendered = true -%}
+          {%- endif -%}
+        {%- elsif is_consult_breaker -%}
+          {%- if e_consultation_rendered == false and breaker_5_html != blank -%}
+            {{ breaker_5_html }}
+            {%- assign e_consultation_rendered = true -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {{ article.content }}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- comment -%} Outer Block: Hero Section {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'hero' -%}
+      <section class="vaidyam-article-hero-wrapper-section" {{ block.shopify_attributes }}>
+        <div class="page-width ka-blog-container">
+          {%- render 'vaidyam-article-hero', article: article, blog: blog, block: block -%}
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Outer Block: Key Takeaways (Full width) {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'key_takeaways' -%}
+      {%- liquid
+        assign kt_sec = article.metafields.custom.key_takeaways_section.value | default: article.metafields.custom.key_takeaways_section | default: article.metafields.custom.at_a_glance_section.value | default: article.metafields.custom.at_a_glance_section
+        assign takeaways_drop = kt_sec.takeaways_content | default: article.metafields.custom.key_takeaways_content
+      -%}
+      {%- if takeaways_drop != blank -%}
+        <div class="page-width ka-blog-container" {{ block.shopify_attributes }}>
+          {%- render 'vaidyam-key-takeaways-card', article: article, block: block -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} ============ Main Content Area: 2-Column Grid (Article Body + Sidebar TOC) ============ {%- endcomment -%}
+  <section class="ka-blog-section--tight">
+    <div class="page-width ka-blog-container ka-article-layout">
+
+      {%- comment -%} ===== LEFT COLUMN: Article Content ===== {%- endcomment -%}
+      <article class="ka-article-content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'mobile_toc' -%}
+              {%- render 'vaidyam-mobile-toc', block: block, toc_mobile_label: toc_mobile_label, toc_items_html: toc_items_html -%}
+            {%- when 'why_trust' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'vaidyam-why-trust-card', article: article, block: block -%}
+              </div>
+            {%- when 'at_a_glance' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'vaidyam-article-at-a-glance', article: article, blog: blog, block: block -%}
+              </div>
+            {%- when 'body' -%}
+              <div class="ka-article-body prose" {{ block.shopify_attributes }}>
+                {{ body_content_html }}
+              </div>
+            {%- when 'products' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'ka-product-recommendations', article: article, blog: blog, block: block -%}
+              </div>
+            {%- when 'glossary' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'vaidyam-glossary-terms', article: article, blog: blog, block: block -%}
+              </div>
+            {%- when 'faq' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'vaidyam-article-faqs', article: article, blog: blog, block: block -%}
+              </div>
+            {%- when 'sources' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'vaidyam-article-sources', article: article, blog: blog, block: block -%}
+              </div>
+            {%- when 'disclaimer' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'vaidyam-article-disclaimer', article: article, blog: blog, block: block -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </article>
+
+      {%- comment -%} ===== SIDEBAR (Desktop TOC) ===== {%- endcomment -%}
+      {%- assign toc_block = section.blocks | where: 'type', 'mobile_toc' | first -%}
+      <aside class="ka-article-sidebar reveal-on-scroll" aria-label="Article table of contents"{% if toc_block != blank %} {{ toc_block.shopify_attributes }}{% endif %}>
+        <div class="vaidyam-article-toc-card">
+          {%- assign side_title = toc_block.settings.heading | default: toc_heading -%}
+          {%- assign toc_icon = body_sec.toc_icon.value | default: body_sec.toc_icon -%}
+          {%- if side_title != blank -%}
+            <h3 class="vaidyam-article-toc-toggle">
+              <div class="ka-toc-header-left">
+                <div class="ka-toc-logo-placeholder">
+                  {%- if toc_icon != blank -%}
+                    <img src="{{ toc_icon | image_url: width: 60 }}" alt="Table of Contents Icon" class="ka-toc-icon-img" width="22" height="22" loading="lazy">
+                  {%- else -%}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ka-toc-icon-svg" aria-hidden="true">
+                      <line x1="3.5" y1="6" x2="20.5" y2="6"></line>
+                      <line x1="3.5" y1="12" x2="16.5" y2="12"></line>
+                      <line x1="3.5" y1="18" x2="18.5" y2="18"></line>
+                    </svg>
+                  {%- endif -%}
+                </div>
+                <span>{{ side_title }}</span>
+              </div>
+              <svg class="vaidyam-article-toc-icon ka-accordion-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </h3>
+          {%- endif -%}
+          <ul class="ka-article-sidebar__list">
+            {%- comment -%} Dynamically generated from article headings by vaidyam.js {%- endcomment -%}
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  {%- comment -%} ============ Outer Block: Related Articles (after 2-column) ============ {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'related' -%}
+        <div class="page-width ka-blog-container" {{ block.shopify_attributes }}>
+          {%- render 'vaidyam-related-articles', article: article, blog: blog, block: block -%}
+        </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} ============ Outer Block: Comments Section ============ {%- endcomment -%}
+  {%- liquid
+    assign show_comments_section = false
+    assign show_comments_raw = article.metafields.custom.comments_section.value.show_comments_section
+    if show_comments_raw != nil
+      if show_comments_raw == true or show_comments_raw == 'true' or show_comments_raw == 'True'
+        assign show_comments_section = false
+      endif
+    endif
+  -%}
+  {%- if show_comments_section -%}
+    <div class="page-width ka-blog-container">
+      {%- render 'vaidyam-article-comments', article: article, blog: blog -%}
+    </div>
+  {%- endif -%}
+
+  {%- render 'vaidyam-read-aloud', article: article, blog: blog -%}
+  {%- render 'ka-chatbot', blog: blog -%}
+
+</div>
+
+<!-- Niagara Scrubber for Mobile & Tablet Viewports -->
+<div class="ka-niagara-scrubber-bar" id="kaScrubberBar" aria-hidden="true">
+  <div class="ka-scrubber-nums-track" id="kaScrubberNumsTrack"></div>
+</div>
+<div class="ka-scrubber-bubble" id="kaScrubberBubble" aria-hidden="true">
+  <span class="bubble-title"></span>
+</div>
+
+<script src="{{ 'vaidyam.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Journal Article Page",
+  "tag": "section",
+  "class": "ka-journal-article-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Article Page Controls"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Article Hero"
+    },
+    {
+      "type": "key_takeaways",
+      "name": "Key Takeaways Banner"
+    },
+    {
+      "type": "mobile_toc",
+      "name": "Table of Contents",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Desktop Sidebar Heading"
+        },
+        {
+          "type": "text",
+          "id": "mobile_label",
+          "label": "Mobile Accordion Label"
+        }
+      ]
+    },
+    {
+      "type": "why_trust",
+      "name": "Why Trust Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Card Heading"
+        }
+      ]
+    },
+    {
+      "type": "at_a_glance",
+      "name": "At a Glance Box"
+    },
+    {
+      "type": "body",
+      "name": "Article Body & Breakers",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_breakers",
+          "label": "Show Inline Breakers",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "products",
+      "name": "Recommended Products Grid"
+    },
+    {
+      "type": "glossary",
+      "name": "Ayurveda Glossary",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Glossary Heading"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ Section"
+    },
+    {
+      "type": "sources",
+      "name": "Scientific Sources"
+    },
+    {
+      "type": "disclaimer",
+      "name": "Medical Disclaimer"
+    },
+    {
+      "type": "related",
+      "name": "Related Articles Grid"
+    },
+    {
+      "type": "comments",
+      "name": "Article Comments"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Journal Article Page",
+      "blocks": [
+        { "type": "hero" },
+        { "type": "key_takeaways" },
+        { "type": "mobile_toc" },
+        { "type": "why_trust" },
+        { "type": "at_a_glance" },
+        { "type": "body" },
+        { "type": "products" },
+        { "type": "glossary" },
+        { "type": "faq" },
+        { "type": "sources" },
+        { "type": "disclaimer" },
+        { "type": "related" }
+      ]
+    }
+  ]
+}
+{% endschema %}

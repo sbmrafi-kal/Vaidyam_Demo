@@ -1,0 +1,78 @@
+{
+  "name": "Article — Ayurveda Redesign",
+  "sections": {
+    "main-article": {
+      "type": "main-vaidyam-article",
+      "settings": {
+        "default_disclaimer": "This content is for informational and educational purposes only. It is not intended as medical advice and should not replace consultation with a qualified healthcare professional. Kerala Ayurveda recommends consulting a doctor or qualified vaidya before beginning any new wellness routine, especially if you have existing health conditions or are on medication."
+      },
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {}
+        },
+        "why_trust": {
+          "type": "why_trust",
+          "settings": {}
+        },
+        "mobile_toc": {
+          "type": "mobile_toc",
+          "settings": {}
+        },
+        "at_a_glance": {
+          "type": "at_a_glance",
+          "settings": {}
+        },
+        "body": {
+          "type": "body",
+          "settings": {}
+        },
+        "products": {
+          "type": "products",
+          "settings": {}
+        },
+        "glossary": {
+          "type": "glossary",
+          "settings": {}
+        },
+        "faq": {
+          "type": "faq",
+          "settings": {}
+        },
+        "sources": {
+          "type": "sources",
+          "settings": {}
+        },
+        "disclaimer": {
+          "type": "disclaimer",
+          "settings": {}
+        },
+        "related": {
+          "type": "related",
+          "settings": {}
+        },
+        "comments": {
+          "type": "comments",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "hero",
+        "mobile_toc",
+        "why_trust",
+        "at_a_glance",
+        "body",
+        "products",
+        "glossary",
+        "faq",
+        "sources",
+        "disclaimer",
+        "related",
+        "comments"
+      ]
+    }
+  },
+  "order": [
+    "main-article"
+  ]
+}

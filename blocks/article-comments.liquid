@@ -1,0 +1,7 @@
+{% doc %}
+Renders comments for the current article.
+{% enddoc %}
+<div class="ka-blog-container" {{ block.shopify_attributes }}>{%- render 'vaidyam-article-comments', article: article, blog: blog -%}</div>
+{% schema %}
+{"name":"Article comments","settings":[],"presets":[{"name":"Article comments"}]}
+{% endschema %}

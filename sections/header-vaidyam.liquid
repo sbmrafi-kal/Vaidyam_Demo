@@ -1,0 +1,494 @@
+{%- comment -%} theme-check-disable ContentForHeaderModification, LiquidComplexity {%- endcomment -%}
+{{ 'vaidyam-header.css' | asset_url | stylesheet_tag }}
+
+<header class="theme-header-custom" role="banner">
+  <div class="theme-header-custom__main-bar">
+    <div class="theme-header-custom__inner">
+    <div class="theme-header-custom__left">
+      <button class="theme-header-custom__menu-btn" type="button" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <nav class="theme-header-custom__nav" aria-label="Primary">
+        {%- assign nav_1_title = section.settings.nav_1_title | default: '' -%}
+        {%- assign nav_2_title = section.settings.nav_2_title | default: '' -%}
+        {%- assign nav_3_title = section.settings.nav_3_title | default: '' -%}
+        {%- assign nav_4_title = section.settings.nav_4_title | default: '' -%}
+        {%- assign nav_5_title = section.settings.nav_5_title | default: '' -%}
+
+        {%- assign nav_1_url = section.settings.nav_1_url | default: routes.root_url -%}
+        {%- assign nav_2_url = section.settings.nav_2_url | default: routes.root_url -%}
+        {%- assign nav_3_url = section.settings.nav_3_url | default: routes.root_url -%}
+        {%- assign nav_4_url = section.settings.nav_4_url | default: routes.root_url -%}
+        {%- assign nav_5_url = section.settings.nav_5_url | default: routes.root_url -%}
+
+        {%- liquid
+          assign active_links = 0
+          if nav_1_title != blank
+            assign active_links = active_links | plus: 1
+          endif
+          if nav_2_title != blank
+            assign active_links = active_links | plus: 1
+          endif
+          if nav_3_title != blank
+            assign active_links = active_links | plus: 1
+          endif
+          if nav_4_title != blank
+            assign active_links = active_links | plus: 1
+          endif
+          if nav_5_title != blank
+            assign active_links = active_links | plus: 1
+          endif
+
+          assign rendered_index = 0
+        -%}
+
+        {%- if nav_1_title != blank -%}
+          {%- assign rendered_index = rendered_index | plus: 1 -%}
+          <a class="theme-header-custom__nav-link{% if rendered_index == active_links %} theme-header-custom__nav-link--last{% endif %}" href="{{ nav_1_url }}">{{ nav_1_title }}</a>
+        {%- endif -%}
+        {%- if nav_2_title != blank -%}
+          {%- assign rendered_index = rendered_index | plus: 1 -%}
+          <a class="theme-header-custom__nav-link{% if rendered_index == active_links %} theme-header-custom__nav-link--last{% endif %}" href="{{ nav_2_url }}">{{ nav_2_title }}</a>
+        {%- endif -%}
+        {%- if nav_3_title != blank -%}
+          {%- assign rendered_index = rendered_index | plus: 1 -%}
+          <a class="theme-header-custom__nav-link{% if rendered_index == active_links %} theme-header-custom__nav-link--last{% endif %}" href="{{ nav_3_url }}">{{ nav_3_title }}</a>
+        {%- endif -%}
+        {%- if nav_4_title != blank -%}
+          {%- assign rendered_index = rendered_index | plus: 1 -%}
+          <a class="theme-header-custom__nav-link{% if rendered_index == active_links %} theme-header-custom__nav-link--last{% endif %}" href="{{ nav_4_url }}">{{ nav_4_title }}</a>
+        {%- endif -%}
+        {%- if nav_5_title != blank -%}
+          {%- assign rendered_index = rendered_index | plus: 1 -%}
+          <a class="theme-header-custom__nav-link{% if rendered_index == active_links %} theme-header-custom__nav-link--last{% endif %}" href="{{ nav_5_url }}">{{ nav_5_title }}</a>
+        {%- endif -%}
+      </nav>
+    </div>
+
+    <div class="theme-header-custom__center">
+      <a class="theme-header-custom__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if section.settings.logo_image != blank -%}
+          {{
+            section.settings.logo_image
+            | image_url: width: 600
+            | image_tag: class: 'theme-header-custom__brand-image', loading: 'eager', alt: section.settings.logo_alt
+          }}
+        {%- else -%}
+          {%- assign logo_text = section.settings.logo_text | default: shop.name -%}
+          {%- assign logo_parts = logo_text | split: ' ' -%}
+          {%- assign logo_first = logo_parts[0] | downcase -%}
+          {%- assign logo_rest = logo_parts | slice: 1, logo_parts.size | join: ' ' | downcase -%}
+          <span class="theme-header-custom__brand-text">
+            <span class="brand-line brand-line--top">{{ logo_first }}</span>
+            {%- if logo_rest != blank -%}
+              <span class="brand-line brand-line--bottom">{{ logo_rest }}</span>
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <div class="theme-header-custom__right">
+      <button class="theme-header-custom__action" type="button" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"></circle>
+          <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <a class="theme-header-custom__action theme-header-custom__action--account" href="{{ routes.account_url }}" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="1.8"></circle>
+          <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </a>
+      <a class="theme-header-custom__action" href="{{ routes.cart_url }}" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="8" cy="21" r="1" stroke="currentColor" stroke-width="1.6"></circle>
+          <circle cx="19" cy="21" r="1" stroke="currentColor" stroke-width="1.6"></circle>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="theme-header-custom__cart-count" aria-label="{{ cart.item_count }} items">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+  </div>
+
+  <div class="theme-header-custom__drawer" id="ThemeHeaderDrawer" aria-hidden="true">
+    <div class="theme-header-custom__drawer-overlay"></div>
+    <div class="theme-header-custom__drawer-content">
+      <div class="theme-header-custom__drawer-header">
+        <span class="theme-header-custom__drawer-title">Menu</span>
+        <button class="theme-header-custom__drawer-close" type="button" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="theme-header-custom__drawer-nav">
+        {%- if nav_1_title != blank -%}<a href="{{ nav_1_url }}">{{ nav_1_title }}</a>{%- endif -%}
+        {%- if nav_2_title != blank -%}<a href="{{ nav_2_url }}">{{ nav_2_title }}</a>{%- endif -%}
+        {%- if nav_3_title != blank -%}<a href="{{ nav_3_url }}">{{ nav_3_title }}</a>{%- endif -%}
+        {%- if nav_4_title != blank -%}<a href="{{ nav_4_url }}">{{ nav_4_title }}</a>{%- endif -%}
+        {%- if nav_5_title != blank -%}<a href="{{ nav_5_url }}">{{ nav_5_title }}</a>{%- endif -%}
+      </nav>
+    </div>
+  </div>
+
+
+
+{%- liquid
+  assign show_breadcrumbs = true
+  if request.page_type == 'index'
+    assign show_breadcrumbs = false
+  elsif request.page_type == 'search'
+    assign show_breadcrumbs = false
+  endif
+-%}
+
+{%- if show_breadcrumbs -%}
+{%- liquid
+  capture content_header_check
+    echo content_for_header
+  endcapture
+  assign header_lower_check = content_header_check | downcase
+  assign is_journal_search_page = false
+  if request.path contains 'journal-search' or page.handle contains 'journal-search'
+    assign is_journal_search_page = true
+  endif
+
+  assign is_journal_404_override = false
+  if request.page_type == '404'
+    if header_lower_check contains 'tagged' or header_lower_check contains 'topic' or header_lower_check contains 'care_path' or header_lower_check contains 'blogs' or header_lower_check contains 'news'
+      assign is_journal_404_override = true
+    endif
+  endif
+-%}
+<div class="theme-header-custom__breadcrumbs-wrap{% if request.page_type == 'blog' or request.page_type == 'article' or is_journal_404_override or is_journal_search_page %} ka-blog-breadcrumbs-wrap{% endif %}">
+  <div class="theme-header-custom__breadcrumbs" aria-label="Breadcrumb">
+      {%- if is_journal_search_page -%}
+        <div class="ka-blog-breadcrumb">
+          <a href="{{ routes.root_url | default: '/' }}" class="ka-breadcrumb-home-link" aria-label="Home"><img src="{{ 'home.png' | asset_url }}" alt="Home" class="ka-breadcrumb-home-icon" width="16" height="16"></a>
+          <span>&gt;</span>
+          <a href="/blogs/news">Kerala Ayurveda Blogs</a>
+          <span>&gt;</span>
+          <span class="theme-header-custom__breadcrumb-current">Journal Search</span>
+        </div>
+      {%- elsif request.page_type == 'blog' or request.page_type == 'article' or is_journal_404_override -%}
+        <div class="ka-blog-breadcrumb">
+          {%- liquid
+            assign has_tags = false
+            if current_tags != blank and current_tags.size > 0
+              assign has_tags = true
+            endif
+          -%}
+          {%- if request.page_type == 'blog' and has_tags == false -%}
+            <a href="{{ routes.root_url | default: '/' }}" class="ka-breadcrumb-home-link" aria-label="Home"><img src="{{ 'home.png' | asset_url }}" alt="Home" class="ka-breadcrumb-home-icon" width="16" height="16"></a>
+            <span>&gt;</span>
+            <span class="theme-header-custom__breadcrumb-current">{{ blog.title | default: 'Journal' }}</span>
+            {%- liquid
+              assign subnav_overview = blog.metafields.custom.subnav_overview
+              assign subnav_care_paths = blog.metafields.custom.subnav_care_paths
+              assign subnav_topics = blog.metafields.custom.subnav_topics
+              assign subnav_latest = blog.metafields.custom.subnav_latest
+              assign subnav_consult = blog.metafields.custom.subnav_consult
+            -%}
+            {%- if subnav_overview != blank or subnav_care_paths != blank or subnav_topics != blank or subnav_latest != blank or subnav_consult != blank -%}
+              <div class="ka-blog-breadcrumb-subnav">
+                {%- if subnav_overview != blank -%}<a class="active" href="#overview">{{ subnav_overview }}</a>{%- endif -%}
+                {%- if subnav_care_paths != blank -%}<a href="#care-paths">{{ subnav_care_paths }}</a>{%- endif -%}
+                {%- if subnav_topics != blank -%}<a href="#topics">{{ subnav_topics }}</a>{%- endif -%}
+                {%- if subnav_latest != blank -%}<a href="#latest">{{ subnav_latest }}</a>{%- endif -%}
+                {%- if subnav_consult != blank -%}<a href="#consult">{{ subnav_consult }}</a>{%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- else -%}
+            <a href="{{ blog.url }}" class="ka-breadcrumb-home-link" aria-label="Home"><img src="{{ 'home.png' | asset_url }}" alt="Home" class="ka-breadcrumb-home-icon" width="16" height="16"></a>
+            <span>&gt;</span>
+            {%- if request.page_type == 'blog' and has_tags -%}
+              {%- liquid
+                assign current_tag = current_tags | first
+
+                # Parse topic and care_path query parameters dynamically from content_for_header
+                capture content_header
+                  echo content_for_header
+                endcapture
+                assign page_url = content_header | split: '"pageurl":"' | last | split: '"' | first
+
+                assign topic_param = ''
+                if page_url contains 'topic='
+                  assign topic_param = page_url | split: 'topic=' | last | split: '&' | first | url_decode | handleize
+                endif
+
+                assign care_path_param = ''
+                if page_url contains 'care_path='
+                  assign care_path_param = page_url | split: 'care_path=' | last | split: '&' | first | url_decode | handleize
+                endif
+
+                assign topic_title = current_tag
+
+                # 1. Check if care_path is active
+                assign path_metaobject = nil
+                if care_path_param != blank
+                  assign care_paths = blog.metafields.custom.care_paths.value
+                  for cp in care_paths
+                    assign temp_cp_handle = cp.system.handle | default: cp.handle | default: cp.title | handleize
+                    if temp_cp_handle == care_path_param
+                      assign path_metaobject = cp
+                      assign topic_title = cp.title.value | default: cp.title
+                      break
+                    endif
+                  endfor
+                endif
+
+                # 2. Check if topic is active
+                if path_metaobject == nil and topic_param != blank
+                  assign topics = blog.metafields.custom.topics.value
+                  if topics != blank
+                    for topic in topics
+                      assign temp_handle = topic.system.handle | default: topic.handle | default: topic.title | handleize
+                      if temp_handle == topic_param
+                        assign topic_title = topic.title.value | default: topic.title
+                        break
+                      endif
+                    endfor
+                  endif
+                endif
+
+                # 3. Fallback to tag match
+                if path_metaobject == nil and topic_param == blank
+                  assign topics = blog.metafields.custom.topics.value
+                  if topics != blank
+                    for topic in topics
+                      if topic.article_filter_tag == current_tag or topic.title == current_tag
+                        assign topic_title = topic.title.value | default: topic.title
+                        break
+                      endif
+                    endfor
+                  endif
+                endif
+              -%}
+              {%- if current_tags.size > 1 -%}
+                {%- liquid
+                  assign first_char = topic_title | slice: 0 | upcase
+                  assign rest_chars = topic_title | slice: 1, 255
+                  assign formatted_topic_title = first_char | append: rest_chars
+                -%}
+                {%- assign current_tag_handle = current_tag | handleize -%}
+                {%- assign back_url = blog.url | append: '/tagged/' | append: current_tag_handle -%}
+                {%- liquid
+                  if path_metaobject != nil
+                    assign back_url = back_url | append: '?care_path=' | append: care_path_param
+                  elsif topic_param != blank
+                    assign back_url = back_url | append: '?topic=' | append: topic_param
+                  endif
+                -%}
+                <a href="{{ back_url }}">{{ formatted_topic_title }}</a>
+                <span>&gt;</span>
+                <span class="theme-header-custom__breadcrumb-current">{{ current_tags | last }}</span>
+              {%- else -%}
+                {%- liquid
+                  assign first_char = topic_title | slice: 0 | upcase
+                  assign rest_chars = topic_title | slice: 1, 255
+                  assign formatted_topic_title = first_char | append: rest_chars
+                -%}
+                <span class="theme-header-custom__breadcrumb-current">{{ formatted_topic_title }}</span>
+              {%- endif -%}
+            {%- elsif request.page_type == 'article' -%}
+              {%- liquid
+                assign hero_sec = article.metafields.custom.hero_section.value
+                assign topic = hero_sec.topic.value
+                assign topic_title = topic.title.value | default: topic.title | default: hero_sec.category_label.value | default: hero_sec.category_label | default: article.tags.first
+                assign raw_tag_handle = topic.article_filter_tag.value | default: topic.article_filter_tag | default: topic_title | handleize
+                if raw_tag_handle contains 'digestion' or raw_tag_handle contains 'digest' or raw_tag_handle contains 'gut'
+                  assign topic_tag = 'digestion'
+                elsif raw_tag_handle contains 'sleep' or raw_tag_handle contains 'stress' or raw_tag_handle contains 'mind'
+                  assign topic_tag = 'sleep'
+                elsif raw_tag_handle contains 'joints' or raw_tag_handle contains 'pain' or raw_tag_handle contains 'bone'
+                  assign topic_tag = 'pain-joints'
+                elsif raw_tag_handle contains 'skin' or raw_tag_handle contains 'hair' or raw_tag_handle contains 'beauty'
+                  assign topic_tag = 'skin-hair'
+                elsif raw_tag_handle contains 'women'
+                  assign topic_tag = 'women-s-health'
+                elsif raw_tag_handle contains 'men'
+                  assign topic_tag = 'men-s-health'
+                elsif raw_tag_handle contains 'kids' or raw_tag_handle contains 'children'
+                  assign topic_tag = 'kids'
+                elsif raw_tag_handle contains 'elder' or raw_tag_handle contains 'old'
+                  assign topic_tag = 'elders'
+                elsif raw_tag_handle contains 'herb'
+                  assign topic_tag = 'herbs'
+                elsif raw_tag_handle contains 'weight'
+                  assign topic_tag = 'weight'
+                elsif raw_tag_handle contains 'immunity'
+                  assign topic_tag = 'immunity'
+                elsif raw_tag_handle contains 'detox'
+                  assign topic_tag = 'detox'
+                else
+                  assign topic_tag = raw_tag_handle
+                endif
+              -%}
+              {%- if topic_title != blank -%}
+                {%- liquid
+                  assign topic_words = topic_title | downcase | split: ' '
+                  assign formatted_topic_title = ''
+                  for w in topic_words
+                    assign w_first = w | slice: 0, 1 | upcase
+                    assign w_rest = w | slice: 1, 255
+                    assign w_clean = w_first | append: w_rest
+                    if formatted_topic_title != blank
+                      assign formatted_topic_title = formatted_topic_title | append: ' ' | append: w_clean
+                    else
+                      assign formatted_topic_title = w_clean
+                    endif
+                  endfor
+                -%}
+                <a href="{{ blog.url }}/tagged/{{ topic_tag }}?topic={{ topic_tag }}">{{ formatted_topic_title }}</a>
+                <span>&gt;</span>
+                {%- liquid
+                  assign b_title = article.title | strip
+                  assign b_first = b_title | slice: 0, 1 | upcase
+                  assign b_rest = b_title | slice: 1, 300 | downcase
+                  assign formatted_b_title = b_first | append: b_rest
+                -%}
+                <span class="theme-header-custom__breadcrumb-current">{{ formatted_b_title }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <a href="{{ routes.root_url }}">Home</a>
+        {%- assign breadcrumb_label = '' -%}
+        {%- case request.page_type -%}
+          {%- when 'product' -%}
+            {%- if product != blank -%}
+              {%- assign breadcrumb_label = product.title -%}
+            {%- else -%}
+              {%- assign path_parts = request.path | split: '/' | reverse -%}
+              {%- assign prod_handle = path_parts[0] -%}
+              {%- assign candidate_product = all_products[prod_handle] -%}
+              {%- if candidate_product != blank -%}
+                {%- assign breadcrumb_label = candidate_product.title -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- when 'collection' -%}
+            {%- if collection != blank -%}
+              {%- assign breadcrumb_label = collection.title -%}
+            {%- endif -%}
+          {%- when 'page' -%}
+            {%- if page != blank and page.title != 'Home' -%}
+              {%- assign breadcrumb_label = page.title -%}
+            {%- endif -%}
+        {%- endcase -%}
+        {%- assign custom_breadcrumb_label = section.settings.breadcrumb_current_label | strip -%}
+        {%- if request.page_type == 'product'
+          and custom_breadcrumb_label != blank
+          and custom_breadcrumb_label != 'Home'
+          and custom_breadcrumb_label != 'Current Page'
+        -%}
+          {%- assign breadcrumb_label = custom_breadcrumb_label -%}
+        {%- endif -%}
+        {%- if breadcrumb_label == blank
+          and custom_breadcrumb_label != blank
+          and custom_breadcrumb_label != 'Home'
+          and custom_breadcrumb_label != 'Current Page'
+        -%}
+          {%- assign breadcrumb_label = custom_breadcrumb_label -%}
+        {%- endif -%}
+        {%- if breadcrumb_label == blank or breadcrumb_label == 'Current Page' or breadcrumb_label == 'Home' -%}
+          {%- assign breadcrumb_label = product.title | default: page_title -%}
+        {%- endif -%}
+        {%- if breadcrumb_label != blank -%}
+          <span class="theme-header-custom__breadcrumb-sep">&gt;</span>
+          <span class="theme-header-custom__breadcrumb-current">{{ breadcrumb_label }}</span>
+        {%- endif -%}
+      {%- endif -%}
+  </div>
+  <div class="ka-mobile-scroll-progress-bar"></div>
+</div>
+{%- endif -%}
+</header>
+
+
+{% schema %}
+{
+  "name": "Header (Custom)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "nav_1_title",
+      "label": "Nav item 1 label",
+      "default": "Shop All"
+    },
+    {
+      "type": "url",
+      "id": "nav_1_url",
+      "label": "Nav item 1 link"
+    },
+    {
+      "type": "text",
+      "id": "nav_2_title",
+      "label": "Nav item 2 label",
+      "default": "Clinics"
+    },
+    {
+      "type": "url",
+      "id": "nav_2_url",
+      "label": "Nav item 2 link"
+    },
+    {
+      "type": "text",
+      "id": "nav_3_title",
+      "label": "Nav item 3 label",
+      "default": "Resorts"
+    },
+    {
+      "type": "url",
+      "id": "nav_3_url",
+      "label": "Nav item 3 link"
+    },
+    {
+      "type": "text",
+      "id": "nav_4_title",
+      "label": "Nav item 4 label",
+      "default": "Hospitals"
+    },
+    {
+      "type": "url",
+      "id": "nav_4_url",
+      "label": "Nav item 4 link"
+    },
+    {
+      "type": "text",
+      "id": "nav_5_title",
+      "label": "Nav item 5 label",
+      "default": "Academy"
+    },
+    {
+      "type": "url",
+      "id": "nav_5_url",
+      "label": "Nav item 5 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_alt",
+      "label": "Logo alt text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header (Custom)"
+    }
+  ]
+}
+{% endschema %}

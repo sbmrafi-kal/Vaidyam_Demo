@@ -1,0 +1,7 @@
+{% doc %}
+Renders sources for the current article.
+{% enddoc %}
+<div class="ka-blog-container" {{ block.shopify_attributes }}>{%- render 'vaidyam-article-sources', article: article, blog: blog -%}</div>
+{% schema %}
+{"name":"Article sources","settings":[],"presets":[{"name":"Article sources"}]}
+{% endschema %}

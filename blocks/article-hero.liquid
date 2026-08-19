@@ -1,0 +1,13 @@
+{% doc %}
+Renders the current article hero with its full journal presentation.
+{% enddoc %}
+
+{%- if article != blank -%}
+  <section class="vaidyam-article-hero-wrapper-section" {{ block.shopify_attributes }}>
+    <div class="ka-blog-container">{%- render 'vaidyam-article-hero', article: article, blog: blog -%}</div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{"name":"Article hero","settings":[],"presets":[{"name":"Article hero"}]}
+{% endschema %}

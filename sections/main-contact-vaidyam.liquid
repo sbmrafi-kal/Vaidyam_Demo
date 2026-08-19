@@ -1,0 +1,98 @@
+{%- render 'vaidyam-font' -%}
+{{ 'vaidyam-landing.css' | asset_url | stylesheet_tag }}
+
+<div class="vaidyam-static-page">
+  <div class="page-width vaidyam-container">
+    <div class="vaidyam-static-header">
+      <p class="vaidyam-eyebrow">GET IN TOUCH · SUBSCRIPTIONS &amp; SUBMISSIONS</p>
+      <h1 class="vaidyam-static-title">Contact Vaidyam Editorial</h1>
+      <p class="vaidyam-static-lead">For article submissions, institutional subscriptions, bulk distribution, or feedback, reach out to our publication division.</p>
+    </div>
+
+    <div class="vaidyam-contact-grid">
+      <div class="vaidyam-contact-card">
+        <div class="vaidyam-contact-icon">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#1B4332" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Publication Head Office</h3>
+        <p>Kerala Ayurveda Limited<br>Head Office – Publication Division<br>Athani Post, Aluva<br>Ernakulam District, Kerala – 683585, India</p>
+      </div>
+
+      <div class="vaidyam-contact-card">
+        <div class="vaidyam-contact-icon">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#1B4332" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Direct Line &amp; WhatsApp</h3>
+        <p><strong>Phone:</strong> <a href="tel:+919048033348">+91 9048033348</a></p>
+        <p><strong>Editorial Email:</strong> <a href="mailto:vaidyam@keralaayurveda.biz">vaidyam@keralaayurveda.biz</a></p>
+        <p>Available Mon–Sat, 9:00 AM – 6:00 PM IST</p>
+      </div>
+
+      <div class="vaidyam-contact-card">
+        <div class="vaidyam-contact-icon">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#1B4332" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>Digital Channels &amp; Media</h3>
+        <p><strong>Instagram:</strong> <a href="https://www.instagram.com/keralaayurvedavaidyam" target="_blank" rel="noopener">@keralaayurvedavaidyam</a></p>
+        <p><strong>Spotify Podcast:</strong> <a href="https://open.spotify.com/show/keralaayurvedapodcast" target="_blank" rel="noopener">Kerala Ayurveda Podcast</a></p>
+        <p><strong>YouTube Channel:</strong> <a href="https://www.youtube.com/@KALVaidyam" target="_blank" rel="noopener">@KALVaidyam</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.vaidyam-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.vaidyam-contact-card {
+  background: #FAF8F4;
+  border: 1px solid #ECE7DB;
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+}
+.vaidyam-contact-icon {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+.vaidyam-contact-card h3 {
+  font-family: 'Amstir', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1B4332;
+  margin-bottom: 14px;
+}
+.vaidyam-contact-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.vaidyam-contact-card a {
+  color: #1B4332;
+  font-weight: 600;
+  text-decoration: none;
+}
+.vaidyam-contact-card a:hover {
+  color: #2D6A4F;
+  text-decoration: underline;
+}
+@media (max-width: 860px) {
+  .vaidyam-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Contact Vaidyam",
+  "settings": []
+}
+{% endschema %}

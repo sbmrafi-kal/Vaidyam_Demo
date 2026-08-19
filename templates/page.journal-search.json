@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-vaidyam-search",
+      "blocks": {
+        "search_header": {
+          "type": "search_header",
+          "settings": {}
+        },
+        "search_results": {
+          "type": "search_results",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "search_header",
+        "search_results"
+      ],
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

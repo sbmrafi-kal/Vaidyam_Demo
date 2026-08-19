@@ -1,0 +1,58 @@
+{% comment %}
+  vaidyam-featured-article-card.liquid — Two-column featured article card (meta-driven)
+  Usage: {% render 'vaidyam-featured-article-card', article: article, blog: blog %}
+{% endcomment %}
+
+{%- liquid
+  assign featured = article
+  assign hero_sec = featured.metafields.custom.hero_section.value
+  assign dek = featured.excerpt | default: hero_sec.dek.value | default: hero_sec.dek | default: featured.content | strip_html | truncate: 200
+  assign read_time = featured.metafields.custom.read_time.value | default: featured.metafields.custom.read_time | default: featured.metafields.custom.read_time_minutes
+  assign author_profile = featured.metafields.custom.written_by_profile.value
+  assign author_name = author_profile.name | default: featured.author
+  assign feat_sec = blog.metafields.custom.featured_section.value | default: blog.metafields.custom.featured_section
+  assign raw_read_full = feat_sec.read_full_article_cta.value | default: feat_sec.read_full_article_cta | default: blog.metafields.custom.read_full_label.value | default: blog.metafields.custom.read_full_label
+  assign clean_read_full = raw_read_full | replace: '→', '' | replace: '->', '' | strip
+  assign by_label = blog.metafields.custom.by_label.value | default: blog.metafields.custom.by_label
+  assign min_read_label = blog.metafields.custom.min_read_label.value | default: blog.metafields.custom.min_read_label
+  assign featured_image = featured.metafields.custom.hero_image.value | default: featured.metafields.custom.hero_image | default: featured.image
+-%}
+
+<a class="ka-blog-feature-card" href="{{ featured.url }}">
+  <div class="ka-blog-feature-copy">
+    <h2>{{ featured.title }}</h2>
+    {%- if dek != blank -%}
+      <p>{{ dek }}</p>
+    {%- endif -%}
+    <div class="ka-blog-meta-line">
+      {%- if author_name != blank -%}
+        <span>{% if by_label != blank %}{{ by_label }} {% endif %}{{ author_name }}</span>
+      {%- endif -%}
+      {%- if read_time != blank -%}
+        {%- if read_time contains 'min' or read_time contains 'read' -%}
+          <span>{{ read_time }} |</span>
+        {%- else -%}
+          <span>{{ read_time }}{% if min_read_label != blank %} {{ min_read_label }}{% endif %} |</span>
+        {%- endif -%}
+      {%- endif -%}
+      {%- if featured.published_at -%}
+        <span>Pub. Date : {{ featured.published_at | date: "%B %d, %Y" }}</span>
+      {%- endif -%}
+    </div>
+    {%- if clean_read_full != blank -%}
+      <span class="ka-blog-read-more">{{ clean_read_full }}</span>
+    {%- endif -%}
+  </div>
+  <div class="ka-blog-feature-card__image">
+    {%- if featured_image != blank -%}
+      <img
+        src="{{ featured_image | image_url: width: 800 }}"
+        alt="{{ featured_image.alt | default: featured.title | escape }}"
+        loading="eager"
+        fetchpriority="high"
+        width="800"
+        height="500"
+      >
+    {%- endif -%}
+  </div>
+</a>

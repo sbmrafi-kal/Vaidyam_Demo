@@ -1,0 +1,7 @@
+{% doc %}
+Renders the current article health disclaimer.
+{% enddoc %}
+<div class="ka-blog-container" {{ block.shopify_attributes }}>{%- render 'vaidyam-article-disclaimer', article: article, blog: blog -%}</div>
+{% schema %}
+{"name":"Article disclaimer","settings":[],"presets":[{"name":"Article disclaimer"}]}
+{% endschema %}

@@ -1,0 +1,51 @@
+{% comment %}
+  vaidyam-article-disclaimer.liquid — Health disclaimer (meta-driven strictly)
+  Usage: {% render 'vaidyam-article-disclaimer', article: article, blog: blog %}
+{% endcomment %}
+
+{%- liquid
+  assign disclaimer_ref = article.metafields.custom.disclaimer_section.value | default: article.metafields.custom.disclaimer_section
+  
+  # Explicit boolean evaluation without default filter traps
+  assign is_enabled = true
+
+  if disclaimer_ref != blank
+    if disclaimer_ref.enable_disclaimer != nil
+      assign is_enabled = disclaimer_ref.enable_disclaimer.value
+      if is_enabled == nil
+        assign is_enabled = disclaimer_ref.enable_disclaimer
+      endif
+    elsif disclaimer_ref.show_disclaimer != nil
+      assign is_enabled = disclaimer_ref.show_disclaimer.value
+      if is_enabled == nil
+        assign is_enabled = disclaimer_ref.show_disclaimer
+      endif
+    endif
+  elsif article.metafields.custom.enable_disclaimer != nil
+    assign is_enabled = article.metafields.custom.enable_disclaimer.value
+    if is_enabled == nil
+      assign is_enabled = article.metafields.custom.enable_disclaimer
+    endif
+  endif
+
+  if block.settings.enable_disclaimer == false
+    assign is_enabled = false
+  endif
+
+  assign disclaimer_label = disclaimer_ref.heading_of_card.value | default: disclaimer_ref.heading_of_card | default: block.settings.heading
+  assign disclaimer_text = disclaimer_ref.content.value | default: disclaimer_ref.content | default: disclaimer_ref.health_disclaimer_content.value | default: disclaimer_ref.health_disclaimer_content | default: block.settings.text
+-%}
+
+{%- if is_enabled == true or is_enabled == 'true' -%}
+  {%- if disclaimer_text != blank -%}
+    <section class="vaidyam-article-disclaimer ka-section-spaced" id="disclaimer">
+      <img class="vaidyam-article-disclaimer__icon" src="{{ 'Health_Disclaimer.png' | asset_url }}" alt="Health disclaimer icon" loading="lazy" width="20" height="20">
+      <p>
+        {%- if disclaimer_label != blank -%}
+          <b>{{ disclaimer_label }}</b>
+        {%- endif -%}
+        {{ disclaimer_text }}
+      </p>
+    </section>
+  {%- endif -%}
+{%- endif -%}

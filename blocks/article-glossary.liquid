@@ -1,0 +1,7 @@
+{% doc %}
+Renders the current article glossary.
+{% enddoc %}
+<div class="ka-blog-container" {{ block.shopify_attributes }}>{%- render 'vaidyam-glossary-terms', article: article, blog: blog -%}</div>
+{% schema %}
+{"name":"Article glossary","settings":[],"presets":[{"name":"Article glossary"}]}
+{% endschema %}

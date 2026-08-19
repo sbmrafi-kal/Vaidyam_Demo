@@ -1,0 +1,38 @@
+{% comment %}
+  vaidyam-mobile-toc.liquid — Mobile Accordion Table of Contents (Dynamic heading extraction)
+  Usage: {% render 'vaidyam-mobile-toc', block: block, toc_mobile_label: toc_mobile_label %}
+{% endcomment %}
+
+<div class="vaidyam-article-toc-mobile reveal-on-scroll" {% if block != blank %}{{ block.shopify_attributes }}{% endif %}>
+  <div class="vaidyam-article-toc-mobile-header">
+    <button class="vaidyam-article-toc-mobile__toggle" type="button" aria-expanded="false" aria-controls="vaidyam-mobile-toc-content">
+      {%- assign label_text = block.settings.mobile_label | default: toc_mobile_label -%}
+      {%- assign body_sec = article.metafields.custom.body_section.value | default: article.metafields.custom.body_section -%}
+      {%- assign toc_icon = body_sec.toc_icon.value | default: body_sec.toc_icon -%}
+      <div class="ka-toc-header-left">
+        <div class="ka-toc-logo-placeholder">
+          {%- if toc_icon != blank -%}
+            <img src="{{ toc_icon | image_url: width: 60 }}" alt="Table of Contents Icon" class="ka-toc-icon-img" width="22" height="22" loading="lazy">
+          {%- else -%}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ka-toc-icon-svg" aria-hidden="true">
+              <line x1="3.5" y1="6" x2="20.5" y2="6"></line>
+              <line x1="3.5" y1="12" x2="16.5" y2="12"></line>
+              <line x1="3.5" y1="18" x2="18.5" y2="18"></line>
+            </svg>
+          {%- endif -%}
+        </div>
+        {%- if label_text != blank -%}
+          <span>{{ label_text }}</span>
+        {%- endif -%}
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="ka-accordion-chevron">
+        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  <div id="vaidyam-mobile-toc-content" class="vaidyam-article-toc-mobile__content">
+    <ul class="vaidyam-article-toc-mobile__list">
+      {%- comment -%} Dynamically populated from article headings by vaidyam.js {%- endcomment -%}
+    </ul>
+  </div>
+</div>

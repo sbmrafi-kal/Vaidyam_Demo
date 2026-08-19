@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-expert-profile",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

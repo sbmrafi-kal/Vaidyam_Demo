@@ -1,0 +1,61 @@
+{% comment %}
+  vaidyam-article-card.liquid — Standard article card (meta-driven)
+  Usage: {% render 'vaidyam-article-card', article: article, blog: blog, show_chip: true %}
+{% endcomment %}
+
+{%- liquid
+  assign card_article = article
+  assign show_chip = show_chip | default: true
+  assign hero_sec = card_article.metafields.custom.hero_section.value
+  assign chip_text = hero_sec.category_label.value | default: hero_sec.category_label | default: card_article.tags.first
+  assign read_time = hero_sec.read_time_minutes.value | default: hero_sec.read_time_minutes
+  assign dek = card_article.excerpt | default: hero_sec.dek.value | default: hero_sec.dek | default: card_article.content | strip_html | truncatewords: 25
+  assign min_read_label = hero_sec.min_read_label.value | default: hero_sec.min_read_label | default: blog.metafields.custom.min_read_label.value | default: blog.metafields.custom.min_read_label | default: 'min read'
+  assign read_article_label = blog.metafields.custom.read_article_label.value | default: blog.metafields.custom.read_article_label
+  assign card_image = card_article.image
+-%}
+
+<a class="vaidyam-article-card" href="{{ card_article.url }}">
+  <div class="vaidyam-article-card__image-container">
+    {%- if card_image != blank -%}
+      <img
+        class="vaidyam-article-card__img"
+        src="{{ card_image | image_url: width: 450 }}"
+        alt="{{ card_image.alt | default: card_article.title | escape }}"
+        loading="lazy"
+        decoding="async"
+        width="450"
+        height="300"
+      >
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'vaidyam-article-card__img placeholder-svg' }}
+    {%- endif -%}
+    {%- if show_chip and chip_text != blank -%}
+      <span class="vaidyam-article-card__badge">{{ chip_text }}</span>
+    {%- endif -%}
+  </div>
+  <div class="vaidyam-article-card__content">
+    <h3 class="vaidyam-article-card__title">{{ card_article.title }}</h3>
+    {%- if dek != blank -%}
+      <p class="vaidyam-article-card__description">{{ dek }}</p>
+    {%- endif -%}
+    <div class="vaidyam-article-card__footer">
+      <span class="vaidyam-article-card__read-more">
+        {%- if read_time != blank -%}
+          {%- if read_time contains 'min' or read_time contains 'read' -%}
+            {{ read_time }}
+          {%- else -%}
+            {{ read_time }} {{ min_read_label }}
+          {%- endif -%}
+        {%- elsif read_article_label != blank -%}
+          {{ read_article_label }}
+        {%- endif -%}
+        {%- if card_article.published_at -%}
+          <span class="vaidyam-article-card__date-separator">·</span>
+          <span class="vaidyam-article-card__date">{{ card_article.published_at | date: "%d %b, %Y" }}</span>
+        {%- endif -%}
+      </span>
+      <span class="vaidyam-article-card__arrow">→</span>
+    </div>
+  </div>
+</a>

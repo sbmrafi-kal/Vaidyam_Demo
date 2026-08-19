@@ -1,0 +1,89 @@
+{%- liquid
+  assign author_name_display = author_profile.name.value | default: author_profile.name
+  assign author_degree = author_profile.degree.value | default: author_profile.degree | default: author_profile.qualifications_abbreviation.value | default: author_profile.qualifications_abbreviation
+  assign author_qual = author_profile.qualifications.value | default: author_profile.qualifications | default: author_profile.designation.value | default: author_profile.designation
+  assign author_photo = author_profile.photo.value | default: author_profile.photo | default: author_profile.image.value | default: author_profile.image
+  assign author_photo_url = ''
+  if author_photo != blank
+    assign author_photo_url = author_photo | image_url: width: 320
+  endif
+
+  assign reviewer_name_display = reviewer_profile.name.value | default: reviewer_profile.name
+  assign reviewer_degree = reviewer_profile.degree.value | default: reviewer_profile.degree | default: reviewer_profile.qualifications_abbreviation.value | default: reviewer_profile.qualifications_abbreviation
+  assign reviewer_qual = reviewer_profile.qualifications.value | default: reviewer_profile.qualifications | default: reviewer_profile.designation.value | default: reviewer_profile.designation
+  assign reviewer_photo = reviewer_profile.photo.value | default: reviewer_profile.photo | default: reviewer_profile.image.value | default: reviewer_profile.image
+  assign reviewer_photo_url = ''
+  if reviewer_photo != blank
+    assign reviewer_photo_url = reviewer_photo | image_url: width: 320
+  endif
+
+  # Section Title (strictly meta-driven)
+  assign section_title = breakers_meta.written_reviewed_by_title.value | default: breakers_meta.written_reviewed_by_title | default: breakers_meta.reviewed_by_title.value | default: breakers_meta.reviewed_by_title | default: blog.metafields.custom.expert_section_heading.value | default: blog.metafields.custom.expert_section_heading | default: block.settings.heading | default: 'Reviewed by Ayurvedic Experts'
+-%}
+
+{%- if author_name_display != blank or reviewer_name_display != blank -%}
+<div class="ka-author-reviewer-component">
+<div class="ka-expert-section-container reveal-on-scroll">
+  {%- if section_title != blank -%}
+    <h2 class="ka-expert-section-heading">{{ section_title }}</h2>
+  {%- endif -%}
+  <div class="ka-expert-section-grid{% if author_name_display != blank and reviewer_name_display != blank %} ka-expert-section-grid--two-cols{% endif %}">
+    
+    {%- if author_name_display != blank -%}
+      <div class="ka-expert-card">
+        <div class="ka-expert-header-row">
+          {%- if author_photo_url != blank -%}
+            <div class="ka-expert-avatar-wrap">
+              <img src="{{ author_photo_url }}" alt="{{ author_name_display | escape }}" loading="lazy" decoding="async" width="72" height="72">
+            </div>
+          {%- endif -%}
+          <div class="ka-expert-title-wrap">
+            <h3 class="ka-expert-name">{{ author_name_display }}</h3>
+            {%- if author_degree != blank -%}<p class="ka-expert-degree">{{ author_degree }}</p>{%- endif -%}
+            {%- if author_qual != blank -%}<p class="ka-expert-designation">{{ author_qual }}</p>{%- endif -%}
+          </div>
+        </div>
+        <div class="ka-expert-card-content">
+          {%- assign author_bio = author_profile.short_bio.value | default: author_profile.short_bio -%}
+          {%- if author_bio != blank -%}<p class="ka-expert-bio">{{ author_bio }}</p>{%- endif -%}
+          {%- assign author_url = author_profile.page_url.value | default: author_profile.page_url | default: author_profile.url | default: '/pages/doctor-profile' -%}
+          <div class="ka-expert-card-footer">
+            <a href="{{ author_url }}" class="ka-expert-read-more">Read More →</a>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+    
+    {%- if author_name_display != blank and reviewer_name_display != blank -%}
+      <div class="ka-expert-separator-line"></div>
+    {%- endif -%}
+
+    {%- if reviewer_name_display != blank -%}
+      <div class="ka-expert-card">
+        <div class="ka-expert-header-row">
+          {%- if reviewer_photo_url != blank -%}
+            <div class="ka-expert-avatar-wrap">
+              <img src="{{ reviewer_photo_url }}" alt="{{ reviewer_name_display | escape }}" loading="lazy" decoding="async" width="72" height="72">
+            </div>
+          {%- endif -%}
+          <div class="ka-expert-title-wrap">
+            <h3 class="ka-expert-name">{{ reviewer_name_display }}</h3>
+            {%- if reviewer_degree != blank -%}<p class="ka-expert-degree">{{ reviewer_degree }}</p>{%- endif -%}
+            {%- if reviewer_qual != blank -%}<p class="ka-expert-designation">{{ reviewer_qual }}</p>{%- endif -%}
+          </div>
+        </div>
+        <div class="ka-expert-card-content">
+          {%- assign reviewer_bio = reviewer_profile.short_bio.value | default: reviewer_profile.short_bio -%}
+          {%- if reviewer_bio != blank -%}<p class="ka-expert-bio">{{ reviewer_bio }}</p>{%- endif -%}
+          {%- assign reviewer_url = reviewer_profile.page_url.value | default: reviewer_profile.page_url | default: reviewer_profile.url | default: '/pages/doctor-profile' -%}
+          <div class="ka-expert-card-footer">
+            <a href="{{ reviewer_url }}" class="ka-expert-read-more">Read More →</a>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+</div>
+{%- endif -%}

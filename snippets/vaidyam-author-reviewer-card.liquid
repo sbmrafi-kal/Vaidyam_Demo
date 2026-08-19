@@ -1,0 +1,52 @@
+{% comment %}
+  vaidyam-author-reviewer-card.liquid — Author/reviewer profile card (meta-driven)
+  Usage: {% render 'vaidyam-author-reviewer-card', profile: profile, role_label: role_label, blog: blog %}
+{% endcomment %}
+
+{%- liquid
+  assign person = profile
+  assign person_name = person.name.value | default: person.name
+  assign person_role = person.role_label.value | default: person.role_label | default: role_label
+  assign person_designation = person.designation.value | default: person.designation
+  assign person_degree = person.degree.value | default: person.degree
+  assign person_qualifications = person.qualifications.value | default: person.qualifications
+  assign person_bio = person.short_bio.value | default: person.short_bio
+  assign person_photo = person.photo.value | default: person.photo | default: person.image.value
+  assign person_initials = person_name | split: ' ' | map: 'first' | join: '' | upcase | truncate: 2, ''
+-%}
+
+{%- if person_name != blank -%}
+  <section class="ka-article-author-card" id="{{ role_label | handleize }}">
+    <div class="ka-article-avatar" aria-hidden="true">
+      {%- if person_photo -%}
+        <img
+          src="{{ person_photo | image_url: width: 176 }}"
+          alt="{{ person_name | escape }}"
+          loading="lazy"
+          width="88"
+          height="88"
+        >
+      {%- else -%}
+        {{ person_initials }}
+      {%- endif -%}
+    </div>
+    <div>
+      {%- if person_role != blank -%}
+        <p class="ka-blog-eyebrow">{{ person_role }}</p>
+      {%- endif -%}
+      <h2>{{ person_name }}</h2>
+      {%- if person_degree != blank or person_qualifications != blank -%}
+        <p class="ka-blog-muted ka-author-credentials">
+          <b>
+            {%- if person_degree != blank -%}{{ person_degree }}{%- endif -%}
+            {%- if person_degree != blank and person_qualifications != blank -%} · {%- endif -%}
+            {%- if person_qualifications != blank -%}{{ person_qualifications }}{%- endif -%}
+          </b>
+        </p>
+      {%- endif -%}
+      {%- if person_bio != blank -%}
+        <p class="ka-author-bio">{{ person_bio }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}

@@ -1,0 +1,46 @@
+{% comment %}
+  vaidyam-why-trust-card.liquid — Collapsible trust card (Top of Article)
+  Usage: {% render 'vaidyam-why-trust-card', article: article %}
+{% endcomment %}
+
+{%- liquid
+  assign body_sec = article.metafields.custom.body_section.value | default: article.metafields.custom.body_section
+  assign breakers_meta = body_sec.breakers.value | default: article.metafields.custom.breakers.value | default: body_sec
+  assign trust_metaobject = breakers_meta.why_trust_card.value | default: breakers_meta.why_trust_card | default: article.metafields.custom.why_trust_kerala_ayurveda.value
+  assign trust_title = block.settings.heading | default: trust_metaobject.trust_card_title.value | default: trust_metaobject.trust_card_title
+  assign is_trust_read_disabled = false
+  assign trust_flag = breakers_meta.trust_card_read_aloud.value | default: breakers_meta.trust_card_read_aloud | default: breakers_meta.trustcard_read.value | default: breakers_meta.trustcard_read | default: breakers_meta.why_trust_read_aloud.value | default: breakers_meta.why_trust_read_aloud | default: breakers_meta.why_trust_read.value | default: breakers_meta.why_trust_read | default: trust_metaobject.trust_card_read_aloud.value | default: trust_metaobject.trust_card_read_aloud | default: trust_metaobject.trustcard_read.value | default: trust_metaobject.trustcard_read | default: article.metafields.custom.trust_card_read_aloud.value | default: article.metafields.custom.trust_card_read_aloud | default: article.metafields.custom.trustcard_read.value | default: article.metafields.custom.trustcard_read | default: article.metafields.custom.why_trust_read_aloud.value | default: article.metafields.custom.why_trust_read_aloud
+  if trust_flag == false or trust_flag == 'false' or trust_flag == 'False'
+    assign is_trust_read_disabled = true
+  endif
+  assign trust_content = trust_metaobject.content.value | default: trust_metaobject.content | default: trust_metaobject.content_html.value | default: trust_metaobject.content_html
+-%}
+
+{%- if trust_metaobject != blank and trust_content != blank -%}
+<div class="vaidyam-why-trust-card" id="vaidyam-why-trust-card"{% if is_trust_read_disabled %} data-read-aloud="false"{% endif %}>
+  <button class="ka-why-trust-header" type="button" aria-expanded="false" aria-controls="ka-why-trust-content">
+    <div class="ka-why-trust-header-left">
+      <div class="ka-why-trust-logo-placeholder">
+        <img src="{{ 'Ka_small_Favicon.png' | asset_url }}" alt="Kerala Ayurveda Icon" class="ka-why-trust-icon" width="22" height="22" loading="lazy">
+      </div>
+      {%- if trust_title != blank -%}
+        <span class="ka-why-trust-title">{{ trust_title }}</span>
+      {%- endif -%}
+    </div>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="ka-why-trust-chevron ka-accordion-chevron">
+      <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="ka-why-trust-content" id="ka-why-trust-content">
+    <div class="ka-why-trust-inner">
+      <div class="rte">
+        {%- if trust_metaobject.content != blank -%}
+          {{ trust_metaobject.content | metafield_tag }}
+        {%- elsif trust_metaobject.content_html != blank -%}
+          {{ trust_metaobject.content_html | metafield_tag }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}

@@ -1,0 +1,54 @@
+{
+  "name": "Footer Group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "links_1": {
+          "type": "link_column",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "footer"
+          }
+        },
+        "links_2": {
+          "type": "link_column",
+          "settings": {
+            "heading": "Policies",
+            "menu": "footer-menu-policies"
+          }
+        },
+        "links_3": {
+          "type": "link_column",
+          "settings": {
+            "heading": "Our Network",
+            "menu": "footer-menu-our-network"
+          }
+        }
+      },
+      "block_order": [
+        "links_1",
+        "links_2",
+        "links_3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "social_label": "Follow Us",
+        "logo_image": "shopify://shop_images/logo-kerala.png",
+        "logo_alt": "Kerala Ayurveda Vaidyam",
+        "tagline": "",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "facebook_link": "https://www.facebook.com/keralaayurvedaltd/",
+        "instagram_link": "https://www.instagram.com/keralaayurvedavaidyam",
+        "youtube_link": "https://www.youtube.com/@KALVaidyam",
+        "linkedin_link": "https://in.linkedin.com/company/kerala-ayurveda",
+        "x_link": "https://twitter.com/kalayurvedacorp"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

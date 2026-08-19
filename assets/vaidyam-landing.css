@@ -1,0 +1,1631 @@
+/* ==========================================================================
+   KERALA AYURVEDA VAIDYAM — DESIGN SYSTEM & CORE STYLESHEET
+   Version: 2.0.0 (Production Modular Architecture)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. DESIGN TOKENS & CSS CUSTOM PROPERTIES
+   ========================================================================== */
+:root {
+  /* --- Brand Color Palette --- */
+  --vd-primary: #1B4332;
+  --vd-primary-dark: #102B20;
+  --vd-primary-light: #2D6A4F;
+  --vd-primary-surface: #EAF2ED;
+  --vd-primary-border: #C8DEC9;
+
+  --vd-gold: #C9A84C;
+  --vd-gold-light: #E4C264;
+  --vd-gold-dark: #A68430;
+  --vd-gold-surface: #FDF9EE;
+  --vd-gold-border: #E8D9AF;
+
+  --vd-bg-main: #FFFFFF;
+  --vd-bg-surface: #FAF8F4;
+  --vd-bg-subtle: #F5F1E8;
+  --vd-bg-alt: #EFE9DC;
+  --vd-bg-dark: #12281E;
+
+  --vd-text-primary: #1A1F1C;
+  --vd-text-secondary: #4A534E;
+  --vd-text-muted: #727C76;
+  --vd-text-inverse: #FFFFFF;
+  --vd-text-inverse-muted: #D1DFD7;
+
+  --vd-border-subtle: #ECE7DC;
+  --vd-border-default: #DED7C8;
+  --vd-border-strong: #C4BAA6;
+  --vd-border-focus: #1B4332;
+
+  /* --- Typography Scale & Families --- */
+  --vd-font-serif: 'Amstir', 'Playfair Display', Georgia, serif;
+  --vd-font-sans: 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --vd-fs-xs: 12px;
+  --vd-fs-sm: 14px;
+  --vd-fs-base: 16px;
+  --vd-fs-md: 18px;
+  --vd-fs-lg: 20px;
+  --vd-fs-xl: 24px;
+  --vd-fs-2xl: 30px;
+  --vd-fs-3xl: 38px;
+  --vd-fs-4xl: 48px;
+
+  --vd-lh-tight: 1.15;
+  --vd-lh-snug: 1.3;
+  --vd-lh-normal: 1.6;
+  --vd-lh-loose: 1.75;
+
+  --vd-fw-normal: 400;
+  --vd-fw-medium: 500;
+  --vd-fw-semibold: 600;
+  --vd-fw-bold: 700;
+  --vd-fw-extrabold: 800;
+
+  /* --- Spacing Scale --- */
+  --vd-sp-1: 4px;
+  --vd-sp-2: 8px;
+  --vd-sp-3: 12px;
+  --vd-sp-4: 16px;
+  --vd-sp-5: 20px;
+  --vd-sp-6: 24px;
+  --vd-sp-8: 32px;
+  --vd-sp-10: 40px;
+  --vd-sp-12: 48px;
+  --vd-sp-16: 64px;
+  --vd-sp-20: 80px;
+  --vd-sp-24: 96px;
+
+  /* --- Border Radius Scale --- */
+  --vd-rad-sm: 6px;
+  --vd-rad-md: 10px;
+  --vd-rad-lg: 16px;
+  --vd-rad-xl: 24px;
+  --vd-rad-full: 9999px;
+
+  /* --- Elevation & Shadows --- */
+  --vd-shadow-xs: 0 1px 3px rgba(18, 38, 25, 0.04);
+  --vd-shadow-sm: 0 4px 12px rgba(18, 38, 25, 0.06);
+  --vd-shadow-md: 0 8px 24px rgba(18, 38, 25, 0.08);
+  --vd-shadow-lg: 0 16px 40px rgba(18, 38, 25, 0.12);
+  --vd-shadow-xl: 0 24px 64px rgba(18, 38, 25, 0.16);
+
+  /* --- Transitions --- */
+  --vd-transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --vd-transition-base: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --vd-transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- Layout & Container --- */
+  --vd-max-width: 1200px;
+}
+
+/* ==========================================================================
+   2. BASE RESET & GLOBAL DEFAULTS
+   ========================================================================== */
+.vaidyam-landing,
+.vaidyam-static-page {
+  background-color: var(--vd-bg-main);
+  color: var(--vd-text-primary);
+  font-family: var(--vd-font-sans);
+  font-size: var(--vd-fs-base);
+  line-height: var(--vd-lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.vaidyam-landing *,
+.vaidyam-static-page * {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   3. REUSABLE COMPONENT SYSTEM
+   ========================================================================== */
+
+/* --- Container --- */
+.vaidyam-container,
+.vd-container {
+  width: 100%;
+  max-width: var(--vd-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--vd-sp-6);
+  padding-right: var(--vd-sp-6);
+}
+
+/* --- Section Headers --- */
+.vaidyam-eyebrow,
+.vd-eyebrow {
+  display: inline-block;
+  font-family: var(--vd-font-sans);
+  font-size: var(--vd-fs-xs);
+  font-weight: var(--vd-fw-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vd-primary-light);
+  margin-bottom: var(--vd-sp-3);
+}
+
+.ka-hindi {
+  font-family: inherit;
+  font-weight: var(--vd-fw-normal);
+  opacity: 0.85;
+}
+
+.vaidyam-section-title,
+.vd-section-title {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-3xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  line-height: var(--vd-lh-tight);
+  text-align: center;
+  margin: 0 0 var(--vd-sp-3) 0;
+  letter-spacing: -0.02em;
+}
+
+.vaidyam-section-subtitle,
+.vd-section-subtitle {
+  font-size: var(--vd-fs-md);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto var(--vd-sp-12) auto;
+}
+
+.ka-blog-section-head {
+  margin-bottom: var(--vd-sp-8);
+}
+
+.ka-blog-section-head h2 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-3xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0;
+  line-height: var(--vd-lh-tight);
+}
+
+/* --- Reusable Buttons --- */
+.vaidyam-btn,
+.vd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--vd-sp-2);
+  padding: 13px 26px;
+  font-family: var(--vd-font-sans);
+  font-size: var(--vd-fs-sm);
+  font-weight: var(--vd-fw-semibold);
+  line-height: 1;
+  border-radius: var(--vd-rad-md);
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all var(--vd-transition-base);
+  white-space: nowrap;
+}
+
+.vaidyam-btn--primary,
+.vd-btn--primary {
+  background-color: var(--vd-primary);
+  color: var(--vd-text-inverse) !important;
+  border-color: var(--vd-primary);
+  box-shadow: var(--vd-shadow-xs);
+}
+
+.vaidyam-btn--primary:hover,
+.vd-btn--primary:hover {
+  background-color: var(--vd-primary-light);
+  border-color: var(--vd-primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--vd-shadow-md);
+}
+
+.vaidyam-btn--outline,
+.vd-btn--outline {
+  background-color: transparent;
+  color: var(--vd-primary) !important;
+  border-color: var(--vd-primary);
+}
+
+.vaidyam-btn--outline:hover,
+.vd-btn--outline:hover {
+  background-color: var(--vd-primary-surface);
+  transform: translateY(-2px);
+}
+
+.vaidyam-btn--full,
+.vd-btn--full {
+  width: 100%;
+}
+
+.vaidyam-btn--lg,
+.vd-btn--lg {
+  padding: 16px 32px;
+  font-size: var(--vd-fs-base);
+}
+
+/* --- Reusable Badges --- */
+.vd-badge,
+.ka-care-card__badge,
+.vaidyam-concern__tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: var(--vd-fw-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--vd-rad-sm);
+  line-height: 1.2;
+}
+
+.ka-care-card__badge,
+.vaidyam-concern__tag {
+  background-color: var(--vd-primary-surface);
+  color: var(--vd-primary);
+}
+
+.vaidyam-concern__tag--outline {
+  background-color: transparent;
+  border: 1px solid var(--vd-border-strong);
+  color: var(--vd-text-secondary);
+}
+
+/* ==========================================================================
+   4. SECTION 1 — HERO
+   ========================================================================== */
+.vaidyam-hero {
+  padding: var(--vd-sp-16) 0 var(--vd-sp-12);
+  background: linear-gradient(180deg, #FBF9F5 0%, #FFFFFF 100%);
+  border-bottom: 1px solid var(--vd-border-subtle);
+}
+
+.vaidyam-hero__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--vd-sp-16);
+  align-items: center;
+}
+
+.vaidyam-hero__title {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-4xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-text-primary);
+  line-height: var(--vd-lh-tight);
+  letter-spacing: -0.025em;
+  margin: 0 0 var(--vd-sp-5) 0;
+}
+
+.vaidyam-hero__subtitle {
+  font-size: var(--vd-fs-md);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-loose);
+  max-width: 560px;
+  margin: 0 0 var(--vd-sp-8) 0;
+}
+
+.vaidyam-hero__actions {
+  display: flex;
+  gap: var(--vd-sp-4);
+  margin-bottom: var(--vd-sp-8);
+  flex-wrap: wrap;
+}
+
+.vaidyam-hero__trust {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-sp-3);
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-muted);
+  padding-top: var(--vd-sp-6);
+  border-top: 1px solid var(--vd-border-subtle);
+  flex-wrap: wrap;
+}
+
+.vaidyam-hero__trust strong {
+  color: var(--vd-text-primary);
+}
+
+.vaidyam-hero__trust-dot {
+  color: var(--vd-gold);
+  font-weight: bold;
+}
+
+.vaidyam-hero__cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.vaidyam-hero__cover-frame {
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--vd-rad-lg);
+  overflow: hidden;
+  box-shadow: var(--vd-shadow-xl);
+  background: var(--vd-bg-main);
+  border: 1px solid var(--vd-border-subtle);
+  transition: transform var(--vd-transition-smooth);
+}
+
+.vaidyam-hero__cover-frame:hover {
+  transform: translateY(-4px);
+}
+
+.vaidyam-hero__cover-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.vaidyam-hero__magazine-card {
+  padding: var(--vd-sp-8) var(--vd-sp-6) var(--vd-sp-6);
+  background: var(--vd-bg-surface);
+  text-align: center;
+  border: 8px solid var(--vd-bg-alt);
+}
+
+.vaidyam-mag-vol {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--vd-text-muted);
+  margin-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-mag-brand {
+  display: block;
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-2xl);
+  color: var(--vd-primary);
+  line-height: 1;
+  margin-bottom: var(--vd-sp-1);
+}
+
+.vaidyam-mag-brand strong {
+  font-size: var(--vd-fs-3xl);
+  display: block;
+  letter-spacing: -0.03em;
+}
+
+.vaidyam-mag-tag {
+  display: block;
+  font-size: var(--vd-fs-xs);
+  color: var(--vd-text-muted);
+  font-style: italic;
+  margin-bottom: var(--vd-sp-6);
+}
+
+.vaidyam-magazine-artwork {
+  background: var(--vd-bg-subtle);
+  border-radius: var(--vd-rad-md);
+  padding: var(--vd-sp-6) var(--vd-sp-4);
+  border: 1px dashed var(--vd-border-strong);
+}
+
+.vaidyam-artwork-leaf {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto var(--vd-sp-3);
+  display: block;
+}
+
+.vaidyam-artwork-caption span {
+  font-size: var(--vd-fs-xs);
+  font-weight: var(--vd-fw-semibold);
+  color: var(--vd-primary-light);
+  display: block;
+}
+
+.vaidyam-hero__stat-badge {
+  position: absolute;
+  bottom: -18px;
+  left: 16px;
+  background: var(--vd-bg-main);
+  padding: var(--vd-sp-3) var(--vd-sp-5);
+  border-radius: var(--vd-rad-md);
+  box-shadow: var(--vd-shadow-lg);
+  border: 1px solid var(--vd-border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--vd-sp-3);
+  z-index: 3;
+}
+
+.vaidyam-hero__stat-num {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-2xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  line-height: 1;
+}
+
+.vaidyam-hero__stat-label {
+  font-size: var(--vd-fs-xs);
+  font-weight: var(--vd-fw-semibold);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-snug);
+  max-width: 110px;
+}
+
+/* ==========================================================================
+   5. SECTION 2 — ABOUT VAIDYAM
+   ========================================================================== */
+.vaidyam-about {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-main);
+}
+
+.vaidyam-about__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vd-sp-8);
+}
+
+.vaidyam-about__card {
+  padding: var(--vd-sp-8) var(--vd-sp-6);
+  background: var(--vd-bg-surface);
+  border-radius: var(--vd-rad-lg);
+  border: 1px solid var(--vd-border-subtle);
+  text-align: center;
+  transition: transform var(--vd-transition-base), box-shadow var(--vd-transition-base);
+}
+
+.vaidyam-about__card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vd-shadow-md);
+  border-color: var(--vd-border-default);
+}
+
+.vaidyam-about__icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--vd-primary-surface);
+  color: var(--vd-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--vd-sp-5);
+}
+
+.vaidyam-about__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.vaidyam-about__card h3 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0 0 var(--vd-sp-3) 0;
+}
+
+.vaidyam-about__card p {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin: 0;
+}
+
+/* ==========================================================================
+   6. SECTION 3 — CURRENT EDITION
+   ========================================================================== */
+.vaidyam-current {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-surface);
+  border-top: 1px solid var(--vd-border-subtle);
+  border-bottom: 1px solid var(--vd-border-subtle);
+}
+
+.vaidyam-current__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--vd-sp-12);
+  align-items: center;
+  background: var(--vd-bg-main);
+  padding: var(--vd-sp-10);
+  border-radius: var(--vd-rad-xl);
+  box-shadow: var(--vd-shadow-md);
+  border: 1px solid var(--vd-border-subtle);
+}
+
+.vaidyam-current__cover {
+  position: relative;
+  border-radius: var(--vd-rad-md);
+  overflow: hidden;
+  box-shadow: var(--vd-shadow-lg);
+}
+
+.vaidyam-current__badge {
+  position: absolute;
+  top: var(--vd-sp-4);
+  left: var(--vd-sp-4);
+  background: var(--vd-primary);
+  color: var(--vd-text-inverse);
+  font-size: 11px;
+  font-weight: var(--vd-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: var(--vd-rad-sm);
+  z-index: 2;
+}
+
+.vaidyam-magazine-edition-card {
+  background: #FAF8F2;
+  border: 6px solid var(--vd-bg-alt);
+  padding: var(--vd-sp-6) var(--vd-sp-5);
+  text-align: center;
+}
+
+.vaidyam-mag-top-strip {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--vd-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--vd-border-default);
+  padding-bottom: var(--vd-sp-2);
+  margin-bottom: var(--vd-sp-4);
+}
+
+.vaidyam-mag-title-bar {
+  margin-bottom: var(--vd-sp-5);
+}
+
+.vaidyam-mag-logo-sm {
+  display: block;
+  font-size: var(--vd-fs-xs);
+  color: var(--vd-text-muted);
+  text-transform: lowercase;
+  line-height: 1.1;
+}
+
+.vaidyam-mag-main-title {
+  display: block;
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-3xl);
+  font-weight: var(--vd-fw-extrabold);
+  color: var(--vd-primary);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.vaidyam-mag-subtitle {
+  display: block;
+  font-size: var(--vd-fs-xs);
+  color: var(--vd-text-muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.vaidyam-mag-center-art {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+  display: block;
+}
+
+.vaidyam-mag-bottom-bar {
+  margin-top: var(--vd-sp-4);
+  padding-top: var(--vd-sp-2);
+  border-top: 1px solid var(--vd-border-default);
+  font-size: var(--vd-fs-xs);
+  font-weight: var(--vd-fw-semibold);
+  color: var(--vd-primary-light);
+}
+
+.vaidyam-current__meta {
+  font-size: var(--vd-fs-xs);
+  font-weight: var(--vd-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--vd-text-muted);
+  margin: 0 0 var(--vd-sp-2) 0;
+}
+
+.vaidyam-current__title {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-2xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  line-height: var(--vd-lh-snug);
+  margin: 0 0 var(--vd-sp-5) 0;
+}
+
+.vaidyam-current__highlights-title {
+  font-size: var(--vd-fs-base);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-text-primary);
+  margin: 0 0 var(--vd-sp-3) 0;
+}
+
+.vaidyam-current__highlights ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--vd-sp-6) 0;
+}
+
+.vaidyam-current__highlights li {
+  position: relative;
+  padding-left: var(--vd-sp-5);
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  margin-bottom: var(--vd-sp-2);
+  line-height: var(--vd-lh-normal);
+}
+
+.vaidyam-current__highlights li::before {
+  content: "•";
+  position: absolute;
+  left: var(--vd-sp-1);
+  color: var(--vd-primary-light);
+  font-size: var(--vd-fs-lg);
+  line-height: 1;
+  top: -2px;
+}
+
+.vaidyam-current__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--vd-sp-3);
+  margin-bottom: var(--vd-sp-6);
+  padding: var(--vd-sp-4) var(--vd-sp-5);
+  background: var(--vd-primary-surface);
+  border-radius: var(--vd-rad-md);
+  border-left: 4px solid var(--vd-primary);
+}
+
+.vaidyam-current__price-amount {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-2xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+}
+
+.vaidyam-current__price-note {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-muted);
+}
+
+.vaidyam-current__action-row {
+  display: flex;
+  gap: var(--vd-sp-3);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   7. SECTION 4 — CARE PATHS (CLINICAL PATHWAYS)
+   ========================================================================== */
+.vaidyam-carepaths-section {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-main);
+}
+
+.ka-blog-care-panel {
+  background: var(--vd-bg-surface);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-rad-xl);
+  padding: var(--vd-sp-8);
+}
+
+.ka-blog-care-intro {
+  margin-bottom: var(--vd-sp-8);
+  border-bottom: 1px solid var(--vd-border-default);
+  padding-bottom: var(--vd-sp-6);
+}
+
+.ka-blog-care-intro h3 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-2xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0 0 var(--vd-sp-2) 0;
+}
+
+.ka-blog-lead {
+  font-size: var(--vd-fs-base);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+}
+
+.ka-blog-path-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vd-sp-6);
+}
+
+.ka-care-card {
+  background: var(--vd-bg-main);
+  border-radius: var(--vd-rad-lg);
+  padding: var(--vd-sp-6);
+  border: 1px solid var(--vd-border-subtle);
+  transition: transform var(--vd-transition-base), box-shadow var(--vd-transition-base), border-color var(--vd-transition-base);
+  display: flex;
+  flex-direction: column;
+}
+
+.ka-care-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--vd-shadow-md);
+  border-color: var(--vd-primary-light);
+}
+
+.ka-care-card__title {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0 0 var(--vd-sp-2) 0;
+  line-height: var(--vd-lh-snug);
+}
+
+.ka-care-card__desc {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin: 0 0 var(--vd-sp-4) 0;
+  flex-grow: 1;
+}
+
+.ka-care-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-sp-2);
+  font-size: var(--vd-fs-sm);
+  font-weight: var(--vd-fw-semibold);
+  color: var(--vd-primary);
+  text-decoration: none;
+  transition: color var(--vd-transition-fast);
+}
+
+.ka-care-card__link:hover {
+  color: var(--vd-primary-light);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   8. SECTION 5 — TOPICS / KNOWLEDGE DOMAINS
+   ========================================================================== */
+.vaidyam-topics-section {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-surface);
+  border-top: 1px solid var(--vd-border-subtle);
+}
+
+.ka-blog-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--vd-sp-5);
+}
+
+.ka-blog-image-card {
+  position: relative;
+  border-radius: var(--vd-rad-lg);
+  overflow: hidden;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+  box-shadow: var(--vd-shadow-sm);
+  transition: transform var(--vd-transition-smooth), box-shadow var(--vd-transition-smooth);
+}
+
+.ka-blog-image-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vd-shadow-lg);
+}
+
+.ka-blog-image-card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--vd-transition-smooth);
+}
+
+.ka-blog-image-card:hover .ka-blog-image-card__bg {
+  transform: scale(1.06);
+}
+
+.ka-blog-image-card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(18, 40, 28, 0.88) 100%);
+  z-index: 1;
+}
+
+.ka-blog-image-card__content {
+  position: relative;
+  z-index: 2;
+  padding: var(--vd-sp-5);
+  color: var(--vd-text-inverse);
+}
+
+.ka-blog-image-card__content h3 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-text-inverse);
+  margin: 0 0 var(--vd-sp-1) 0;
+  line-height: var(--vd-lh-snug);
+}
+
+.ka-blog-read-more {
+  font-size: var(--vd-fs-xs);
+  font-weight: var(--vd-fw-semibold);
+  color: var(--vd-gold-light);
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   9. SECTION 6 — THROUGH THE PAGES
+   ========================================================================== */
+.vaidyam-pages {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-main);
+}
+
+.vaidyam-pages__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--vd-sp-6);
+  margin-bottom: var(--vd-sp-10);
+}
+
+.vaidyam-pages__card {
+  display: flex;
+  background: var(--vd-bg-surface);
+  border-radius: var(--vd-rad-lg);
+  overflow: hidden;
+  border: 1px solid var(--vd-border-subtle);
+  transition: transform var(--vd-transition-base), box-shadow var(--vd-transition-base), border-color var(--vd-transition-base);
+}
+
+.vaidyam-pages__card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--vd-shadow-md);
+  border-color: var(--vd-border-default);
+}
+
+.vaidyam-pages__card-image {
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.vaidyam-pages__card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.vaidyam-pages__card-body {
+  padding: var(--vd-sp-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.vaidyam-pages__card-body h3 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0 0 var(--vd-sp-2) 0;
+}
+
+.vaidyam-pages__card-body p {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin: 0 0 var(--vd-sp-3) 0;
+  flex-grow: 1;
+}
+
+.vaidyam-pages__readmore {
+  font-size: var(--vd-fs-sm);
+  font-weight: var(--vd-fw-semibold);
+  color: var(--vd-primary);
+  text-decoration: none;
+}
+
+.vaidyam-pages__readmore:hover {
+  color: var(--vd-primary-light);
+  text-decoration: underline;
+}
+
+.vaidyam-pages__footer {
+  text-align: center;
+  padding-top: var(--vd-sp-4);
+}
+
+.vaidyam-pages__footer p {
+  font-size: var(--vd-fs-base);
+  color: var(--vd-text-muted);
+  margin-bottom: var(--vd-sp-4);
+}
+
+/* ==========================================================================
+   10. SECTION 7 — ALL 18 RECURRING SECTIONS GRID
+   ========================================================================== */
+.vaidyam-sections-full {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-subtle);
+  border-top: 1px solid var(--vd-border-subtle);
+}
+
+.vaidyam-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vd-sp-6);
+}
+
+.vaidyam-section-item {
+  background: var(--vd-bg-main);
+  padding: var(--vd-sp-6);
+  border-radius: var(--vd-rad-lg);
+  border: 1px solid var(--vd-border-subtle);
+  box-shadow: var(--vd-shadow-xs);
+  transition: transform var(--vd-transition-base), border-color var(--vd-transition-base);
+}
+
+.vaidyam-section-item:hover {
+  transform: translateY(-3px);
+  border-color: var(--vd-primary-light);
+  box-shadow: var(--vd-shadow-sm);
+}
+
+.vaidyam-section-item__icon {
+  font-size: 26px;
+  margin-bottom: var(--vd-sp-3);
+}
+
+.vaidyam-section-item__title {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0 0 var(--vd-sp-2) 0;
+}
+
+.vaidyam-section-item__desc {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin: 0;
+}
+
+/* ==========================================================================
+   11. SECTION 8 — BY CONCERN
+   ========================================================================== */
+.vaidyam-concern {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-main);
+}
+
+.vaidyam-concern__featured {
+  position: relative;
+  background: var(--vd-bg-surface);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-rad-xl);
+  padding: var(--vd-sp-8) var(--vd-sp-10);
+  display: flex;
+  margin-bottom: var(--vd-sp-4);
+}
+
+.vaidyam-concern__accent {
+  width: 5px;
+  background: var(--vd-primary);
+  border-radius: var(--vd-rad-full);
+  margin-right: var(--vd-sp-6);
+  flex-shrink: 0;
+}
+
+.vaidyam-concern__content {
+  flex-grow: 1;
+}
+
+.vaidyam-concern__tags {
+  display: flex;
+  gap: var(--vd-sp-2);
+  margin-bottom: var(--vd-sp-3);
+}
+
+.vaidyam-concern__desc {
+  font-size: var(--vd-fs-base);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin-bottom: var(--vd-sp-3);
+}
+
+.vaidyam-concern__link {
+  display: inline-block;
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  text-decoration: none;
+  margin-bottom: var(--vd-sp-2);
+  transition: color var(--vd-transition-fast);
+}
+
+.vaidyam-concern__link:hover {
+  color: var(--vd-primary-light);
+  text-decoration: underline;
+}
+
+.vaidyam-concern__author {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-muted);
+  margin: 0;
+}
+
+.vaidyam-concern__note {
+  text-align: center;
+  font-size: var(--vd-fs-xs);
+  color: var(--vd-text-muted);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   12. SECTION 9 — VIDEO (AYURVEDA IN ACTION)
+   ========================================================================== */
+.vaidyam-video {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-surface);
+  border-top: 1px solid var(--vd-border-subtle);
+}
+
+.vaidyam-video__embed {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: var(--vd-rad-lg);
+  overflow: hidden;
+  box-shadow: var(--vd-shadow-lg);
+}
+
+.vaidyam-video__placeholder {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  background: linear-gradient(135deg, var(--vd-primary) 0%, var(--vd-primary-light) 100%);
+  cursor: pointer;
+}
+
+.vaidyam-video__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--vd-sp-6);
+}
+
+.vaidyam-video__channel {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-sp-3);
+  color: var(--vd-text-inverse);
+}
+
+.vaidyam-video__channel-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--vd-gold-light);
+  color: var(--vd-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--vd-fs-sm);
+  font-weight: bold;
+}
+
+.vaidyam-video__channel strong {
+  display: block;
+  font-size: var(--vd-fs-base);
+}
+
+.vaidyam-video__channel span {
+  font-size: var(--vd-fs-xs);
+  opacity: 0.85;
+}
+
+.vaidyam-video__play {
+  align-self: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 68px;
+  height: 48px;
+  transition: transform var(--vd-transition-fast);
+}
+
+.vaidyam-video__play:hover {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   13. SECTION 10 — TESTIMONIALS CAROUSEL
+   ========================================================================== */
+.vaidyam-testimonials {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-main);
+}
+
+.vaidyam-testimonials__carousel {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.vaidyam-testimonials__track {
+  position: relative;
+  min-height: 280px;
+}
+
+.vaidyam-testimonials__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--vd-transition-smooth), visibility var(--vd-transition-smooth);
+  background: var(--vd-bg-surface);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-rad-xl);
+  padding: var(--vd-sp-10) var(--vd-sp-12);
+  text-align: center;
+}
+
+.vaidyam-testimonials__slide.active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+}
+
+.vaidyam-testimonials__stars {
+  color: var(--vd-gold);
+  font-size: var(--vd-fs-lg);
+  letter-spacing: 4px;
+  margin-bottom: var(--vd-sp-4);
+}
+
+.vaidyam-testimonials__quote {
+  margin: 0 0 var(--vd-sp-6) 0;
+  padding: 0;
+  border: none;
+}
+
+.vaidyam-testimonials__quote p {
+  font-size: var(--vd-fs-md);
+  color: var(--vd-text-primary);
+  line-height: var(--vd-lh-loose);
+  font-style: italic;
+}
+
+.vaidyam-testimonials__author h4 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin: 0 0 4px 0;
+}
+
+.vaidyam-testimonials__author span {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-muted);
+}
+
+.vaidyam-testimonials__nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--vd-sp-2);
+  margin-top: var(--vd-sp-8);
+}
+
+.vaidyam-testimonials__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--vd-rad-full);
+  border: 2px solid var(--vd-primary);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--vd-transition-base);
+}
+
+.vaidyam-testimonials__dot.active {
+  background: var(--vd-primary);
+  width: 24px;
+  border-radius: var(--vd-rad-sm);
+}
+
+/* ==========================================================================
+   14. SECTION 11 — OUR LEGACY
+   ========================================================================== */
+.vaidyam-legacy {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-bg-surface);
+  border-top: 1px solid var(--vd-border-subtle);
+}
+
+.vaidyam-legacy__content {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: var(--vd-fs-md);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-loose);
+}
+
+.vaidyam-legacy__content p {
+  margin-bottom: var(--vd-sp-6);
+}
+
+.vaidyam-legacy__pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vd-sp-6);
+  margin-top: var(--vd-sp-10);
+}
+
+.vaidyam-legacy__pillar {
+  background: var(--vd-bg-main);
+  padding: var(--vd-sp-6);
+  border-radius: var(--vd-rad-lg);
+  border: 1px solid var(--vd-border-subtle);
+  box-shadow: var(--vd-shadow-xs);
+}
+
+.vaidyam-pillar-badge {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-gold);
+  margin-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-legacy__pillar strong {
+  display: block;
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  color: var(--vd-primary);
+  margin-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-legacy__pillar span {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  display: block;
+}
+
+/* ==========================================================================
+   15. SECTION 12 — SUBSCRIBE & CONTACT CTA
+   ========================================================================== */
+.vaidyam-contact-cta {
+  padding: var(--vd-sp-20) 0;
+  background: var(--vd-primary);
+  color: var(--vd-text-inverse);
+}
+
+.vaidyam-contact-cta__inner {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--vd-sp-12);
+  align-items: center;
+}
+
+.vaidyam-contact-cta__text h2 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-3xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-text-inverse);
+  margin: 0 0 var(--vd-sp-3) 0;
+}
+
+.vaidyam-contact-cta__text p {
+  font-size: var(--vd-fs-md);
+  color: var(--vd-text-inverse-muted);
+  margin: 0 0 var(--vd-sp-6) 0;
+}
+
+.vaidyam-contact-cta__details p {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-inverse-muted);
+  margin: 0 0 var(--vd-sp-2) 0;
+}
+
+.vaidyam-contact-cta__details strong {
+  color: var(--vd-gold-light);
+}
+
+.vaidyam-contact-cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-sp-6);
+  align-items: flex-start;
+}
+
+.vaidyam-contact-cta__social {
+  display: flex;
+  gap: var(--vd-sp-3);
+}
+
+.vaidyam-contact-cta__social a {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--vd-rad-full);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--vd-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--vd-transition-fast);
+}
+
+.vaidyam-contact-cta__social a:hover {
+  background: var(--vd-gold-light);
+  color: var(--vd-primary);
+  transform: translateY(-2px);
+}
+
+.vaidyam-contact-cta__social svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==========================================================================
+   16. STATIC PAGES (ABOUT, EDITORIAL BOARD, GUIDELINES, CONTACT)
+   ========================================================================== */
+.vaidyam-static-page {
+  padding: var(--vd-sp-16) 0 var(--vd-sp-24);
+  background: var(--vd-bg-main);
+}
+
+.vaidyam-static-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--vd-sp-12);
+}
+
+.vaidyam-static-title {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-4xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin-bottom: var(--vd-sp-4);
+  line-height: var(--vd-lh-tight);
+}
+
+.vaidyam-static-lead {
+  font-size: var(--vd-fs-md);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+}
+
+.vaidyam-static-content {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.vaidyam-static-section {
+  margin-bottom: var(--vd-sp-12);
+}
+
+.vaidyam-static-section h2 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-2xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin-bottom: var(--vd-sp-5);
+  border-bottom: 2px solid var(--vd-border-subtle);
+  padding-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-static-section p {
+  font-size: var(--vd-fs-base);
+  line-height: var(--vd-lh-loose);
+  color: var(--vd-text-secondary);
+  margin-bottom: var(--vd-sp-4);
+}
+
+.vaidyam-static-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vd-sp-6);
+  margin: var(--vd-sp-8) 0 var(--vd-sp-12);
+}
+
+.vaidyam-static-pillar-card {
+  background: var(--vd-bg-surface);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-rad-lg);
+  padding: var(--vd-sp-6);
+}
+
+.vaidyam-pillar-icon {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-gold);
+  margin-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-static-pillar-card h3 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-lg);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-static-pillar-card p {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin: 0;
+}
+
+.vaidyam-themes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vd-sp-6);
+  margin-top: var(--vd-sp-5);
+}
+
+.vaidyam-theme-item {
+  background: var(--vd-primary-surface);
+  padding: var(--vd-sp-6);
+  border-radius: var(--vd-rad-md);
+  border-left: 4px solid var(--vd-primary);
+}
+
+.vaidyam-theme-item h4 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-md);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin-bottom: var(--vd-sp-2);
+}
+
+.vaidyam-theme-item p {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-normal);
+  margin: 0;
+}
+
+.vaidyam-vision-mission-box {
+  background: var(--vd-bg-surface);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-rad-lg);
+  padding: var(--vd-sp-8);
+  margin-top: var(--vd-sp-12);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--vd-sp-8);
+}
+
+.vaidyam-vm-block h3 {
+  font-family: var(--vd-font-serif);
+  font-size: var(--vd-fs-xl);
+  font-weight: var(--vd-fw-bold);
+  color: var(--vd-primary);
+  margin-bottom: var(--vd-sp-3);
+}
+
+.vaidyam-vm-block p {
+  font-size: var(--vd-fs-sm);
+  color: var(--vd-text-secondary);
+  line-height: var(--vd-lh-loose);
+}
+
+.vaidyam-goal-tag {
+  color: var(--vd-primary) !important;
+  font-weight: var(--vd-fw-semibold);
+  margin-top: var(--vd-sp-3);
+}
+
+/* ==========================================================================
+   17. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 980px) {
+  .vaidyam-hero__grid {
+    grid-template-columns: 1fr;
+    gap: var(--vd-sp-10);
+  }
+
+  .vaidyam-current__grid {
+    grid-template-columns: 1fr;
+    gap: var(--vd-sp-8);
+    padding: var(--vd-sp-6);
+  }
+
+  .vaidyam-about__cards,
+  .ka-blog-path-list,
+  .ka-blog-topic-grid,
+  .vaidyam-sections-grid,
+  .vaidyam-legacy__pillars,
+  .vaidyam-static-pillars-grid,
+  .vaidyam-themes-grid,
+  .vaidyam-vision-mission-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vaidyam-pages__grid,
+  .vaidyam-contact-cta__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .vaidyam-hero__title {
+    font-size: var(--vd-fs-2xl);
+  }
+
+  .vaidyam-section-title {
+    font-size: var(--vd-fs-xl);
+  }
+
+  .vaidyam-about__cards,
+  .ka-blog-path-list,
+  .ka-blog-topic-grid,
+  .vaidyam-sections-grid,
+  .vaidyam-legacy__pillars,
+  .vaidyam-static-pillars-grid,
+  .vaidyam-themes-grid,
+  .vaidyam-vision-mission-box {
+    grid-template-columns: 1fr;
+  }
+
+  .vaidyam-pages__card {
+    flex-direction: column;
+  }
+
+  .vaidyam-pages__card-image {
+    width: 100%;
+    height: 120px;
+  }
+
+  .vaidyam-testimonials__slide {
+    padding: var(--vd-sp-6) var(--vd-sp-4);
+  }
+
+  .vaidyam-testimonials__quote p {
+    font-size: var(--vd-fs-sm);
+  }
+
+  .vaidyam-hero__stat-badge {
+    position: static;
+    margin-top: var(--vd-sp-4);
+  }
+
+  .vaidyam-current__action-row {
+    flex-direction: column;
+  }
+
+  .vaidyam-current__action-row .vaidyam-btn {
+    width: 100%;
+  }
+}

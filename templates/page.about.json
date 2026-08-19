@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-about-vaidyam",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

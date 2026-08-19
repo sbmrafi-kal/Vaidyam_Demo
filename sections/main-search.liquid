@@ -1,0 +1,352 @@
+{%- comment -%} theme-check-disable ContentForHeaderModification, UnusedAssign {%- endcomment -%}
+<script>
+  if (window.location.pathname === '/search') {
+    var searchParams = window.location.search;
+    if (searchParams) {
+      window.location.replace('/pages/journal-search' + searchParams);
+    }
+  }
+</script>
+
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'vaidyam-landing.css' | asset_url | stylesheet_tag }}
+
+{%- capture content_header -%}{{ content_for_header }}{%- endcapture -%}
+{%- liquid
+  # Parse q and filter_tag parameters from page url in content_for_header
+  assign page_url = content_header | split: 'pageurl' | last | split: ',' | first | replace: '&quot;', '' | replace: '"', '' | replace: ':', '' | replace: '\/', '/' | strip
+  
+  # Normalize JSON-escaped and URL-encoded query delimiters
+  assign page_url = page_url | replace: '\u0026', '&' | replace: '%26', '&' | replace: '\u003d', '=' | replace: '\u003D', '=' | replace: '%3d', '=' | replace: '%3D', '='
+  
+  assign query_string = page_url | split: '?' | last
+  assign params = query_string | split: '&'
+  
+  assign display_terms = ''
+  assign filter_tag = ''
+  
+  for param in params
+    if param contains 'q='
+      assign display_terms = param | split: 'q=' | last | url_decode | strip
+    elsif param contains 'filter_tag='
+      assign filter_tag = param | split: 'filter_tag=' | last | url_decode | strip
+    endif
+  endfor
+
+  assign search_performed = true
+
+  if display_terms == '*' or display_terms == 'author:*' or display_terms == 'tag:*'
+    assign display_terms = ''
+  endif
+  assign clean_terms = display_terms
+  if clean_terms contains 'title:('
+    assign clean_terms = clean_terms | split: 'title:(' | last | split: ')' | first | strip
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign matched_articles = ""
+  assign search_term = clean_terms | downcase | strip
+-%}
+{%- paginate blogs['news'].articles by 250 -%}
+  {%- if search_performed -%}
+    {%- for art in blogs['news'].articles -%}
+      {%- assign art_title = art.title | downcase -%}
+
+      {%- assign match_found = false -%}
+      {%- if search_term == blank or search_term == '*' -%}
+        {%- assign match_found = true -%}{%- else -%}{%- comment -%} Primary: match by tags {%- endcomment -%}
+        {%- for t in art.tags -%}
+          {%- assign t_down = t | downcase -%}
+          {%- if t_down contains search_term -%}
+            {%- assign match_found = true -%}{%- break -%}{%- endif -%}
+        {%- endfor -%}
+        {%- comment -%} Secondary: match by title {%- endcomment -%}
+        {%- if match_found == false -%}
+          {%- if art_title contains search_term -%}
+            {%- assign match_found = true -%}{%- endif -%}
+        {%- endif -%}
+        {%- comment -%} Tertiary: match by body/excerpt or dek {%- endcomment -%}
+        {%- if match_found == false -%}
+          {%- assign art_excerpt = art.excerpt | default: art.content | strip_html | downcase -%}
+          {%- assign art_dek = art.metafields.custom.dek.value | default: art.metafields.custom.dek | default: '' | downcase -%}
+          {%- if art_excerpt contains search_term or art_dek contains search_term -%}
+            {%- assign match_found = true -%}{%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if match_found -%}
+        {%- assign matches_filter = true -%}
+        {%- if filter_tag != blank -%}
+          {%- assign matches_filter = false -%}
+          {%- for tag in art.tags -%}
+            {%- assign tag_handle = tag | handleize -%}
+            {%- if tag_handle == filter_tag -%}
+              {%- assign matches_filter = true -%}{%- break -%}{%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if matches_filter -%}
+          {%- assign matched_articles = matched_articles | append: "," | append: art.handle -%}{%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endpaginate -%}
+
+{%- assign matched_articles_clean = matched_articles | remove_first: "," -%}
+{%- assign matched_handles = matched_articles_clean | split: "," | uniq | compact -%}
+{%- assign matched_count = matched_handles.size -%}
+
+<div class="template-search ka-journal-search{% if clean_terms != blank and matched_count == 0 %} template-search--empty{% endif %} section-{{ section.id }}-padding ka-blog-wrapper">
+  {%- capture search_header_html -%}
+    <div class="template-search__header ka-search-header-wrap">
+      <h1 class="ka-search-h1">
+        {%- if clean_terms != blank -%}
+          Search results
+        {%- else -%}
+          Search journal
+        {%- endif -%}
+      </h1>
+      <div class="template-search__search">
+        <form action="/pages/journal-search" method="get" role="search" class="search">
+          <div class="field">
+            <input
+              class="search__input field__input"
+              id="Search-In-Template"
+              type="search"
+              name="q"
+              value="{{ clean_terms | escape }}"
+              placeholder="Search articles..."
+            >
+            <label class="field__label" for="Search-In-Template">Search articles...</label>
+            {%- if clean_terms != blank -%}
+              <a href="/pages/journal-search" class="ka-custom-search-reset" aria-label="Clear search">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </a>
+            {%- endif -%}
+            <button type="submit" class="search__button field__button" aria-label="Search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+      {%- if clean_terms != blank -%}
+        <p role="status" class="ka-search-count-text">
+          {%- if matched_count == 1 -%}
+            1 article found
+          {%- else -%}
+            {{ matched_count }} articles found
+          {%- endif -%}
+          &nbsp;for “{{ clean_terms }}”
+        </p>
+        {%- if matched_count == 0 -%}
+          <p role="status" class="ka-search-no-results">
+            No articles matched your search.
+          </p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  {%- endcapture -%}
+
+  {%- capture search_results_html -%}
+    {%- if search_performed -%}
+      <div class="ka-blog-container">
+        <div class="product-grid-container" id="ProductGridContainer">
+          {%- liquid
+            assign selected_blog = blogs['news']
+            assign search_page_meta = selected_blog.metafields.custom.search_page.value
+            assign topics_sec = selected_blog.metafields.custom.topics_section.value
+            assign topics = search_page_meta.topics.value | default: topics_sec.topics.value | default: selected_blog.metafields.custom.topics.value
+          -%}
+          <div class="ka-search-layout">
+            <!-- Filters Sidebar -->
+            <aside class="ka-search-filters" aria-label="Search page filters">
+              <h2 class="ka-search-filters-title">Filter by Topic<span class="ka-search-filters-toggle-icon"></span></h2>
+              <div class="ka-search-filters-list">
+                <a class="ka-filter-link{% if filter_tag == blank %} active{% endif %}" href="/pages/journal-search?q={{ clean_terms | escape }}">All</a>
+                {%- if topics != blank -%}
+                  {%- for topic in topics -%}
+                    {%- assign topic_title = topic.title.value | default: topic.title -%}
+                    {%- assign topic_tag = topic.article_filter_tag.value | default: topic.article_filter_tag | default: topic_title -%}
+                    {%- assign topic_tag_mapped = topic_tag | handleize -%}
+                    {%- if topic_title != blank and topic_tag_mapped != blank -%}
+                      <a class="ka-filter-link{% if filter_tag == topic_tag_mapped %} active{% endif %}" href="/pages/journal-search?q={{ clean_terms | escape }}&filter_tag={{ topic_tag_mapped }}">{{ topic_title }}</a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </aside>
+
+            <!-- Results Content -->
+            <div class="ka-search-results">
+              {%- if matched_count > 0 -%}
+                {%- liquid
+                  assign current_page = 1
+                  if page_url contains 'search_page='
+                    assign current_page = page_url | split: 'search_page=' | last | split: '&' | first | plus: 0
+                  endif
+                  if current_page < 1
+                    assign current_page = 1
+                  endif
+
+                  assign limit = 12
+                  assign offset = current_page | minus: 1 | times: limit
+                  assign total_items = matched_handles.size
+                  assign total_pages = total_items | plus: limit | minus: 1 | divided_by: limit
+                -%}
+
+                <div class="ka-blog-article-grid ka-blog-article-grid--search">
+                  {%- for handle in matched_handles limit: limit offset: offset -%}
+                    {%- assign item = articles[handle] -%}
+                    {%- if item != blank -%}
+                      {%- render 'vaidyam-article-card', article: item -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+                {%- if total_pages > 1 -%}
+                  <nav class="ka-blog-pagination" aria-label="Search pagination">
+                    {%- if current_page > 1 -%}
+                      {%- assign prev_page = current_page | minus: 1 -%}
+                      <a href="/pages/journal-search?q={{ display_terms }}&filter_tag={{ filter_tag }}&search_page={{ prev_page }}#ProductGridContainer">← Previous</a>
+                    {%- endif -%}
+
+                    {%- if total_pages <= 7 -%}
+                      {%- for page_num in (1..total_pages) -%}
+                        {%- if page_num == current_page -%}
+                          <span class="current">{{ page_num }}</span>
+                        {%- else -%}
+                          <a href="/pages/journal-search?q={{ display_terms }}&filter_tag={{ filter_tag }}&search_page={{ page_num }}#ProductGridContainer">{{ page_num }}</a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- else -%}
+                      {%- if current_page == 1 -%}
+                        <span class="current">1</span>
+                      {%- else -%}
+                        <a href="/pages/journal-search?q={{ display_terms }}&filter_tag={{ filter_tag }}&search_page=1#ProductGridContainer">1</a>
+                      {%- endif -%}
+
+                      {%- if current_page > 4 -%}
+                        <span class="deco">&hellip;</span>
+                      {%- endif -%}
+
+                      {%- assign start_page = current_page | minus: 2 -%}
+                      {%- assign end_page = current_page | plus: 2 -%}
+                      {%- assign page_threshold = total_pages | minus: 3 -%}
+
+                      {%- if current_page <= 4 -%}
+                        {%- assign start_page = 2 -%}
+                        {%- assign end_page = 5 -%}
+                      {%- elsif current_page >= page_threshold -%}
+                        {%- assign start_page = total_pages | minus: 4 -%}
+                        {%- assign end_page = total_pages | minus: 1 -%}
+                      {%- endif -%}
+
+                      {%- for page_num in (start_page..end_page) -%}
+                        {%- if page_num == current_page -%}
+                          <span class="current">{{ page_num }}</span>
+                        {%- else -%}
+                          <a href="/pages/journal-search?q={{ display_terms }}&filter_tag={{ filter_tag }}&search_page={{ page_num }}#ProductGridContainer">{{ page_num }}</a>
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                      {%- if current_page < page_threshold -%}
+                        <span class="deco">&hellip;</span>
+                      {%- endif -%}
+
+                      {%- if current_page == total_pages -%}
+                        <span class="current">{{ total_pages }}</span>
+                      {%- else -%}
+                        <a href="/pages/journal-search?q={{ display_terms }}&filter_tag={{ filter_tag }}&search_page={{ total_pages }}#ProductGridContainer">{{ total_pages }}</a>
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if current_page < total_pages -%}
+                      {%- assign next_page = current_page | plus: 1 -%}
+                      <a href="/pages/journal-search?q={{ display_terms }}&filter_tag={{ filter_tag }}&search_page={{ next_page }}#ProductGridContainer">Next →</a>
+                    {%- endif -%}
+                  </nav>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  <div class="ka-blog-container">
+    {{ search_header_html }}
+  </div>
+  {{ search_results_html }}
+</div>
+
+<script src="{{ 'vaidyam.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Journal Search",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "search_header",
+      "name": "Search Header & Form",
+      "limit": 1
+    },
+    {
+      "type": "search_results",
+      "name": "Search Results & Filters",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Journal Search"
+    }
+  ]
+}
+{% endschema %}

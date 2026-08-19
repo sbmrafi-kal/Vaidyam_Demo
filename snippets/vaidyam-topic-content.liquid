@@ -1,0 +1,1021 @@
+{%- comment -%} theme-check-disable ContentForHeaderModification, UnusedAssign {%- endcomment -%}
+{% comment %}
+  vaidyam-topic-content.liquid — Topic/category content rendering (snippet-based for reuse in sections and 404 bypass)
+  Usage: {% render 'vaidyam-topic-content' %}
+{% endcomment %}
+
+{{ 'vaidyam-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'vaidyam-font' -%}
+
+{%- liquid
+  assign selected_blog = blog
+  if selected_blog == blank or selected_blog.handle == blank
+    assign selected_blog = blogs['news']
+  endif
+
+  assign current_tag = current_tags | first
+
+  assign topic_metaobject = nil
+  assign topic_param = ''
+-%}
+
+{%- capture content_header -%}{{ content_for_header }}{%- endcapture -%}
+{%- liquid
+  assign page_url = content_header | split: 'pageurl' | last | split: '}' | first | split: ',' | first | replace: '&quot;', '' | replace: '"', '' | replace: ':', '' | replace: '\/', '/' | replace: '\u002f', '/' | replace: '\u002F', '/' | strip
+  assign page_url = page_url | replace: '\u0026', '&' | replace: '%26', '&' | replace: '\u003d', '=' | replace: '\u003D', '=' | replace: '%3d', '=' | replace: '%3D', '=' | replace: '%20', ' '
+
+  if current_tag == blank or current_tag == nil
+    if page_url contains '/tagged/'
+      assign current_tag = page_url | split: '/tagged/' | last | split: '?' | first | split: '&' | first | split: '/' | first | url_decode | strip
+    elsif request.path contains '/tagged/'
+      assign current_tag = request.path | split: '/tagged/' | last | split: '?' | first | split: '/' | first | url_decode | strip
+    endif
+  endif
+
+  assign topic_param = ''
+  if page_url contains 'topic='
+    assign topic_param = page_url | split: 'topic=' | last | split: '&' | first | url_decode | handleize
+  endif
+
+  assign care_path_param = ''
+  if page_url contains 'care_path='
+    assign care_path_param = page_url | split: 'care_path=' | last | split: '&' | first | url_decode | handleize
+  endif
+
+  assign path_metaobject = nil
+  assign care_paths = selected_blog.metafields.custom.care_paths_section.value.care_paths.value | default: selected_blog.metafields.custom.care_paths.value
+
+  # 1. Dynamic Modular Care Path resolution (Works for ANY number of care paths dynamically)
+  if care_paths != blank and care_path_param != blank
+    for cp in care_paths
+      assign raw_handle = cp.system.handle | default: cp.handle | handleize
+      assign cp_title_clean = cp.title.value | default: cp.title | handleize
+      assign cp_filter_tag_clean = cp.article_filter_tag.value | default: cp.article_filter_tag | handleize
+
+      if raw_handle != blank and raw_handle == care_path_param
+        assign path_metaobject = cp
+        break
+      elsif cp_title_clean != blank and cp_title_clean == care_path_param
+        assign path_metaobject = cp
+        break
+      elsif cp_filter_tag_clean != blank and cp_filter_tag_clean == care_path_param
+        assign path_metaobject = cp
+        break
+      endif
+    endfor
+
+    # Dynamic index extraction if param contains number e.g. "exact-care-path-3" or "care-path-12"
+    if path_metaobject == nil and care_path_param contains 'path-'
+      assign param_num_str = care_path_param | split: 'path-' | last | plus: 0
+      if param_num_str > 0
+        assign param_idx = param_num_str | minus: 1
+        assign path_metaobject = care_paths[param_idx]
+      endif
+    endif
+
+    if path_metaobject == nil
+      assign path_metaobject = care_paths[0]
+    endif
+  endif
+
+  # 2. Resolve Topic metaobject if topic_param is present
+  assign topic_metaobject = nil
+  assign topics = selected_blog.metafields.custom.topics_section.value.topics.value | default: selected_blog.metafields.custom.topics.value
+
+  if topic_param != blank and topics != blank
+    for topic in topics
+      assign temp_handle = topic.system.handle | default: topic.handle | default: topic.title | handleize
+      assign temp_tag = topic.article_filter_tag | handleize
+      if temp_handle != blank and temp_handle == topic_param
+        assign topic_metaobject = topic
+        break
+      elsif temp_tag != blank and temp_tag == topic_param
+        assign topic_metaobject = topic
+        break
+      endif
+    endfor
+  endif
+
+  # 3. If no query parameter matched, resolve by current_tag
+  if path_metaobject == nil and topic_metaobject == nil and current_tag != blank
+    assign c_handle = current_tag | handleize
+    assign c_down = current_tag | downcase | strip
+    assign clean_c_handle = c_handle | replace: '-1', '' | replace: '-2', '' | replace: 'care-path-', ''
+
+    # Check Care Paths first for matching handle/tag/title
+    if care_paths != blank
+      for cp in care_paths
+        assign cp_handle = cp.system.handle | default: cp.handle | handleize
+        assign clean_cp_handle = cp_handle | replace: 'care-path-', '' | replace: '-1', ''
+        assign cp_title = cp.title | downcase | strip
+        assign cp_title_h = cp.title | handleize
+        assign cp_filter_tag = cp.article_filter_tag | handleize
+        assign cp_tag_down = cp.article_filter_tag | downcase | strip
+
+        if cp_handle != blank and cp_handle == c_handle
+          assign path_metaobject = cp
+          break
+        elsif clean_cp_handle != blank and clean_cp_handle == clean_c_handle
+          assign path_metaobject = cp
+          break
+        elsif cp_title_h != blank and cp_title_h contains clean_c_handle or clean_c_handle contains cp_title_h
+          assign path_metaobject = cp
+          break
+        elsif cp_filter_tag != blank and cp_filter_tag == c_handle or cp_filter_tag contains clean_c_handle
+          assign path_metaobject = cp
+          break
+        elsif cp_title != blank and cp_title == c_down
+          assign path_metaobject = cp
+          break
+        elsif cp_tag_down != blank and cp_tag_down == c_down
+          assign path_metaobject = cp
+          break
+        endif
+      endfor
+    endif
+
+    # If not a Care Path, check Topics
+    if path_metaobject == nil and topics != blank
+      for topic in topics
+        assign t_handle = topic.system.handle | default: topic.handle | handleize
+        assign t_tag_handle = topic.article_filter_tag | handleize
+        assign t_title_handle = topic.title | handleize
+        assign t_tag_down = topic.article_filter_tag | downcase | strip
+        assign t_title_down = topic.title | downcase | strip
+
+        if t_handle != blank and t_handle == c_handle
+          assign topic_metaobject = topic
+          break
+        elsif t_tag_handle != blank and t_tag_handle == c_handle
+          assign topic_metaobject = topic
+          break
+        elsif t_title_handle != blank and t_title_handle == c_handle
+          assign topic_metaobject = topic
+          break
+        elsif t_tag_down != blank and t_tag_down == c_down
+          assign topic_metaobject = topic
+          break
+        elsif t_title_down != blank and t_title_down == c_down
+          assign topic_metaobject = topic
+          break
+        endif
+      endfor
+    endif
+  endif
+
+  assign topic_title_raw = topic_metaobject.title.value | default: topic_metaobject.title | default: current_tag | default: topic_param
+  if topic_title_raw contains '-' or topic_title_raw contains '_'
+    assign topic_title_parts = topic_title_raw | replace: '-', ' ' | replace: '_', ' ' | split: ' '
+    assign topic_title_formatted = ''
+    for word in topic_title_parts
+      assign word_cap = word | capitalize
+      assign topic_title_formatted = topic_title_formatted | append: word_cap | append: ' '
+    endfor
+    assign topic_title = topic_title_formatted | strip
+  else
+    assign topic_title = topic_title_raw
+  endif
+
+  assign topic_handle = topic_metaobject.system.handle | default: topic_metaobject.handle | default: topic_param | default: topic_title | handleize
+  assign topic_description = topic_metaobject.description.value | default: topic_metaobject.description
+  assign eyebrow_label = selected_blog.metafields.custom.topic_hero_eyebrow.value | default: selected_blog.metafields.custom.topic_hero_eyebrow
+  assign topic_image = topic_metaobject.image.value | default: topic_metaobject.image
+  
+  assign is_carepath_page = false
+  if path_metaobject != nil or care_path_param != blank
+    assign is_carepath_page = true
+  endif
+
+  if is_carepath_page
+    if path_metaobject == nil or topic_metaobject == blank
+      assign topic_metaobject = path_metaobject.linked_topic.value
+    endif
+    assign topic_title = path_metaobject.title.value | default: path_metaobject.title | default: topic_title_raw
+    if topic_title == blank or topic_title == current_tag or topic_title == topic_param
+      assign topic_title = topic_title_raw
+    endif
+    assign topic_handle = path_metaobject.system.handle | default: path_metaobject.handle | default: care_path_param | default: topic_title | handleize
+    assign topic_description = path_metaobject.hero_description_extended.value | default: path_metaobject.hero_description_extended | default: path_metaobject.hero_description.value | default: path_metaobject.hero_description | default: path_metaobject.subtitle.value | default: path_metaobject.subtitle | default: topic_metaobject.description.value | default: topic_metaobject.description
+    assign topic_image = topic_metaobject.image.value | default: topic_metaobject.image | default: path_metaobject.image.value | default: path_metaobject.image
+    assign eyebrow_label = path_metaobject.eyebrow_label.value | default: path_metaobject.eyebrow_label
+
+    # Read Care Path content dynamically from Shopify Admin dashboard metaobject fields
+    assign pathway_badge = "Ahara & Vihara"
+    assign pathway_lifestyle_desc = path_metaobject.pathway_lifestyle_desc.value | default: path_metaobject.pathway_lifestyle_desc | default: path_metaobject.pathway_lifestyle_description.value | default: path_metaobject.pathway_lifestyle_description
+
+    assign phase_1_title = path_metaobject.phase_1_title.value | default: path_metaobject.phase_1_title
+    assign phase_1_desc = path_metaobject.phase_1_description.value | default: path_metaobject.phase_1_description
+    
+    assign phase_2_title = path_metaobject.phase_2_title.value | default: path_metaobject.phase_2_title
+    assign phase_2_desc = path_metaobject.phase_2_description.value | default: path_metaobject.phase_2_description
+    
+    assign phase_3_title = path_metaobject.phase_3_title.value | default: path_metaobject.phase_3_title
+    assign phase_3_desc = path_metaobject.phase_3_description.value | default: path_metaobject.phase_3_description
+
+    assign diet_title = path_metaobject.diet_title.value | default: path_metaobject.diet_title | default: path_metaobject.dietary_rules_title.value | default: path_metaobject.dietary_rules_title | default: path_metaobject.dietary_title.value | default: path_metaobject.dietary_title | default: path_metaobject.diet_rules_title.value | default: path_metaobject.diet_rules_title | default: path_metaobject.ahara_title.value | default: path_metaobject.ahara_title | default: 'Ahara (Dietary Protocols)'
+    assign diet_rule_1 = path_metaobject.diet_rule_1.value | default: path_metaobject.diet_rule_1
+    assign diet_rule_2 = path_metaobject.diet_rule_2.value | default: path_metaobject.diet_rule_2
+    assign diet_rule_3 = path_metaobject.diet_rule_3.value | default: path_metaobject.diet_rule_3
+
+    assign vihara_title = path_metaobject.vihara_title.value | default: path_metaobject.vihara_title | default: path_metaobject.vihara_rules_title.value | default: path_metaobject.vihara_rules_title | default: path_metaobject.vihara_regimen_title.value | default: path_metaobject.vihara_regimen_title | default: path_metaobject.lifestyle_title.value | default: path_metaobject.lifestyle_title | default: path_metaobject.vihara_lifestyle_title.value | default: path_metaobject.vihara_lifestyle_title | default: 'Vihara (Lifestyle Protocols)'
+    assign vihara_rule_1 = path_metaobject.vihara_rule_1.value | default: path_metaobject.vihara_rule_1
+    assign vihara_rule_2 = path_metaobject.vihara_rule_2.value | default: path_metaobject.vihara_rule_2
+    assign vihara_rule_3 = path_metaobject.vihara_rule_3.value | default: path_metaobject.vihara_rule_3
+  endif
+
+  # Title case for eyebrow label
+  assign eyebrow_label_down = eyebrow_label | downcase
+  if eyebrow_label_down contains 'browse' or eyebrow_label_down contains 'topic'
+    assign eyebrow_label = 'BROWSE BY TOPIC'
+  elsif eyebrow_label_down contains 'care' or eyebrow_label_down contains 'journey'
+    assign eyebrow_label = 'PREMIUM CARE JOURNEY'
+  endif
+
+  assign topic_secondary_label = topic_metaobject.secondary_label
+-%}
+
+<div class="ka-blog-wrapper ka-blog-wrapper--topic{% if is_carepath_page %} is-carepath-layout{% endif %}">
+
+  {%- comment -%} Capture layout blocks once at the top {%- endcomment -%}
+  {%- capture topic_hero_html -%}
+    <section class="ka-blog-section--tight" id="overview">
+      <div class="ka-blog-container">
+        <article class="ka-blog-topic-hero{% if is_carepath_page %} ka-blog-topic-hero--carepath{% endif %}">
+          <div class="ka-blog-topic-hero__content">
+            {%- if is_carepath_page -%}
+              <span class="ka-carepath-badge-hero">{{ eyebrow_label }}</span>
+            {%- elsif eyebrow_label != blank -%}
+              <p class="ka-blog-eyebrow">
+                {{ eyebrow_label }}
+                {%- if topic_secondary_label != blank -%}
+                  <span class="ka-hindi"> · {{ topic_secondary_label }}</span>
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+            <h1>{{ topic_title }}</h1>
+            {%- if topic_description != blank -%}
+              <p class="ka-blog-lead">{{ topic_description }}</p>
+            {%- endif -%}
+          </div>
+          {%- if topic_image != blank -%}
+            <div class="ka-blog-topic-hero__image-wrap">
+              <img
+                src="{{ topic_image | image_url: width: 800 }}"
+                srcset="{{ topic_image | image_url: width: 450 }} 450w, {{ topic_image | image_url: width: 800 }} 800w, {{ topic_image | image_url: width: 1200 }} 1200w"
+                sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 800px"
+                alt="{{ topic_title | escape }}"
+                loading="eager"
+                fetchpriority="high"
+                width="800"
+                height="400"
+              >
+            </div>
+          {%- endif -%}
+        </article>
+      </div>
+    </section>
+  {%- endcapture -%}
+
+  {%- capture care_path_journey_html -%}
+    {%- if is_carepath_page -%}
+      {%- liquid
+        assign phase_items = path_metaobject.care_journey_phases.value | default: path_metaobject.phases.value
+      -%}
+      {%- if phase_items != blank and phase_items.size > 0 -%}
+        <section class="ka-blog-section ka-section-carepath" id="care-path-journey">
+          <div class="ka-blog-container">
+            <div class="ka-care-journey-card">
+              <div class="ka-care-journey-steps">
+                {%- for phase in phase_items -%}
+                  {%- assign p_num = phase.step_number.value | default: phase.step_number | default: forloop.index -%}
+                  {%- assign p_title = phase.title.value | default: phase.title -%}
+                  {%- assign p_desc = phase.description.value | default: phase.description -%}
+                  {%- if forloop.index > 1 -%}
+                    <div class="ka-care-journey-step-connector"></div>
+                  {%- endif -%}
+                  <div class="ka-care-journey-step">
+                    <div class="ka-care-step-icon-wrap">
+                      <div class="ka-care-step-num">0{{ p_num }}</div>
+                      <div class="ka-care-step-svg">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path>
+                          <path d="M12 22V12"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="ka-care-step-content">
+                      <h4>{{ p_title }}</h4>
+                      <p>{{ p_desc }}</p>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              <div class="ka-care-journey-footer">
+                <div class="ka-care-journey-footer-text">
+                  <strong>Need personalized advice?</strong> Get a custom care pathway tailored specifically to your body constitution (Prakriti) from our certified Vaidyas.
+                </div>
+                <a class="ka-blog-btn ka-blog-btn--secondary" href="#consult">WhatsApp Consults</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture care_path_lifestyle_html -%}
+    {%- if is_carepath_page -%}
+      {%- liquid
+        assign diet_items = path_metaobject.dietary_rules_list.value | default: path_metaobject.diet_rules.value | default: path_metaobject.ahara_diet_rules.value
+        assign vihara_items = path_metaobject.vihara_rules_list.value | default: path_metaobject.vihara_rules.value | default: path_metaobject.vihara_regimen_rules.value
+        assign diet_title = path_metaobject.diet_title.value | default: path_metaobject.diet_title | default: path_metaobject.dietary_rules_title.value | default: path_metaobject.dietary_rules_title | default: path_metaobject.dietary_title.value | default: path_metaobject.dietary_title | default: path_metaobject.diet_rules_title.value | default: path_metaobject.diet_rules_title | default: path_metaobject.ahara_title.value | default: path_metaobject.ahara_title
+        assign vihara_title = path_metaobject.vihara_title.value | default: path_metaobject.vihara_title | default: path_metaobject.vihara_rules_title.value | default: path_metaobject.vihara_rules_title | default: path_metaobject.vihara_regimen_title.value | default: path_metaobject.vihara_regimen_title | default: path_metaobject.lifestyle_title.value | default: path_metaobject.lifestyle_title | default: path_metaobject.vihara_lifestyle_title.value | default: path_metaobject.vihara_lifestyle_title
+        
+        assign has_diet = false
+        if diet_items != blank and diet_items.size > 0
+          assign has_diet = true
+        endif
+        
+        assign has_vihara = false
+        if vihara_items != blank and vihara_items.size > 0
+          assign has_vihara = true
+        endif
+      -%}
+      {%- if has_diet or has_vihara -%}
+        <section class="ka-blog-section ka-carepath-lifestyle-section" id="lifestyle">
+          <div class="ka-blog-container">
+            {%- if pathway_badge != blank or pathway_lifestyle_desc != blank -%}
+              <div class="ka-carepath-section-header">
+                {%- if pathway_badge != blank -%}
+                  <span class="ka-carepath-section-badge">{{ pathway_badge }}</span>
+                {%- endif -%}
+                {%- if pathway_lifestyle_desc != blank -%}
+                  <p>{{ pathway_lifestyle_desc }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+            <div class="ka-carepath-lifestyle-grid">
+              {%- if has_diet -%}
+                <div class="ka-lifestyle-card ka-lifestyle-card--diet">
+                  <div class="ka-lifestyle-card-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 11a8 8 0 0 0 16 0H4z"/>
+                      <path d="M6 19h12"/>
+                      <path d="M9 4c0 2-1 3-1 4"/>
+                      <path d="M12 3c0 2-1 3-1 4"/>
+                      <path d="M15 4c0 2-1 3-1 4"/>
+                    </svg>
+                    {%- if diet_title != blank -%}
+                      <h3>{{ diet_title }}</h3>
+                    {%- endif -%}
+                  </div>
+                  <ul>
+                    {%- for item in diet_items -%}
+                      {%- assign b_title = item.rule_title.value | default: item.rule_title | default: item.title.value | default: item.title | default: item.bold_title.value | default: item.bold_title -%}
+                      {%- assign b_desc = item.rule_description.value | default: item.rule_description | default: item.description.value | default: item.description -%}
+                      {%- if b_title != blank or b_desc != blank -%}
+                        <li>{% if b_title != blank %}<b>{{ b_title }}{% if b_desc != blank %}:{% endif %}</b> {% endif %}{{ b_desc }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+              {%- if has_vihara -%}
+                <div class="ka-lifestyle-card ka-lifestyle-card--lifestyle">
+                  <div class="ka-lifestyle-card-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="4"/>
+                      <path d="M12 2v2"/>
+                      <path d="M12 20v2"/>
+                      <path d="m4.93 4.93 1.41 1.41"/>
+                      <path d="m17.66 17.66 1.41 1.41"/>
+                      <path d="M2 12h2"/>
+                      <path d="M20 12h2"/>
+                      <path d="m6.34 17.66-1.41 1.41"/>
+                      <path d="m19.07 4.93-1.41 1.41"/>
+                    </svg>
+                    {%- if vihara_title != blank -%}
+                      <h3>{{ vihara_title }}</h3>
+                    {%- endif -%}
+                  </div>
+                  <ul>
+                    {%- for item in vihara_items -%}
+                      {%- assign b_title = item.rule_title.value | default: item.rule_title | default: item.title.value | default: item.title | default: item.bold_title.value | default: item.bold_title -%}
+                      {%- assign b_desc = item.rule_description.value | default: item.rule_description | default: item.description.value | default: item.description -%}
+                      {%- if b_title != blank or b_desc != blank -%}
+                        <li>{% if b_title != blank %}<b>{{ b_title }}{% if b_desc != blank %}:{% endif %}</b> {% endif %}{{ b_desc }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture care_path_products_html -%}
+    {%- if is_carepath_page -%}
+      {%- liquid
+        assign prod_items = path_metaobject.recommended_product_items.value | default: path_metaobject.care_path_products.value | default: path_metaobject.products.value
+      -%}
+      {%- if prod_items != blank and prod_items.size > 0 -%}
+        <section class="ka-blog-section ka-carepath-products-section" id="formulations">
+          <div class="ka-blog-container">
+            <div class="ka-carepath-section-header">
+              <span class="ka-carepath-section-badge">Traditional Formulations</span>
+              <h2>Bespoke Formulation Routine</h2>
+              <p>Curated remedies engineered to support the therapeutic goals of your care journey.</p>
+            </div>
+
+            <div class="ka-article-product-grid-shell">
+              <div class="ka-article-product-grid">
+                {%- for prod_entry in prod_items -%}
+                  {%- assign pe_title = prod_entry.product_name.value | default: prod_entry.product_name -%}
+                  {%- assign pe_tag = prod_entry.product_tag.value | default: prod_entry.product_tag -%}
+                  {%- assign pe_pt1 = prod_entry.desc_point_1.value | default: prod_entry.desc_point_1 -%}
+                  {%- assign pe_pt2 = prod_entry.desc_point_2.value | default: prod_entry.desc_point_2 -%}
+                  {%- assign pe_pt3 = prod_entry.desc_point_3.value | default: prod_entry.desc_point_3 -%}
+                  {%- assign pe_prod = prod_entry.product.value | default: prod_entry.product -%}
+
+                  {%- render 'product-card',
+                    product: prod_entry,
+                    title: pe_title,
+                    tag_text: pe_tag,
+                    pt_1: pe_pt1,
+                    pt_2: pe_pt2,
+                    pt_3: pe_pt3
+                  -%}
+                {%- endfor -%}
+              </div>
+              <button class="ka-product-grid-arrow ka-product-grid-arrow--prev" type="button" aria-label="Previous product" disabled>
+                <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 15.5L2.5 9L9.5 2.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="ka-product-grid-arrow ka-product-grid-arrow--next" type="button" aria-label="Next product">
+                <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.5 2.5L9.5 9L2.5 15.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture care_path_experts_html -%}
+    {%- if is_carepath_page -%}
+      {%- liquid
+        assign doc_items = path_metaobject.clinical_care_doctors.value | default: path_metaobject.doctors.value
+      -%}
+      {%- if doc_items != blank and doc_items.size > 0 -%}
+        <section class="ka-blog-section ka-carepath-experts-section" id="care-team">
+          <div class="ka-blog-container">
+            <div class="ka-carepath-section-header">
+              <span class="ka-carepath-section-badge">Expert Vaidyas</span>
+              <h2>Meet Your Clinical Care Team</h2>
+              <p>Our experienced Ayurvedic doctors are ready to guide you at every step of your recovery pathway.</p>
+            </div>
+            <div class="ka-carepath-experts-grid">
+              {%- for doc in doc_items -%}
+                {%- assign d_name = doc.name.value | default: doc.name -%}
+                {%- assign d_degree = doc.degree.value | default: doc.degree -%}
+                {%- assign d_bio = doc.short_bio.value | default: doc.short_bio -%}
+                <div class="ka-clinical-expert-card">
+                  {%- if d_photo != blank -%}
+                    <div class="ka-clinical-avatar">
+                      <img src="{{ d_photo | image_url: width: 320 }}" alt="{{ d_name | escape }}" loading="lazy" width="320" height="320">
+                    </div>
+                  {%- endif -%}
+                  <div class="ka-clinical-info">
+                    {%- if d_name != blank -%}
+                      <h3>{{ d_name }}</h3>
+                    {%- endif -%}
+                    {%- if d_degree != blank -%}
+                      <p class="ka-clinical-degree">{{ d_degree }}</p>
+                    {%- endif -%}
+                    {%- if d_bio != blank -%}
+                      <p class="ka-clinical-bio">{{ d_bio }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture care_path_faq_html -%}
+    {%- if is_carepath_page -%}
+      {%- liquid
+        assign faq_items = path_metaobject.care_path_faqs.value | default: path_metaobject.faqs.value
+      -%}
+      {%- if faq_items != blank and faq_items.size > 0 -%}
+        <section class="ka-blog-section ka-carepath-faq-section" id="faqs">
+          <div class="ka-blog-container">
+            <div class="ka-carepath-section-header">
+              <span class="ka-carepath-section-badge">Frequently Asked</span>
+              <h2>Pathway FAQs</h2>
+              <p>Common questions regarding your clinical care timeline and protocols.</p>
+            </div>
+            <div class="ka-carepath-faq-list">
+              {%- for faq in faq_items -%}
+                {%- assign f_q = faq.question.value | default: faq.question -%}
+                {%- assign f_a = faq.answer.value | default: faq.answer -%}
+                {%- if f_q != blank and f_a != blank -%}
+                  <div class="ka-faq-item">
+                    <button class="ka-faq-trigger" aria-expanded="false">
+                      <span>{{ f_q }}</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"/>
+                      </svg>
+                    </button>
+                    <div class="ka-faq-content">
+                      <p>{{ f_a }}</p>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture articles_grid_html -%}
+    <section class="ka-blog-section--tight" id="articles">
+      <div class="ka-blog-container">
+        {%- liquid
+          # 1. Build a list of all major topic filter tags and titles to exclude them from sub-filters
+          assign major_topic_tags = ""
+          assign major_topics = selected_blog.metafields.custom.topics_section.value.topics.value | default: selected_blog.metafields.custom.topics.value
+          for t_obj in major_topics
+            assign mt_tag = t_obj.article_filter_tag | strip
+            assign mt_title = t_obj.title | strip
+            if mt_tag != blank
+              assign major_topic_tags = major_topic_tags | append: "," | append: mt_tag
+            endif
+            if mt_title != blank
+              assign major_topic_tags = major_topic_tags | append: "," | append: mt_title
+            endif
+          endfor
+
+          # Also add administrative tags to the blacklist
+          assign major_topic_tags = major_topic_tags | append: ",Feature,Essay,Reading guide,Ayurveda,Journal,Popular,All"
+          assign blacklist_tags = major_topic_tags | split: "," | uniq
+
+          # 2. Extract related tags from article tags, skipping blacklisted tags
+          assign related_tags = ""
+        -%}
+
+        {%- paginate selected_blog.articles by 9 -%}
+          {%- liquid
+            # Calculate active matching articles count across blog for this topic or linked topics list
+            assign match_count = 0
+            assign t_handle = topic_handle | downcase | strip
+            assign c_tag_handle = current_tag | handleize
+
+            assign linked_topic_handles = ""
+            if is_carepath_page
+              assign linked_topics = path_metaobject.linked_article_tag.value | default: path_metaobject.linked_topics.value
+              if linked_topics != blank and linked_topics.size > 0
+                for l_topic in linked_topics
+                  assign lt_tag = l_topic.article_filter_tag.value | default: l_topic.article_filter_tag | default: l_topic.title.value | default: l_topic.title
+                  assign lt_title = l_topic.title.value | default: l_topic.title
+                  assign lt_handle = lt_tag | handleize
+                  assign lt_title_handle = lt_title | handleize
+                  if lt_handle != blank
+                    assign linked_topic_handles = linked_topic_handles | append: "," | append: lt_handle
+                  endif
+                  if lt_title_handle != blank
+                    assign linked_topic_handles = linked_topic_handles | append: "," | append: lt_title_handle
+                  endif
+                endfor
+              endif
+
+              assign cp_title_h = path_metaobject.title.value | default: path_metaobject.title | handleize
+              assign cp_tag_h = path_metaobject.article_filter_tag.value | default: path_metaobject.article_filter_tag | handleize
+              if cp_title_h != blank
+                assign linked_topic_handles = linked_topic_handles | append: "," | append: cp_title_h
+              endif
+              if cp_tag_h != blank
+                assign linked_topic_handles = linked_topic_handles | append: "," | append: cp_tag_h
+              endif
+
+              # Dynamically extract sub-words from care path title and tags for 100% modular matching
+              assign cp_words = path_metaobject.title.value | default: path_metaobject.title | downcase | replace: '&', ' ' | replace: '-', ' ' | replace: '_', ' ' | split: ' '
+              for cw in cp_words
+                assign clean_cw = cw | strip | handleize
+                if clean_cw.size > 2 and clean_cw != 'and' and clean_cw != 'care' and clean_cw != 'path'
+                  assign linked_topic_handles = linked_topic_handles | append: "," | append: clean_cw
+                endif
+              endfor
+            endif
+
+            if linked_topic_handles == blank
+              assign topic_tag_val = path_metaobject.article_filter_tag.value | default: topic_metaobject.article_filter_tag | default: topic_title
+              assign linked_topic_handles = topic_tag_val | handleize
+            endif
+
+            assign linked_handles_array = linked_topic_handles | split: "," | uniq | compact
+
+            for article in selected_blog.articles
+              assign has_match_1 = false
+              if current_tags.size > 1
+                assign match_all = true
+                for active_t in current_tags
+                  assign has_this_tag = false
+                  for tag in article.tags
+                    assign tag_clean = tag | downcase | strip
+                    assign active_clean = active_t | downcase | strip
+                    if tag_clean == active_clean
+                      assign has_this_tag = true
+                      break
+                    endif
+                  endfor
+                  unless has_this_tag
+                    assign match_all = false
+                    break
+                  endunless
+                endfor
+                if match_all
+                  assign has_match_1 = true
+                endif
+              else
+                assign topic_tag_val = topic_metaobject.article_filter_tag.value | default: topic_metaobject.article_filter_tag | default: path_metaobject.article_filter_tag.value | default: path_metaobject.article_filter_tag | default: topic_title
+                assign topic_tag_handle = topic_tag_val | handleize
+                assign topic_title_handle = topic_title | handleize
+                assign art_h = article.handle | downcase
+                assign art_t = article.title | downcase
+
+                for tag in article.tags
+                  assign tag_handle = tag | handleize
+                  assign tag_clean = tag | downcase | strip
+                  if tag_handle != blank
+                    if tag_handle == t_handle or tag_handle == c_tag_handle or tag_handle == topic_tag_handle or tag_handle == topic_title_handle
+                      assign has_match_1 = true
+                      break
+                    endif
+                    for lh in linked_handles_array
+                      assign clean_lh = lh | replace: '-care', '' | replace: '-health', '' | replace: '-glow', '' | replace: '-scalp', ''
+                      if tag_handle == lh or tag_clean contains lh or lh contains tag_handle or tag_clean contains clean_lh or tag_handle contains clean_lh or art_h contains clean_lh or art_t contains clean_lh
+                        assign has_match_1 = true
+                        break
+                      endif
+                    endfor
+                    if has_match_1
+                      break
+                    endif
+                    if topic_tag_handle.size > 2 and tag_handle contains topic_tag_handle or topic_tag_handle contains tag_handle
+                      assign has_match_1 = true
+                      break
+                    endif
+                    if topic_title_handle.size > 2 and tag_handle contains topic_title_handle or topic_title_handle contains tag_handle
+                      assign has_match_1 = true
+                      break
+                    endif
+                  endif
+                endfor
+              endif
+
+              if has_match_1
+                assign match_count = match_count | plus: 1
+              endif
+            endfor
+
+            # Populate related tags for sub-filtering
+            for article in selected_blog.articles
+              assign has_match_2 = false
+              if current_tags.size > 1
+                assign match_all = true
+                for active_t in current_tags
+                  assign has_this_tag = false
+                  for tag in article.tags
+                    assign tag_clean = tag | downcase | strip
+                    assign active_clean = active_t | downcase | strip
+                    if tag_clean == active_clean
+                      assign has_this_tag = true
+                      break
+                    endif
+                  endfor
+                  unless has_this_tag
+                    assign match_all = false
+                    break
+                  endunless
+                endfor
+                if match_all
+                  assign has_match_2 = true
+                endif
+              else
+                assign art_h = article.handle | downcase
+                assign art_t = article.title | downcase
+                for tag in article.tags
+                  assign tag_handle = tag | handleize
+                  assign tag_clean = tag | downcase | strip
+                  if tag_handle != blank
+                    if tag_handle == t_handle or tag_handle == c_tag_handle or tag_handle == topic_tag_handle or tag_handle == topic_title_handle
+                      assign has_match_2 = true
+                      break
+                    endif
+                    for lh in linked_handles_array
+                      assign clean_lh = lh | replace: '-care', '' | replace: '-health', '' | replace: '-glow', '' | replace: '-scalp', ''
+                      if tag_handle == lh or tag_clean contains lh or lh contains tag_handle or tag_clean contains clean_lh or tag_handle contains clean_lh or art_h contains clean_lh or art_t contains clean_lh
+                        assign has_match_2 = true
+                        break
+                      endif
+                    endfor
+                    if has_match_2
+                      break
+                    endif
+                    if topic_tag_handle.size > 2 and tag_handle contains topic_tag_handle or topic_tag_handle contains tag_handle
+                      assign has_match_2 = true
+                      break
+                    endif
+                    if topic_title_handle.size > 2 and tag_handle contains topic_title_handle or topic_title_handle contains tag_handle
+                      assign has_match_2 = true
+                      break
+                    endif
+                  endif
+                endfor
+              endif
+
+              if has_match_2
+                for t in article.tags
+                  assign t_clean = t | strip
+                  if t_clean != current_tag
+                    assign is_blacklisted = false
+                    for bl_tag in blacklist_tags
+                      if bl_tag == t_clean
+                        assign is_blacklisted = true
+                        break
+                      endif
+                    endfor
+                    unless is_blacklisted
+                      assign related_tags = related_tags | append: "," | append: t_clean
+                    endunless
+                  endif
+                endfor
+              endif
+            endfor
+
+            assign related_tags_array = related_tags | split: "," | uniq | compact
+            assign display_count = match_count
+          -%}
+
+          <div class="ka-blog-section-head ka-section-head--spaced">
+            <div>
+              <p class="ka-blog-eyebrow">
+                {{ display_count }} articles
+              </p>
+              {%- assign guides_h = topic_metaobject.guides_heading.value | default: topic_metaobject.guides_heading -%}
+              {%- if guides_h != blank -%}
+                <h2>{{ guides_h }}</h2>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%} Filter bar from dynamic related tags (excluded on Care Paths page) {%- endcomment -%}
+          {%- if related_tags_array.size > 0 and is_carepath_page == false -%}
+            <nav class="ka-blog-filter-bar" aria-label="{{ topic_title }} filters">
+              {%- assign current_tag_handle = current_tag | handleize -%}
+              {%- assign all_filter_url = selected_blog.url | append: '/tagged/' | append: current_tag_handle -%}
+              {%- if path_metaobject != nil -%}
+                {%- assign all_filter_url = selected_blog.url | append: '/tagged/' | append: topic_handle -%}
+              {%- endif -%}
+
+              <a class="ka-blog-filter-item{% unless current_tags.size > 1 %} active{% endunless %}" href="{{ all_filter_url }}#articles">All Guides</a>
+              {%- for r_tag in related_tags_array -%}
+                {%- assign r_tag_handle = r_tag | handleize -%}
+                {%- assign filter_url = selected_blog.url | append: '/tagged/' | append: current_tag_handle | append: '+' | append: r_tag_handle -%}
+                {%- if path_metaobject != nil -%}
+                  {%- assign filter_url = selected_blog.url | append: '/tagged/' | append: topic_handle | append: '+' | append: r_tag_handle -%}
+                {%- endif -%}
+
+                {%- assign is_active = false -%}
+                {%- if current_tags.size > 1 -%}
+                  {%- for active_t in current_tags -%}
+                    {%- assign active_t_clean = active_t | downcase | strip -%}
+                    {%- assign r_tag_clean = r_tag | downcase | strip -%}
+                    {%- if active_t_clean == r_tag_clean -%}
+                      {%- assign is_active = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                <a class="ka-blog-filter-item{% if is_active %} active{% endif %}" href="{{ filter_url }}#articles">{{ r_tag }}</a>
+              {%- endfor -%}
+            </nav>
+          {%- endif -%}
+
+          <div class="ka-blog-article-grid">
+            {%- assign loop_count = 0 -%}
+            {%- for article in selected_blog.articles -%}
+              {%- assign show_article = false -%}
+
+              {%- if current_tags.size > 1 -%}
+                {%- assign match_all = true -%}
+                {%- for active_t in current_tags -%}
+                  {%- assign has_this_tag = false -%}
+                  {%- for tag in article.tags -%}
+                    {%- assign tag_clean = tag | downcase | strip -%}
+                    {%- assign active_clean = active_t | downcase | strip -%}
+                    {%- if tag_clean == active_clean -%}
+                      {%- assign has_this_tag = true -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- unless has_this_tag -%}
+                    {%- assign match_all = false -%}
+                    {%- break -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- if match_all -%}
+                  {%- assign show_article = true -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- assign t_handle = topic_handle | downcase | strip -%}
+                {%- assign c_tag_handle = current_tag | handleize -%}
+                {%- assign topic_tag_val = topic_metaobject.article_filter_tag.value | default: topic_metaobject.article_filter_tag | default: path_metaobject.article_filter_tag.value | default: path_metaobject.article_filter_tag | default: topic_title -%}
+                {%- assign topic_tag_handle = topic_tag_val | handleize -%}
+                {%- assign topic_title_handle = topic_title | handleize -%}
+                {%- assign art_h = article.handle | downcase -%}
+                {%- assign art_t = article.title | downcase -%}
+                
+                {%- for tag in article.tags -%}
+                  {%- assign tag_handle = tag | handleize -%}
+                  {%- assign tag_clean = tag | downcase | strip -%}
+
+                  {%- if tag_handle == t_handle or tag_handle == c_tag_handle or tag_handle == topic_tag_handle or tag_handle == topic_title_handle -%}
+                    {%- assign show_article = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+
+                  {%- if linked_handles_array != blank and linked_handles_array.size > 0 -%}
+                    {%- for lh in linked_handles_array -%}
+                      {%- assign clean_lh = lh | replace: '-care', '' | replace: '-health', '' | replace: '-glow', '' | replace: '-scalp', '' -%}
+                      {%- if tag_handle == lh or tag_clean contains lh or lh contains tag_handle or tag_clean contains clean_lh or tag_handle contains clean_lh or art_h contains clean_lh or art_t contains clean_lh -%}
+                        {%- assign show_article = true -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if show_article -%}{%- break -%}{%- endif -%}
+                  {%- endif -%}
+
+                  {%- if topic_tag_handle.size > 2 and tag_handle contains topic_tag_handle or topic_tag_handle contains tag_handle -%}
+                    {%- assign show_article = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  {%- if topic_title_handle.size > 2 and tag_handle contains topic_title_handle or topic_title_handle contains tag_handle -%}
+                    {%- assign show_article = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+
+              {%- if show_article -%}
+                {%- assign loop_count = loop_count | plus: 1 -%}
+                {%- render 'vaidyam-article-card', article: article -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if loop_count == 0 -%}
+              <div class="ka-blog-no-articles-card">
+                <div class="ka-no-articles-badge">JOURNAL GUIDES</div>
+                <h3>Explore {{ topic_title }} Guides</h3>
+                <p>We are actively publishing new research-backed Ayurvedic articles for <strong>{{ topic_title }}</strong>. Articles tagged with this topic will appear here soon.</p>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if paginate.pages > 1 and display_count > 9 and loop_count > 0 -%}
+            <nav class="ka-blog-pagination" aria-label="Topic pagination">
+              {%- if paginate.previous -%}
+                {%- assign prev_url = paginate.previous.url -%}
+                {%- if topic_handle != blank -%}
+                  {%- if prev_url contains '?' -%}
+                    {%- assign prev_url = prev_url | append: '&topic=' | append: topic_handle -%}
+                  {%- else -%}
+                    {%- assign prev_url = prev_url | append: '?topic=' | append: topic_handle -%}
+                  {%- endif -%}
+                {%- endif -%}
+                <a class="ka-pagination-prev" href="{{ prev_url }}#articles" aria-label="Previous page">← Previous</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                 {%- if part.is_link -%}
+                  {%- assign part_url = part.url -%}
+                  {%- if topic_handle != blank -%}
+                    {%- if part_url contains '?' -%}
+                      {%- assign part_url = part_url | append: '&topic=' | append: topic_handle -%}
+                    {%- else -%}
+                      {%- assign part_url = part_url | append: '?topic=' | append: topic_handle -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  <a href="{{ part_url }}#articles">{{ part.title }}</a>
+                {%- else -%}
+                  {%- if part.title == paginate.current_page -%}
+                    <span class="current">{{ part.title }}</span>
+                  {%- else -%}
+                    <span class="deco">{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                {%- assign next_url = paginate.next.url -%}
+                {%- if topic_handle != blank -%}
+                  {%- if next_url contains '?' -%}
+                    {%- assign next_url = next_url | append: '&topic=' | append: topic_handle -%}
+                  {%- else -%}
+                    {%- assign next_url = next_url | append: '?topic=' | append: topic_handle -%}
+                  {%- endif -%}
+                {%- endif -%}
+                <a class="ka-pagination-next" href="{{ next_url }}#articles" aria-label="Next page">Next →</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </section>
+  {%- endcapture -%}
+
+  {%- if has_blocks -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'hero' -%}
+          <div {{ block.shopify_attributes }}>
+            {{ topic_hero_html }}
+          </div>
+        {%- when 'care_paths' or 'care_path' or 'journey' -%}
+          <div {{ block.shopify_attributes }}>
+            {{ care_path_journey_html }}
+          </div>
+        {%- when 'lifestyle' or 'ahara_vihara' -%}
+          {%- if is_carepath_page -%}
+            <div {{ block.shopify_attributes }}>
+              {{ care_path_lifestyle_html }}
+            </div>
+          {%- endif -%}
+        {%- when 'products' or 'formulations' -%}
+          {%- if is_carepath_page -%}
+            <div {{ block.shopify_attributes }}>
+              {{ care_path_products_html }}
+            </div>
+          {%- endif -%}
+        {%- when 'experts' or 'care_team' -%}
+          {%- if is_carepath_page -%}
+            <div {{ block.shopify_attributes }}>
+              {{ care_path_experts_html }}
+            </div>
+          {%- endif -%}
+        {%- when 'faq' or 'faqs' -%}
+          {%- if is_carepath_page -%}
+            <div {{ block.shopify_attributes }}>
+              {{ care_path_faq_html }}
+            </div>
+          {%- endif -%}
+        {%- when 'latest' or 'grid' or 'articles' -%}
+          <div {{ block.shopify_attributes }}>
+            {{ articles_grid_html }}
+          </div>
+        {%- when 'consult' -%}
+          <div {{ block.shopify_attributes }}>
+            {%- render 'ka-consult-cta', blog: selected_blog, section: section -%}
+          </div>
+        {%- when 'disclaimer' -%}
+          <div class="page-width ka-blog-container" {{ block.shopify_attributes }}>
+            <div class="vaidyam-article-disclaimer-box">
+              <p class="vaidyam-article-disclaimer-text">
+                {{ section.settings.default_disclaimer }}
+              </p>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- if is_carepath_page -%}
+      {{ topic_hero_html }}
+      {{ care_path_journey_html }}
+      {{ care_path_lifestyle_html }}
+      {{ care_path_products_html }}
+      {{ care_path_experts_html }}
+      {{ care_path_faq_html }}
+      {{ articles_grid_html }}
+    {%- else -%}
+      {{ topic_hero_html }}
+      {{ care_path_journey_html }}
+      {{ articles_grid_html }}
+      {%- render 'ka-consult-cta', blog: selected_blog, section: section -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%} ============ CHATBOT ============ {%- endcomment -%}
+  {%- render 'ka-chatbot', blog: selected_blog -%}
+</div>
+
+<script src="{{ 'vaidyam.js' | asset_url }}" defer></script>

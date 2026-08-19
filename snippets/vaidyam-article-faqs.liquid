@@ -1,0 +1,44 @@
+{% comment %}
+  vaidyam-article-faqs.liquid — FAQ accordion using native <details>
+  Usage: {% render 'vaidyam-article-faqs', article: article, blog: blog, block: block %}
+  All labels meta-driven via article.metafields.custom.*
+{% endcomment %}
+
+{%- liquid
+  assign faq_sec = article.metafields.custom.faq_section.value | default: article.metafields.custom.faq_section
+  assign faqs = faq_sec.faqs.value | default: faq_sec.faqs | default: article.metafields.custom.faqs.value | default: article.metafields.custom.faqs
+  assign faq_heading = block.settings.heading | default: faq_sec.heading.value | default: faq_sec.heading | default: faq_sec.title.value | default: faq_sec.title | default: article.metafields.custom.faq_heading.value | default: article.metafields.custom.faq_heading
+  assign faq_eyebrow = block.settings.eyebrow | default: faq_sec.eyebrow.value | default: faq_sec.eyebrow | default: blog.metafields.custom.faq_eyebrow.value | default: blog.metafields.custom.faq_eyebrow
+-%}
+
+{%- if faqs != blank and faqs.size > 0 -%}
+  <section class="ka-article-faq ka-blog-section--tight" id="faq" aria-labelledby="ka-faq-title">
+    {%- if faq_eyebrow != blank and faq_eyebrow != faq_heading -%}
+      <p class="ka-blog-eyebrow">{{ faq_eyebrow }}</p>
+    {%- endif -%}
+    {%- if faq_heading != blank -%}
+      <h2 id="ka-faq-title" class="ka-article-faq-title">{{ faq_heading }}</h2>
+    {%- endif -%}
+    {%- for faq_item in faqs -%}
+      {%- assign q_text = faq_item.question.value | default: faq_item.question | default: faq_item.title.value | default: faq_item.title | default: faq_item.heading.value | default: faq_item.heading -%}
+      {%- assign a_drop = faq_item.answer | default: faq_item.content -%}
+      {%- assign a_text = a_drop.value | default: a_drop -%}
+      {%- if q_text != blank -%}
+        <details class="ka-faq-item">
+          <summary class="ka-faq-summary">
+            <span>{{ q_text }}</span>
+          </summary>
+          <div class="ka-faq-answer">
+            <div class="ka-faq-answer-inner rte">
+              {%- if a_drop != blank and a_drop.type == 'rich_text_field' -%}
+                {{ a_drop | metafield_tag }}
+              {%- elsif a_text != blank -%}
+                {{ a_text | newline_to_br }}
+              {%- endif -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </section>
+{%- endif -%}

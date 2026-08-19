@@ -1,0 +1,12 @@
+ignore:
+  - 'Current/**'
+  - 'Articles/**'
+  - 'Articles_Formatted/**'
+  - 'Insertion/**'
+  - 'Ref/**'
+  - 'scratch/**'
+
+MatchingTranslations:
+  enabled: false
+TemplateLength:
+  enabled: false

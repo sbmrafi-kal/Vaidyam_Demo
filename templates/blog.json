@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "main-blog": {
+      "type": "main-vaidyam",
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {}
+        },
+        "about": {
+          "type": "about",
+          "settings": {}
+        },
+        "current_edition": {
+          "type": "current_edition",
+          "settings": {}
+        },
+        "care_paths": {
+          "type": "care_paths",
+          "settings": {}
+        },
+        "topics": {
+          "type": "topics",
+          "settings": {}
+        },
+        "through_pages": {
+          "type": "through_pages",
+          "settings": {}
+        },
+        "all_sections": {
+          "type": "all_sections",
+          "settings": {}
+        },
+        "by_concern": {
+          "type": "by_concern",
+          "settings": {}
+        },
+        "video": {
+          "type": "video",
+          "settings": {}
+        },
+        "testimonials": {
+          "type": "testimonials",
+          "settings": {}
+        },
+        "our_legacy": {
+          "type": "our_legacy",
+          "settings": {}
+        },
+        "contact_info": {
+          "type": "contact_info",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "hero",
+        "about",
+        "current_edition",
+        "care_paths",
+        "topics",
+        "through_pages",
+        "all_sections",
+        "by_concern",
+        "video",
+        "testimonials",
+        "our_legacy",
+        "contact_info"
+      ],
+      "name": "Vaidyam Journal Hub",
+      "settings": {
+        "hero_eyebrow": "KERALA AYURVEDA · SINCE 2003",
+        "hero_title": "A quarterly journal on evolving Ayurveda, for practitioners and students.",
+        "hero_subtitle": "Vaidyam connects classical Ayurvedic scholarship with contemporary clinical practice — published quarterly by Kerala Ayurveda Limited, reviewed by practicing BAMS and MD physicians."
+      }
+    }
+  },
+  "order": [
+    "main-blog"
+  ]
+}

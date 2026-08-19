@@ -1,0 +1,230 @@
+{% comment %}
+  vaidyam-trust-breaker.liquid — Why Trust Card Breaker (Metaobject Driven)
+  Usage: {% render 'vaidyam-trust-breaker', article: article, breakers_meta: breakers_meta %}
+{% endcomment %}
+
+{%- liquid
+  assign body_sec = article.metafields.custom.body_section.value | default: article.metafields.custom.body_section
+  assign breakers_meta = breakers_meta | default: body_sec.breakers.value | default: article.metafields.custom.breakers.value
+  assign trust_metaobject = breakers_meta.why_trust_card.value | default: breakers_meta.why_trust_card | default: article.metafields.custom.why_trust_kerala_ayurveda.value
+  
+  assign card_title = trust_metaobject.title.value | default: trust_metaobject.title
+  
+  assign item_1_img = trust_metaobject.icon_1.value | default: trust_metaobject.icon_1
+  assign item_1_lbl = trust_metaobject.icon_1_alt_name.value | default: trust_metaobject.icon_1_alt_name
+
+  assign item_2_img = trust_metaobject.icon_2.value | default: trust_metaobject.icon_2
+  assign item_2_lbl = trust_metaobject.icon_2_alt_name.value | default: trust_metaobject.icon_2_alt_name
+
+  assign item_3_img = trust_metaobject.icon_3.value | default: trust_metaobject.icon_3
+  assign item_3_lbl = trust_metaobject.icon_3_alt_name.value | default: trust_metaobject.icon_3_alt_name
+
+  assign item_4_img = trust_metaobject.icon_4.value | default: trust_metaobject.icon_4
+  assign item_4_lbl = trust_metaobject.icon_4_alt_name.value | default: trust_metaobject.icon_4_alt_name
+
+  assign item_5_img = trust_metaobject.icon_5.value | default: trust_metaobject.icon_5
+  assign item_5_lbl = trust_metaobject.icon_5_alt_name.value | default: trust_metaobject.icon_5_alt_name
+
+  assign is_trust_read_disabled = false
+  if breakers_meta.trust_card_read_aloud != null
+    assign t_val = breakers_meta.trust_card_read_aloud.value | default: breakers_meta.trust_card_read_aloud
+    if t_val == false or t_val == 'false' or t_val == 'False'
+      assign is_trust_read_disabled = true
+    endif
+  elsif breakers_meta.trustcard_read != null
+    assign t_val = breakers_meta.trustcard_read.value | default: breakers_meta.trustcard_read
+    if t_val == false or t_val == 'false' or t_val == 'False'
+      assign is_trust_read_disabled = true
+    endif
+  elsif trust_metaobject.trust_card_read_aloud != null
+    assign t_val = trust_metaobject.trust_card_read_aloud.value | default: trust_metaobject.trust_card_read_aloud
+    if t_val == false or t_val == 'false' or t_val == 'False'
+      assign is_trust_read_disabled = true
+    endif
+  elsif article.metafields.custom.trust_card_read_aloud != null
+    assign t_val = article.metafields.custom.trust_card_read_aloud.value | default: article.metafields.custom.trust_card_read_aloud
+    if t_val == false or t_val == 'false' or t_val == 'False'
+      assign is_trust_read_disabled = true
+    endif
+  elsif article.metafields.custom.trustcard_read != null
+    assign t_val = article.metafields.custom.trustcard_read.value | default: article.metafields.custom.trustcard_read
+    if t_val == false or t_val == 'false' or t_val == 'False'
+      assign is_trust_read_disabled = true
+    endif
+  endif
+
+  assign display_trust = true
+  assign dt_raw = nil
+  if breakers_meta.display_trust_block != null
+    assign dt_raw = breakers_meta.display_trust_block
+  elsif breakers_meta.display_trust_card != null
+    assign dt_raw = breakers_meta.display_trust_card
+  elsif trust_metaobject.display_trust_block != null
+    assign dt_raw = trust_metaobject.display_trust_block
+  elsif trust_metaobject.display_trust_card != null
+    assign dt_raw = trust_metaobject.display_trust_card
+  elsif article.metafields.custom.display_trust_block != null
+    assign dt_raw = article.metafields.custom.display_trust_block
+  elsif article.metafields.custom.display_trust_card != null
+    assign dt_raw = article.metafields.custom.display_trust_card
+  endif
+
+  if dt_raw != null
+    if dt_raw.value == false or dt_raw.value == 'false' or dt_raw == false or dt_raw == 'false' or dt_raw == 'False' or dt_raw == 0
+      assign display_trust = false
+    endif
+  endif
+-%}
+
+{%- if trust_metaobject != blank and display_trust -%}
+<div class="vaidyam-trust-breaker-card reveal-on-scroll" id="vaidyam-trust-breaker"{% if is_trust_read_disabled %} data-read-aloud="false"{% endif %}>
+  <div class="vaidyam-trust-breaker-inner">
+    {%- if card_title != blank -%}
+      <div class="ka-trust-header">
+        <h2 class="ka-trust-title">{{ card_title }}</h2>
+        <div class="ka-trust-divider">
+          <svg width="60" height="12" viewBox="0 0 60 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0 6H24M36 6H60" stroke="#2C3E24" stroke-opacity="0.3" stroke-width="1"/>
+            <path d="M30 2C27.5 4.5 25 6 22 6C25 6 27.5 7.5 30 10C32.5 7.5 35 6 38 6C35 6 32.5 4.5 30 2Z" fill="#2C3E24" fill-opacity="0.7"/>
+          </svg>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} DESKTOP VIEW (5 items in 1 horizontal row with vertical dividers) {%- endcomment -%}
+    <div class="ka-trust-desktop-view">
+      <div class="ka-trust-grid ka-trust-grid--desktop">
+        
+        {%- comment -%} Item 1 {%- endcomment -%}
+        <div class="ka-trust-item">
+          <div class="ka-trust-icon-circle">
+            {%- if item_1_img != blank -%}
+              <img src="{{ item_1_img | image_url: width: 140 }}" alt="{{ item_1_lbl | escape }}" width="70" height="70" loading="lazy" class="ka-trust-icon-img">
+            {%- else -%}
+              <img src="{{ 'icon_01.png' | asset_url }}" alt="80 Years Heritage" width="70" height="70" loading="lazy" class="ka-trust-icon-img">
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="ka-trust-col-divider" aria-hidden="true"></div>
+
+        {%- comment -%} Item 2 {%- endcomment -%}
+        <div class="ka-trust-item">
+          <div class="ka-trust-icon-circle">
+            {%- if item_2_img != blank -%}
+              <img src="{{ item_2_img | image_url: width: 140 }}" alt="{{ item_2_lbl | escape }}" width="70" height="70" loading="lazy" class="ka-trust-icon-img">
+            {%- else -%}
+              <img src="{{ 'icon_02.png' | asset_url }}" alt="US FDA Registered" width="70" height="70" loading="lazy" class="ka-trust-icon-img">
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="ka-trust-col-divider" aria-hidden="true"></div>
+
+        {%- comment -%} Item 3 {%- endcomment -%}
+        <div class="ka-trust-item">
+          <div class="ka-trust-icon-circle">
+            {%- if item_3_img != blank -%}
+              <img src="{{ item_3_img | image_url: width: 140 }}" alt="{{ item_3_lbl | escape }}" width="70" height="70" loading="lazy" class="ka-trust-icon-img">
+            {%- else -%}
+              <img src="{{ 'icon_03.png' | asset_url }}" alt="1945 Established" width="70" height="70" loading="lazy" class="ka-trust-icon-img">
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="ka-trust-col-divider" aria-hidden="true"></div>
+
+        {%- comment -%} Item 4 {%- endcomment -%}
+        <div class="ka-trust-item">
+          <div class="ka-trust-icon-circle">
+            {%- if item_4_img != blank -%}
+              <img src="{{ item_4_img | image_url: width: 140 }}" alt="{{ item_4_lbl | escape }}" width="70" height="70" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+            {%- else -%}
+              <img src="{{ 'icon_04.png' | asset_url }}" alt="350+ Products" width="70" height="70" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="ka-trust-col-divider" aria-hidden="true"></div>
+
+        {%- comment -%} Item 5 {%- endcomment -%}
+        <div class="ka-trust-item">
+          <div class="ka-trust-icon-circle">
+            {%- if item_5_img != blank -%}
+              <img src="{{ item_5_img | image_url: width: 140 }}" alt="{{ item_5_lbl | escape }}" width="70" height="70" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+            {%- else -%}
+              <img src="{{ 'icon_05.png' | asset_url }}" alt="Clinics & Academy Expert Led" width="70" height="70" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+            {%- endif -%}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {%- comment -%} MOBILE VIEW {%- endcomment -%}
+    <div class="ka-trust-mobile-view">
+      <div class="ka-trust-mobile-box">
+        <div class="ka-trust-grid ka-trust-grid--mobile">
+          
+          {%- comment -%} Item 1 {%- endcomment -%}
+          <div class="ka-trust-item">
+            <div class="ka-trust-icon-circle">
+              {%- if item_1_img != blank -%}
+                <img src="{{ item_1_img | image_url: width: 120 }}" alt="{{ item_1_lbl | escape }}" width="56" height="56" loading="lazy" class="ka-trust-icon-img">
+              {%- else -%}
+                <img src="{{ 'icon_01.png' | asset_url }}" alt="80 Years Heritage" width="56" height="56" loading="lazy" class="ka-trust-icon-img">
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%} Item 2 {%- endcomment -%}
+          <div class="ka-trust-item">
+            <div class="ka-trust-icon-circle">
+              {%- if item_2_img != blank -%}
+                <img src="{{ item_2_img | image_url: width: 120 }}" alt="{{ item_2_lbl | escape }}" width="56" height="56" loading="lazy" class="ka-trust-icon-img">
+              {%- else -%}
+                <img src="{{ 'icon_02.png' | asset_url }}" alt="US FDA Registered" width="56" height="56" loading="lazy" class="ka-trust-icon-img">
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%} Item 3 {%- endcomment -%}
+          <div class="ka-trust-item">
+            <div class="ka-trust-icon-circle">
+              {%- if item_3_img != blank -%}
+                <img src="{{ item_3_img | image_url: width: 120 }}" alt="{{ item_3_lbl | escape }}" width="56" height="56" loading="lazy" class="ka-trust-icon-img">
+              {%- else -%}
+                <img src="{{ 'icon_03.png' | asset_url }}" alt="1945 Established" width="56" height="56" loading="lazy" class="ka-trust-icon-img">
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%} Item 4 {%- endcomment -%}
+          <div class="ka-trust-item">
+            <div class="ka-trust-icon-circle">
+              {%- if item_4_img != blank -%}
+                <img src="{{ item_4_img | image_url: width: 120 }}" alt="{{ item_4_lbl | escape }}" width="56" height="56" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+              {%- else -%}
+                <img src="{{ 'icon_04.png' | asset_url }}" alt="350+ Products" width="56" height="56" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%} Item 5 {%- endcomment -%}
+          <div class="ka-trust-item">
+            <div class="ka-trust-icon-circle">
+              {%- if item_5_img != blank -%}
+                <img src="{{ item_5_img | image_url: width: 120 }}" alt="{{ item_5_lbl | escape }}" width="56" height="56" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+              {%- else -%}
+                <img src="{{ 'icon_05.png' | asset_url }}" alt="Clinics & Academy Expert Led" width="56" height="56" loading="lazy" class="ka-trust-icon-img ka-trust-icon-img--vector">
+              {%- endif -%}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{%- endif -%}

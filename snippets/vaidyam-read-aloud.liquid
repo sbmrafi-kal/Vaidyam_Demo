@@ -1,0 +1,228 @@
+{% comment %}
+  vaidyam-read-aloud.liquid — Premium browser-native Speech Synthesis (Read Aloud) audio agent
+  Usage: {% render 'vaidyam-read-aloud', article: article %}
+{% endcomment %}
+
+<div class="vaidyam-read-aloud-component">
+<button class="vaidyam-read-aloud-floating-btn ka-hidden" id="vaidyam-read-aloud-trigger" aria-label="Read Aloud Article">
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="vaidyam-read-aloud-icon"
+  >
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+  </svg>
+  <span class="vaidyam-read-aloud-label">Read Aloud</span>
+</button>
+
+<!-- Read Aloud Selection Modal -->
+<div class="vaidyam-read-aloud-modal" id="vaidyam-read-aloud-modal" aria-hidden="true">
+  <div class="vaidyam-read-aloud-modal-overlay"></div>
+  <div class="vaidyam-read-aloud-modal-content" id="vaidyam-read-aloud-modal-content">
+    <div class="vaidyam-read-aloud-modal-header">
+      <button class="vaidyam-read-aloud-back-btn" aria-label="Go back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h3>Read Aloud Options</h3>
+      <button class="vaidyam-read-aloud-modal-close" aria-label="Close modal" onclick="if(window.closeKaReadAloudModal)window.closeKaReadAloudModal();">&times;</button>
+    </div>
+
+    <!-- Container for double-pane sliding views -->
+    <div class="vaidyam-read-aloud-modal-views-wrapper">
+      <!-- Main Options View -->
+      <div class="vaidyam-read-aloud-modal-body">
+        <button class="vaidyam-read-aloud-option-btn" data-mode="entire">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E4B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <span>Read All Content</span>
+        </button>
+
+        <button class="vaidyam-read-aloud-option-btn" data-mode="section">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E4B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <circle cx="4" cy="6" r="1.5" fill="#1E4B3C"></circle>
+            <circle cx="4" cy="12" r="1.5" fill="#1E4B3C"></circle>
+            <circle cx="4" cy="18" r="1.5" fill="#1E4B3C"></circle>
+          </svg>
+          <span>Read a Specific Section</span>
+        </button>
+
+        <button class="vaidyam-read-aloud-option-btn" data-mode="takeaways">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E4B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+          </svg>
+          <span>Read Key Takeaways Only</span>
+        </button>
+      </div>
+
+      <!-- TOC Section Picker View -->
+      <div class="vaidyam-read-aloud-toc-selection">
+        <p class="vaidyam-read-aloud-subheading">Select a section to begin:</p>
+        <div class="vaidyam-read-aloud-toc-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Active Speech Control Bar (Desktop Floating Media Pill) -->
+<div class="vaidyam-read-aloud-player" id="vaidyam-read-aloud-player">
+  <div class="vaidyam-read-aloud-player-inner">
+    <!-- Left: Thumbnail + Title & Timer Below Title -->
+    <div class="ka-desk-player-left">
+      <div class="ka-desk-player-img-wrap">
+        {% if article.image %}
+          <img src="{{ article.image | image_url: width: 80, height: 80 }}" alt="{{ article.title | escape }}" width="38" height="38">
+        {% else %}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        {% endif %}
+      </div>
+      <div class="ka-desk-player-text">
+        <span class="ka-desk-player-title">{{ article.title | escape | truncate: 35 }}</span>
+        <span class="ka-desk-time-display" id="ka-desk-time">0:00 / 0:00</span>
+      </div>
+    </div>
+
+    <!-- Center: Playback Controls (15s Rewind | Play | 15s Forward) -->
+    <div class="ka-desk-player-center">
+      <button class="ka-desk-ctrl-btn vaidyam-read-aloud-rewind-btn" aria-label="Rewind 15 seconds">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+          <path d="M1 4v6h6"/>
+          <text x="12" y="15.5" font-size="7.5" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="sans-serif">15</text>
+        </svg>
+      </button>
+      <button class="ka-desk-play-primary vaidyam-read-aloud-play-btn is-paused" aria-label="Play/Pause speech">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon" width="20" height="20">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" width="20" height="20">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+      <button class="ka-desk-ctrl-btn vaidyam-read-aloud-forward-btn" aria-label="Forward 15 seconds">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          <path d="M23 4v6h-6"/>
+          <text x="12" y="15.5" font-size="7.5" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="sans-serif">15</text>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Right: Speed, Volume Toggle, Stop -->
+    <div class="ka-desk-player-right">
+      <div class="vaidyam-read-aloud-speed-wrap">
+        <button class="vaidyam-read-aloud-speed-btn">1x</button>
+        <div class="vaidyam-read-aloud-speed-dropdown">
+          <button data-speed="1.0">1x</button>
+          <button data-speed="1.25">1.25x</button>
+          <button data-speed="1.5">1.5x</button>
+        </div>
+      </div>
+      <div class="vaidyam-read-aloud-volume-wrap">
+        <button class="vaidyam-read-aloud-vol-trigger" id="ka-desk-vol-toggle" aria-label="Toggle Mute/Unmute">
+          <svg class="vol-sound-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="vol-mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+      </div>
+      <button class="vaidyam-read-aloud-stop-btn" aria-label="Stop reading" onclick="if(window.stopKaReadAloud)window.stopKaReadAloud();">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+<!-- Mobile Player Card (Glossary Light Green Card + Straight Scrubber Bar) -->
+<div class="ka-mobile-player-card" id="ka-mobile-player-card">
+  <!-- Straight Scrubber Bar Line + Time Row + Inline Close Button -->
+  <div class="ka-mp-time-row">
+    <span class="ka-mp-time" id="ka-mp-time-current">0:00</span>
+    <div class="ka-mp-bar-container" id="ka-mp-bar-container">
+      <svg class="ka-mp-bar-svg" id="ka-mp-bar-svg" preserveAspectRatio="none">
+        <path class="ka-mp-svg-track" id="ka-mp-svg-track" d=""></path>
+        <path class="ka-mp-svg-fill" id="ka-mp-svg-fill" d=""></path>
+      </svg>
+      <div class="ka-mp-thumb-dot" id="ka-mp-thumb-dot"></div>
+      <input type="range" class="ka-mp-range" id="ka-mp-range" min="0" max="100" value="0" step="0.1" aria-label="Progress scrubber">
+    </div>
+    <span class="ka-mp-time" id="ka-mp-time-total">-0:00</span>
+    <button class="ka-mp-inline-close-btn" id="ka-mp-stop" aria-label="Close media player" onclick="if(window.stopKaReadAloud)window.stopKaReadAloud();">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Single Horizontal Controls Row (5-Buttons: Speed | Rewind | Play | Forward | Mute) -->
+  <div class="ka-mp-controls-row">
+    <button class="ka-mp-speed-btn" id="ka-mp-speed-btn" aria-label="Speed option">1x</button>
+    
+    <button class="ka-mp-ctrl-btn ka-mp-rewind-btn" id="ka-mp-rewind" aria-label="Rewind 15 seconds">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+        <path d="M1 4v6h6"/>
+        <text x="12" y="15.5" font-size="7.5" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="sans-serif">15</text>
+      </svg>
+    </button>
+
+    <button class="ka-mp-play-primary ka-mp-play-btn is-paused" id="ka-mp-play" aria-label="Play or pause speech">
+      <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon" width="20" height="20">
+        <polygon points="6 3 20 12 6 21 6 3"></polygon>
+      </svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" width="20" height="20">
+        <rect x="6" y="4" width="4" height="16"></rect>
+        <rect x="14" y="4" width="4" height="16"></rect>
+      </svg>
+    </button>
+
+    <button class="ka-mp-ctrl-btn ka-mp-forward-btn" id="ka-mp-forward" aria-label="Forward 15 seconds">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        <path d="M23 4v6h-6"/>
+        <text x="12" y="15.5" font-size="7.5" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="sans-serif">15</text>
+      </svg>
+    </button>
+
+    <button class="ka-mp-ctrl-btn ka-mp-mute-btn" id="ka-mp-mute" aria-label="Toggle Mute/Unmute">
+      <svg class="vol-sound-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      </svg>
+      <svg class="vol-mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    </button>
+  </div>
+</div>
+
+</div>
+
+<script src="{{ 'vaidyam-read-aloud.js' | asset_url }}" defer></script>

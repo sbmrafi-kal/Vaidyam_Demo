@@ -1,0 +1,160 @@
+{% comment %}
+  vaidyam-related-articles.liquid — Related articles 2x2 grid carousel
+  Strictly dynamic from Shopify Admin metafields/metaobjects. No fallbacks or mocks.
+  Usage: {% render 'vaidyam-related-articles', article: article, blog: blog %}
+{% endcomment %}
+
+{%- liquid
+  assign rec_sec = article.metafields.custom.related_articles_section.value
+  if rec_sec == blank
+    assign rec_sec = article.metafields.custom.related_articles_section
+  endif
+  if rec_sec == blank
+    assign rec_sec = article.metafields.custom.related_articles.value
+  endif
+  if rec_sec == blank
+    assign rec_sec = article.metafields.custom.related_articles
+  endif
+
+  assign related_raw = nil
+  if rec_sec.related_articles_list.value != blank
+    assign related_raw = rec_sec.related_articles_list.value
+  elsif rec_sec.related_articles_list != blank
+    assign related_raw = rec_sec.related_articles_list
+  elsif rec_sec.related_articles.value != blank
+    assign related_raw = rec_sec.related_articles.value
+  elsif rec_sec.related_articles != blank
+    assign related_raw = rec_sec.related_articles
+  elsif rec_sec.articles_list.value != blank
+    assign related_raw = rec_sec.articles_list.value
+  elsif rec_sec.articles_list != blank
+    assign related_raw = rec_sec.articles_list
+  elsif rec_sec.articles.value != blank
+    assign related_raw = rec_sec.articles.value
+  elsif rec_sec.articles != blank
+    assign related_raw = rec_sec.articles
+  elsif article.metafields.custom.related_articles_list.value != blank
+    assign related_raw = article.metafields.custom.related_articles_list.value
+  elsif article.metafields.custom.related_articles_list != blank
+    assign related_raw = article.metafields.custom.related_articles_list
+  elsif article.metafields.custom.related_articles.value != blank
+    assign related_raw = article.metafields.custom.related_articles.value
+  elsif article.metafields.custom.related_articles != blank
+    assign related_raw = article.metafields.custom.related_articles
+  endif
+
+  assign related_eyebrow = block.settings.eyebrow
+  if related_eyebrow == blank
+    assign related_eyebrow = rec_sec.eyebrow_header_label.value | default: rec_sec.eyebrow_header_label | default: rec_sec.related_eyebrow.value | default: rec_sec.related_eyebrow | default: 'MORE FROM AYURVEDA'
+  endif
+
+  assign related_heading = block.settings.heading
+  if related_heading == blank
+    assign related_heading = rec_sec.section_heading.value | default: rec_sec.section_heading | default: rec_sec.heading.value | default: rec_sec.heading | default: 'Related Articles'
+  endif
+-%}
+
+{%- if related_raw != blank -%}
+  {%- capture related_slides_html -%}
+    {%- assign card_count = 0 -%}
+    {%- assign total_slides = 0 -%}
+
+    {%- for item in related_raw -%}
+      {%- assign rel_art = nil -%}
+      {%- if item.title != blank and item.url != blank -%}
+        {%- assign rel_art = item -%}
+      {%- elsif item.article != blank -%}
+        {%- assign rel_art = item.article.value | default: item.article -%}
+      {%- elsif item.title != blank -%}
+        {%- assign rel_art = item -%}
+      {%- elsif item.handle != blank -%}
+        {%- assign rel_art = item -%}
+        {%- if rel_art.title == blank -%}
+          {%- assign bare_h = item.handle | split: '/' | last -%}
+          {%- if blog.handle != blank -%}
+            {%- assign full_h = blog.handle | append: '/' | append: bare_h -%}
+            {%- assign rel_art = articles[full_h] | default: articles[bare_h] -%}
+          {%- else -%}
+            {%- assign rel_art = articles[bare_h] -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign item_str = item | append: '' | strip -%}
+        {%- assign bare_h = item_str | split: '/' | last -%}
+        {%- if blog.handle != blank -%}
+          {%- assign full_h = blog.handle | append: '/' | append: bare_h -%}
+          {%- assign rel_art = articles[full_h] | default: articles[bare_h] -%}
+        {%- else -%}
+          {%- assign rel_art = articles[bare_h] -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if rel_art != blank and rel_art.title != blank -%}
+        {%- assign is_same_article = false -%}
+        {%- if rel_art.id != blank and article.id != blank and rel_art.id == article.id -%}
+          {%- assign is_same_article = true -%}
+        {%- elsif rel_art.handle != blank and article.handle != blank and rel_art.handle == article.handle -%}
+          {%- assign is_same_article = true -%}
+        {%- endif -%}
+
+        {%- unless is_same_article -%}
+          {%- assign mod4 = card_count | modulo: 4 -%}
+          {%- if mod4 == 0 -%}
+            {%- if card_count > 0 -%}</div></div>{%- endif -%}
+            {%- assign total_slides = total_slides | plus: 1 -%}
+            <div class="ka-related-slide" data-slide-index="{{ total_slides | minus: 1 }}">
+              <div class="ka-related-slide-grid">
+          {%- endif -%}
+
+          {%- render 'vaidyam-article-card', article: rel_art -%}
+          {%- assign card_count = card_count | plus: 1 -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if card_count > 0 -%}</div></div>{%- endif -%}
+  {%- endcapture -%}
+
+  {%- if card_count > 0 -%}
+    <section class="ka-blog-section--tight" id="related" data-card-count="{{ card_count }}" data-slides="{{ total_slides }}">
+      <div class="ka-blog-section-head vaidyam-related-articles-header">
+        <div class="vaidyam-related-articles-title-group">
+          {%- if related_eyebrow != blank -%}
+            <p class="ka-blog-eyebrow">{{ related_eyebrow }}</p>
+          {%- endif -%}
+          {%- if related_heading != blank -%}
+            <h2>{{ related_heading }}</h2>
+          {%- endif -%}
+        </div>
+        
+        {%- if card_count > 4 and total_slides > 1 -%}
+          <div class="ka-blog-topic-nav vaidyam-related-articles-nav" aria-label="Related articles carousel navigation">
+            <button class="ka-blog-topic-arrow ka-blog-topic-arrow--prev" type="button" aria-label="Previous articles">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12L4 8L10 4"/>
+              </svg>
+            </button>
+            <button class="ka-blog-topic-arrow ka-blog-topic-arrow--next" type="button" aria-label="Next articles">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 12L12 8L6 4"/>
+              </svg>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div class="vaidyam-related-articles-line"></div>
+      
+      <div class="ka-article-product-grid-shell vaidyam-related-articles-shell">
+        <div class="vaidyam-related-articles-carousel-container">
+          <div class="vaidyam-related-articles-track">
+            {{ related_slides_html }}
+          </div>
+        </div>
+      </div>
+
+      <div class="vaidyam-related-articles-bottom-line"></div>
+
+    </section>
+  {%- endif -%}
+{%- endif -%}
