@@ -1,0 +1,380 @@
+- generic [active] [ref=f104e1]:
+  - link "Skip to content" [ref=f104e2] [cursor=pointer]:
+    - /url: "#MainContent"
+  - banner [ref=f104e4]:
+    - generic [ref=f104e7]:
+      - link [ref=f104e10] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f104e12]:
+        - button "Open search" [ref=f104e14] [cursor=pointer]
+        - generic [ref=f104e15]:
+          - button "Open account menu" [ref=f104e17] [cursor=pointer]
+          - 'button "Open cart Total items in cart: 0" [ref=f104e23] [cursor=pointer]':
+            - generic [ref=f104e25]:
+              - status:
+                - generic [ref=f104e27]: "Total items in cart: 0"
+  - main [ref=f104e28]:
+    - generic [ref=f104e31]:
+      - generic [ref=f104e32]:
+        - generic [ref=f104e33]: Kerala Ayurveda · Since 2003
+        - heading "Kerala Ayurveda Vaidyam" [level=1] [ref=f104e34]
+        - paragraph [ref=f104e36]: A quarterly journal on evolving Ayurveda — for practitioners and students, physician-reviewed, published since 2003.
+        - generic [ref=f104e37]:
+          - link [ref=f104e38] [cursor=pointer]:
+            - /url: "#current-edition"
+          - link "Read free articles" [ref=f104e42] [cursor=pointer]:
+            - /url: /apps/vaidyam/read
+        - generic [ref=f104e43]: 80+ years of Kerala Ayurveda · Quarterly since 2003 · Reviewed by practicing physicians
+      - generic [ref=f104e47]:
+        - generic [ref=f104e48]: "18"
+        - generic [ref=f104e49]: recurring sections every issue
+    - generic [ref=f104e52]:
+      - generic [ref=f104e55]:
+        - heading "Current Edition" [level=2] [ref=f104e56]
+        - paragraph [ref=f104e58]: Discover our latest issue filled with expert insights and practical Ayurvedic wisdom.
+      - generic [ref=f104e59]:
+        - generic [ref=f104e60]: New Issue
+        - generic [ref=f104e64]:
+          - generic [ref=f104e65]: Vol VIII issue 4, Oct - Dec 2025
+          - heading "Vaidyam - A Journal on Evolving Ayurveda" [level=2] [ref=f104e66]
+          - generic [ref=f104e67]:
+            - generic [ref=f104e68]: "In This Issue:"
+            - list [ref=f104e69]:
+              - listitem [ref=f104e70]: "Special Feature: Exploring multispeciality approaches in the management of thyroid conditions"
+              - listitem [ref=f104e71]: "⁠Futuristic & Thought-Provoking articles: For the evolution of evidence-based Ayurveda"
+              - listitem [ref=f104e72]: "Words of Wisdom: Insights from doyens of Ayurveda, guiding the next generation of practitioners"
+              - listitem [ref=f104e73]: "Clinical Focus: Practice-oriented, clinically relevant guidance in managing thyroid conditions"
+            - generic [ref=f104e74]:
+              - heading "Rs. 700" [level=2] [ref=f104e75]
+              - generic [ref=f104e76]: Print Only
+            - button "Get This Issue" [ref=f104e78] [cursor=pointer]
+    - generic [ref=f104e87]:
+      - generic [ref=f104e89]:
+        - heading "Through The Pages" [level=2] [ref=f104e90]
+        - paragraph [ref=f104e92]: Each issue of Vaidyam brings you in-depth articles across these essential categories
+      - list [ref=f104e97]:
+        - listitem [ref=f104e98]:
+          - generic [ref=f104e102]:
+            - heading "Vaidya Voice" [level=2] [ref=f104e103]
+            - generic [ref=f104e104]:
+              - paragraph [ref=f104e106]: The voice of the vaidya.” This section focuses on interviews, panel discussions, surveys, and focal discussions regarding specific clinical topics, highlighting experts or clinicians along with their specialties, clinical experiences, and practical applications.
+              - button "Read more" [ref=f104e107] [cursor=pointer]
+        - listitem [ref=f104e108]:
+          - generic [ref=f104e112]:
+            - heading "Case of the trimonth" [level=2] [ref=f104e113]
+            - generic [ref=f104e114]:
+              - paragraph [ref=f104e116]: To effectively present findings from single-case reports, it's essential to follow the CARE (Case Report) format properly. By adhering to the CARE guidelines, we document the clinical details, interventions, and outcomes of individual cases, thereby contributing to the broader understanding of medical practice and patient care. Each report highlights unique aspects of the case while maintaining a clear and structured approach, making it easier for readers to grasp the significance and implications of the findings.
+              - button "Read more" [ref=f104e117] [cursor=pointer]
+        - listitem [ref=f104e118]:
+          - generic [ref=f104e122]:
+            - heading "Vox-Populi" [level=2] [ref=f104e123]
+            - generic [ref=f104e124]:
+              - paragraph [ref=f104e126]: Vox Populi, meaning "voice of the people," is dedicated to highlighting the thoughts, ideas, and insights from individuals who are not Ayurvedic practitioners but have engaged with or possess a strong understanding of Ayurveda. This section aims to shed light on the diverse beliefs and perspectives regarding Ayurvedic health and science that exist within our society, promoting a broader appreciation of the various non-medical viewpoints.
+              - button "Read more" [ref=f104e127] [cursor=pointer]
+        - listitem [ref=f104e128]:
+          - generic [ref=f104e132]:
+            - heading "Śāstramathanam" [level=2] [ref=f104e133]
+            - generic [ref=f104e134]:
+              - paragraph [ref=f104e136]: The academic involvement of Kerala Ayurveda in the past went beyond mere words; it led to the development of many programs. One of these was the Śāstramathanam, or the so-called venue for churning of knowledge, hosted by Late Padmasree Dr. K. Rajagopalan, along with other practitioners, students, and others. The documented version of these discussions is now launched as a narrative series in every issue of Vaidya Magazine.
+              - button "Read more" [ref=f104e137] [cursor=pointer]
+      - generic [ref=f104e138]:
+        - paragraph [ref=f104e140]: And much more in every issue, including expert interviews, reader questions, and product reviews.
+        - button "See all categories" [ref=f104e141] [cursor=pointer]
+    - generic [ref=f104e144]:
+      - generic [ref=f104e146]:
+        - heading "By concern" [level=2] [ref=f104e147]
+        - paragraph [ref=f104e149]: Every clinical article below is standalone, physician-reviewed, and free to register for — no trial, no payment, ever.
+      - link "DIGESTIVE & GUT HEALTH CLINICAL Real dosing guidance for one of Ayurveda's most-prescribed formulations, grounded in clinical evidence. Triphala in Clinical Practice Dr. Nimin Sreedhar, BAMS · Chief of Medical Technology, Kerala Ayurveda Limited" [ref=f104e151] [cursor=pointer]:
+        - /url: /apps/vaidyam/read
+        - generic [ref=f104e152]:
+          - generic [ref=f104e153]: DIGESTIVE & GUT HEALTH
+          - generic [ref=f104e154]: CLINICAL
+        - paragraph [ref=f104e156]: Real dosing guidance for one of Ayurveda's most-prescribed formulations, grounded in clinical evidence.
+        - generic [ref=f104e157]: Triphala in Clinical Practice
+        - generic [ref=f104e161]: Dr. Nimin Sreedhar, BAMS · Chief of Medical Technology, Kerala Ayurveda Limited
+      - paragraph [ref=f104e163]: Prototype build — one article live today; more concerns are added as the library grows.
+    - generic [ref=f104e167]:
+      - generic [ref=f104e169]:
+        - heading "What Our Readers Say" [level=2] [ref=f104e170]
+        - paragraph [ref=f104e172]: Trusted by practicing Ayurvedic physicians and BAMS students, in Kerala and beyond.
+      - group [ref=f104e175]:
+        - generic [ref=f104e176]:
+          - tabpanel [ref=f104e177]:
+            - generic [ref=f104e178]:
+              - generic [ref=f104e179]:
+                - generic [ref=f104e180]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e182]:
+                  - text: "\""
+                  - emphasis [ref=f104e183]: I find Vaidyam magazine very interesting and informative. Vaidyam Jan - March 2025 issue focusing on Sports Ayurveda has been a captivating experience for me as a reader. Without depriving stress on the central theme, various aspects of Sastra have been dealt with beautifully. The contents are enlightening in nature. Conversations with Dr Mathews Vempilli, and expository on Murivenna by Dr Ajayan Sadanandan and most of the other sections were interesting. Glad to see the knowledge of legendary physicians like Dr K Rajagopalan being passed on to the next generation of Vaidyas. Overall the Quarterly is a must read for all upcoming Vaidyas and Sasthrarthis
+                  - text: "\""
+              - generic [ref=f104e187]:
+                - heading [level=2] [ref=f104e188]: Dr. Anand R. V.
+                - generic [ref=f104e189]: Chief Physician
+          - tabpanel [ref=f104e190]:
+            - generic [ref=f104e191]:
+              - generic [ref=f104e192]:
+                - generic [ref=f104e193]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e195]:
+                  - emphasis [ref=f104e196]: "\"The revamped version of Kerala Ayurveda's Vaidyam magazine stands out with its diverse features and engaging sections that blend traditional Ayurveda with contemporary research, insightful interviews, and showcases from premier institutions. While maintaining its traditional purity, the magazine adds vibrant colors with new columns such as book reviews, formulations, and interviews with luminaries. These unique additions enhance its appeal, making it a delightful read for all. I extend my heartfelt thanks to the visionary team behind this initiative.”"
+              - generic [ref=f104e200]:
+                - heading [level=2] [ref=f104e201]: Dr. Arjun M.
+                - generic [ref=f104e202]: Assistant Professor, Department of Rasasastra & Bhaishajya KalpanaVaidyaratnam Ayurveda College, Ollur, Thrissur.
+          - tabpanel [ref=f104e203]:
+            - generic [ref=f104e204]:
+              - generic [ref=f104e205]:
+                - generic [ref=f104e206]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e208]:
+                  - text: "\""
+                  - emphasis [ref=f104e209]: The cover page is attractive, and the overall content is highly professional. The 'Simple to Complex – Readometer' is especially helpful, and the editorial quality reflects a strong and relevant editing team. Vaidyam serves as a practical guide for BAMS students and doctors, with insightful interviews and well-structured treatment protocols. I found the 'Spotlight' section concise and engaging, while features like the 'Floral Trail of Rama' bring creativity to the magazine. Articles by Dr. Jayan and Dr. Ajayan are practical, useful, and well-presented. The inclusion of QR codes makes access quick and easy. Overall, Vaidyam is readable, interesting, and professionally laid out. Wishing the team continued success
+                  - text: ."
+              - generic [ref=f104e213]:
+                - heading [level=2] [ref=f104e214]: Dr. Rajesh B.
+                - generic [ref=f104e215]: Consultant
+          - tabpanel [ref=f104e216]:
+            - generic [ref=f104e217]:
+              - generic [ref=f104e218]:
+                - generic [ref=f104e219]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e221]:
+                  - text: "\""
+                  - emphasis [ref=f104e222]: I truly appreciate the efforts of the Kerala Ayurveda Vaidyam Team in bringing out this special issue on Sports Ayurveda. The magazine beautifully highlights how Ayurveda can play a vital role in enhancing sports performance, ensuring quicker recovery, and preventing lifestyle-related injuries among athletes. By blending classical Ayurvedic wisdom with modern sports science, this issue provides valuable insights for practitioners, students, and the general public alike. I congratulate the editorial team for this excellent initiative and wish the magazine greater reach and impact in the days to come.
+                  - text: "\""
+              - generic [ref=f104e226]:
+                - heading [level=2] [ref=f104e227]: Dr. Arun P. V.
+                - generic [ref=f104e228]: Ayurvedic Physician | Senate Member, KUHS
+          - tabpanel [ref=f104e229]:
+            - generic [ref=f104e230]:
+              - generic [ref=f104e231]:
+                - generic [ref=f104e232]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e234]:
+                  - text: "\""
+                  - emphasis [ref=f104e235]: I find Vaidyam magazine very interesting and informative. Vaidyam Jan - March 2025 issue focusing on Sports Ayurveda has been a captivating experience for me as a reader. Without depriving stress on the central theme, various aspects of Sastra have been dealt with beautifully. The contents are enlightening in nature. Conversations with Dr Mathews Vempilli, and expository on Murivenna by Dr Ajayan Sadanandan and most of the other sections were interesting. Glad to see the knowledge of legendary physicians like Dr K Rajagopalan being passed on to the next generation of Vaidyas. Overall the Quarterly is a must read for all upcoming Vaidyas and Sasthrarthis
+                  - text: "\""
+              - generic [ref=f104e239]:
+                - heading [level=2] [ref=f104e240]: Dr. Anand R. V.
+                - generic [ref=f104e241]: Chief Physician
+          - tabpanel [ref=f104e242]:
+            - generic [ref=f104e243]:
+              - generic [ref=f104e244]:
+                - generic [ref=f104e245]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e247]:
+                  - emphasis [ref=f104e248]: "\"The revamped version of Kerala Ayurveda's Vaidyam magazine stands out with its diverse features and engaging sections that blend traditional Ayurveda with contemporary research, insightful interviews, and showcases from premier institutions. While maintaining its traditional purity, the magazine adds vibrant colors with new columns such as book reviews, formulations, and interviews with luminaries. These unique additions enhance its appeal, making it a delightful read for all. I extend my heartfelt thanks to the visionary team behind this initiative.”"
+              - generic [ref=f104e252]:
+                - heading [level=2] [ref=f104e253]: Dr. Arjun M.
+                - generic [ref=f104e254]: Assistant Professor, Department of Rasasastra & Bhaishajya KalpanaVaidyaratnam Ayurveda College, Ollur, Thrissur.
+          - tabpanel "1 of 4" [ref=f104e255]:
+            - generic [ref=f104e256]:
+              - generic [ref=f104e257]:
+                - generic "5 out of 5" [ref=f104e258]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e260]:
+                  - text: "\""
+                  - emphasis [ref=f104e261]: The cover page is attractive, and the overall content is highly professional. The 'Simple to Complex – Readometer' is especially helpful, and the editorial quality reflects a strong and relevant editing team. Vaidyam serves as a practical guide for BAMS students and doctors, with insightful interviews and well-structured treatment protocols. I found the 'Spotlight' section concise and engaging, while features like the 'Floral Trail of Rama' bring creativity to the magazine. Articles by Dr. Jayan and Dr. Ajayan are practical, useful, and well-presented. The inclusion of QR codes makes access quick and easy. Overall, Vaidyam is readable, interesting, and professionally laid out. Wishing the team continued success
+                  - text: ."
+              - generic [ref=f104e265]:
+                - heading "Dr. Rajesh B." [level=2] [ref=f104e266]
+                - generic [ref=f104e267]: Consultant
+          - tabpanel "2 of 4" [ref=f104e268]:
+            - generic [ref=f104e269]:
+              - generic [ref=f104e270]:
+                - generic "5 out of 5" [ref=f104e271]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e273]:
+                  - text: "\""
+                  - emphasis [ref=f104e274]: I truly appreciate the efforts of the Kerala Ayurveda Vaidyam Team in bringing out this special issue on Sports Ayurveda. The magazine beautifully highlights how Ayurveda can play a vital role in enhancing sports performance, ensuring quicker recovery, and preventing lifestyle-related injuries among athletes. By blending classical Ayurvedic wisdom with modern sports science, this issue provides valuable insights for practitioners, students, and the general public alike. I congratulate the editorial team for this excellent initiative and wish the magazine greater reach and impact in the days to come.
+                  - text: "\""
+              - generic [ref=f104e278]:
+                - heading "Dr. Arun P. V." [level=2] [ref=f104e279]
+                - generic [ref=f104e280]: Ayurvedic Physician | Senate Member, KUHS
+          - tabpanel "3 of 4" [ref=f104e281]:
+            - generic [ref=f104e282]:
+              - generic [ref=f104e283]:
+                - generic "5 out of 5" [ref=f104e284]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e286]:
+                  - text: "\""
+                  - emphasis [ref=f104e287]: I find Vaidyam magazine very interesting and informative. Vaidyam Jan - March 2025 issue focusing on Sports Ayurveda has been a captivating experience for me as a reader. Without depriving stress on the central theme, various aspects of Sastra have been dealt with beautifully. The contents are enlightening in nature. Conversations with Dr Mathews Vempilli, and expository on Murivenna by Dr Ajayan Sadanandan and most of the other sections were interesting. Glad to see the knowledge of legendary physicians like Dr K Rajagopalan being passed on to the next generation of Vaidyas. Overall the Quarterly is a must read for all upcoming Vaidyas and Sasthrarthis
+                  - text: "\""
+              - generic [ref=f104e291]:
+                - heading "Dr. Anand R. V." [level=2] [ref=f104e292]
+                - generic [ref=f104e293]: Chief Physician
+          - tabpanel [ref=f104e294]:
+            - generic [ref=f104e295]:
+              - generic [ref=f104e296]:
+                - generic [ref=f104e297]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e299]:
+                  - emphasis [ref=f104e300]: "\"The revamped version of Kerala Ayurveda's Vaidyam magazine stands out with its diverse features and engaging sections that blend traditional Ayurveda with contemporary research, insightful interviews, and showcases from premier institutions. While maintaining its traditional purity, the magazine adds vibrant colors with new columns such as book reviews, formulations, and interviews with luminaries. These unique additions enhance its appeal, making it a delightful read for all. I extend my heartfelt thanks to the visionary team behind this initiative.”"
+              - generic [ref=f104e304]:
+                - heading [level=2] [ref=f104e305]: Dr. Arjun M.
+                - generic [ref=f104e306]: Assistant Professor, Department of Rasasastra & Bhaishajya KalpanaVaidyaratnam Ayurveda College, Ollur, Thrissur.
+          - tabpanel [ref=f104e307]:
+            - generic [ref=f104e308]:
+              - generic [ref=f104e309]:
+                - generic [ref=f104e310]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e312]:
+                  - text: "\""
+                  - emphasis [ref=f104e313]: The cover page is attractive, and the overall content is highly professional. The 'Simple to Complex – Readometer' is especially helpful, and the editorial quality reflects a strong and relevant editing team. Vaidyam serves as a practical guide for BAMS students and doctors, with insightful interviews and well-structured treatment protocols. I found the 'Spotlight' section concise and engaging, while features like the 'Floral Trail of Rama' bring creativity to the magazine. Articles by Dr. Jayan and Dr. Ajayan are practical, useful, and well-presented. The inclusion of QR codes makes access quick and easy. Overall, Vaidyam is readable, interesting, and professionally laid out. Wishing the team continued success
+                  - text: ."
+              - generic [ref=f104e317]:
+                - heading [level=2] [ref=f104e318]: Dr. Rajesh B.
+                - generic [ref=f104e319]: Consultant
+          - tabpanel [ref=f104e320]:
+            - generic [ref=f104e321]:
+              - generic [ref=f104e322]:
+                - generic [ref=f104e323]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e325]:
+                  - text: "\""
+                  - emphasis [ref=f104e326]: I truly appreciate the efforts of the Kerala Ayurveda Vaidyam Team in bringing out this special issue on Sports Ayurveda. The magazine beautifully highlights how Ayurveda can play a vital role in enhancing sports performance, ensuring quicker recovery, and preventing lifestyle-related injuries among athletes. By blending classical Ayurvedic wisdom with modern sports science, this issue provides valuable insights for practitioners, students, and the general public alike. I congratulate the editorial team for this excellent initiative and wish the magazine greater reach and impact in the days to come.
+                  - text: "\""
+              - generic [ref=f104e330]:
+                - heading [level=2] [ref=f104e331]: Dr. Arun P. V.
+                - generic [ref=f104e332]: Ayurvedic Physician | Senate Member, KUHS
+          - tabpanel [ref=f104e333]:
+            - generic [ref=f104e334]:
+              - generic [ref=f104e335]:
+                - generic [ref=f104e336]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e338]:
+                  - text: "\""
+                  - emphasis [ref=f104e339]: I find Vaidyam magazine very interesting and informative. Vaidyam Jan - March 2025 issue focusing on Sports Ayurveda has been a captivating experience for me as a reader. Without depriving stress on the central theme, various aspects of Sastra have been dealt with beautifully. The contents are enlightening in nature. Conversations with Dr Mathews Vempilli, and expository on Murivenna by Dr Ajayan Sadanandan and most of the other sections were interesting. Glad to see the knowledge of legendary physicians like Dr K Rajagopalan being passed on to the next generation of Vaidyas. Overall the Quarterly is a must read for all upcoming Vaidyas and Sasthrarthis
+                  - text: "\""
+              - generic [ref=f104e343]:
+                - heading [level=2] [ref=f104e344]: Dr. Anand R. V.
+                - generic [ref=f104e345]: Chief Physician
+          - tabpanel [ref=f104e346]:
+            - generic [ref=f104e347]:
+              - generic [ref=f104e348]:
+                - generic [ref=f104e349]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e351]:
+                  - emphasis [ref=f104e352]: "\"The revamped version of Kerala Ayurveda's Vaidyam magazine stands out with its diverse features and engaging sections that blend traditional Ayurveda with contemporary research, insightful interviews, and showcases from premier institutions. While maintaining its traditional purity, the magazine adds vibrant colors with new columns such as book reviews, formulations, and interviews with luminaries. These unique additions enhance its appeal, making it a delightful read for all. I extend my heartfelt thanks to the visionary team behind this initiative.”"
+              - generic [ref=f104e356]:
+                - heading [level=2] [ref=f104e357]: Dr. Arjun M.
+                - generic [ref=f104e358]: Assistant Professor, Department of Rasasastra & Bhaishajya KalpanaVaidyaratnam Ayurveda College, Ollur, Thrissur.
+          - tabpanel [ref=f104e359]:
+            - generic [ref=f104e360]:
+              - generic [ref=f104e361]:
+                - generic [ref=f104e362]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e364]:
+                  - text: "\""
+                  - emphasis [ref=f104e365]: The cover page is attractive, and the overall content is highly professional. The 'Simple to Complex – Readometer' is especially helpful, and the editorial quality reflects a strong and relevant editing team. Vaidyam serves as a practical guide for BAMS students and doctors, with insightful interviews and well-structured treatment protocols. I found the 'Spotlight' section concise and engaging, while features like the 'Floral Trail of Rama' bring creativity to the magazine. Articles by Dr. Jayan and Dr. Ajayan are practical, useful, and well-presented. The inclusion of QR codes makes access quick and easy. Overall, Vaidyam is readable, interesting, and professionally laid out. Wishing the team continued success
+                  - text: ."
+              - generic [ref=f104e369]:
+                - heading [level=2] [ref=f104e370]: Dr. Rajesh B.
+                - generic [ref=f104e371]: Consultant
+          - tabpanel [ref=f104e372]:
+            - generic [ref=f104e373]:
+              - generic [ref=f104e374]:
+                - generic [ref=f104e375]: ★★★★★ ★★★★★
+                - paragraph [ref=f104e377]:
+                  - text: "\""
+                  - emphasis [ref=f104e378]: I truly appreciate the efforts of the Kerala Ayurveda Vaidyam Team in bringing out this special issue on Sports Ayurveda. The magazine beautifully highlights how Ayurveda can play a vital role in enhancing sports performance, ensuring quicker recovery, and preventing lifestyle-related injuries among athletes. By blending classical Ayurvedic wisdom with modern sports science, this issue provides valuable insights for practitioners, students, and the general public alike. I congratulate the editorial team for this excellent initiative and wish the magazine greater reach and impact in the days to come.
+                  - text: "\""
+              - generic [ref=f104e382]:
+                - heading [level=2] [ref=f104e383]: Dr. Arun P. V.
+                - generic [ref=f104e384]: Ayurvedic Physician | Senate Member, KUHS
+        - tablist "Select a slide to show":
+          - tab "Go to page 1" [selected] [ref=f104e385]
+          - tab "Go to page 2" [ref=f104e386]
+  - contentinfo [ref=f104e387]:
+    - generic [ref=f104e390]:
+      - generic [ref=f104e394]:
+        - group [ref=f104e399]:
+          - generic "Quick Links" [ref=f104e400]
+          - list [ref=f104e402]:
+            - listitem [ref=f104e403]:
+              - link "About Kerala Ayurveda" [ref=f104e404] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/about-us-1
+            - listitem [ref=f104e405]:
+              - link "Clinics" [ref=f104e406] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/clinics-listing
+            - listitem [ref=f104e407]:
+              - link "Ayurveda Academy" [ref=f104e408] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/academy
+            - listitem [ref=f104e409]:
+              - link "Investors" [ref=f104e410] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/investors
+            - listitem [ref=f104e411]:
+              - link "Research & Development" [ref=f104e412] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/research-and-development
+            - listitem [ref=f104e413]:
+              - link "Careers" [ref=f104e414] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/careers
+            - listitem [ref=f104e415]:
+              - link "Blogs" [ref=f104e416] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/blogs/news
+            - listitem [ref=f104e417]:
+              - link "Contact Us" [ref=f104e418] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/contact
+        - group [ref=f104e420]:
+          - generic "Policies" [ref=f104e421]
+          - list [ref=f104e423]:
+            - listitem [ref=f104e424]:
+              - link "Terms of use" [ref=f104e425] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/terms-of-use
+            - listitem [ref=f104e426]:
+              - link "Privacy Policy" [ref=f104e427] [cursor=pointer]:
+                - /url: /policies/privacy-policy
+            - listitem [ref=f104e428]:
+              - link "Shipping and Delivery Policy" [ref=f104e429] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/shipping-and-delivery-policy
+            - listitem [ref=f104e430]:
+              - link "Return/Cancellation Policy" [ref=f104e431] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/return-cancellation-policy
+            - listitem [ref=f104e432]:
+              - link "FAQs" [ref=f104e433] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/pages/faq
+        - group [ref=f104e435]:
+          - generic "Our Network" [ref=f104e436]
+          - list [ref=f104e438]:
+            - listitem [ref=f104e439]:
+              - link "Ayurvedagram Bengaluru" [ref=f104e440] [cursor=pointer]:
+                - /url: https://www.ayurvedagram.com/
+            - listitem [ref=f104e441]:
+              - link "Ayurvedagram Bali" [ref=f104e442] [cursor=pointer]:
+                - /url: https://www.ayurvedagrambali.com/
+            - listitem [ref=f104e443]:
+              - link "The Health Village" [ref=f104e444] [cursor=pointer]:
+                - /url: https://www.thehealthvillage.biz/
+            - listitem [ref=f104e445]:
+              - link "Kerala Ayurveda India - Store" [ref=f104e446] [cursor=pointer]:
+                - /url: https://keralaayurveda.com/
+            - listitem [ref=f104e447]:
+              - link "Kerala Ayurveda India - Academy" [ref=f104e448] [cursor=pointer]:
+                - /url: https://keralaayurvedaacademy.in/
+            - listitem [ref=f104e449]:
+              - link "Kerala Ayurveda USA - Store" [ref=f104e450] [cursor=pointer]:
+                - /url: https://keralaayurveda.store/
+            - listitem [ref=f104e451]:
+              - link "Kerala Ayurveda USA - Wellness" [ref=f104e452] [cursor=pointer]:
+                - /url: https://www.keralaayurveda.us/wellnesscenter/
+            - listitem [ref=f104e453]:
+              - link "Kerala Ayurveda USA - Academy" [ref=f104e454] [cursor=pointer]:
+                - /url: https://www.keralaayurveda.us/courses/
+      - generic [ref=f104e455]:
+        - generic [ref=f104e458]:
+          - text: © 2026
+          - link "Kerala Ayurveda Vaidyam" [ref=f104e459] [cursor=pointer]:
+            - /url: /
+        - generic [ref=f104e461]:
+          - link "Facebook" [ref=f104e463] [cursor=pointer]:
+            - /url: https://www.facebook.com/keralaayurvedaltd/
+          - link "X" [ref=f104e467] [cursor=pointer]:
+            - /url: https://x.com/kalayurvedacorp?lang=en
+          - link "Instagram" [ref=f104e471] [cursor=pointer]:
+            - /url: https://www.instagram.com/keralaayurvedaltd/?hl=en
+          - link "Pinterest" [ref=f104e475] [cursor=pointer]:
+            - /url: https://www.pinterest.com/keralaayurvedaltd/
+          - link "Youtube" [ref=f104e479] [cursor=pointer]:
+            - /url: https://www.youtube.com/c/KeralaAyurvedalimited
+          - link "Linkedin" [ref=f104e483] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/kerala-ayurveda/?originalSubdomain=in
+  - iframe [ref=f104e487]:
+    - generic [ref=f106e4]:
+      - button [ref=f106e7] [cursor=pointer]
+      - generic [ref=f106e15]:
+        - generic [ref=f106e18]:
+          - link [ref=f106e19] [cursor=pointer]:
+            - /url: https://admin.shopify.com/store/kerala-ayurveda-vaidyam
+            - img "Logo" [ref=f106e20]
+          - generic [ref=f106e22]:
+            - generic [ref=f106e23]: PROTOTYPE - Article Freemium + Referral (do not...
+            - generic [ref=f106e24]: Draft
+        - generic [ref=f106e26]:
+          - button "Hide bar" [ref=f106e28] [cursor=pointer]
+          - button "Exit preview" [ref=f106e31] [cursor=pointer]
+          - button "Copy link" [ref=f106e35] [cursor=pointer]
