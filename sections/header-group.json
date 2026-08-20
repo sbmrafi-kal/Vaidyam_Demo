@@ -5,18 +5,20 @@
     "header": {
       "type": "header-vaidyam",
       "settings": {
-        "nav_1_title": "Articles",
-        "nav_1_url": "/blogs/ayurveda",
-        "nav_2_title": "About",
-        "nav_2_url": "/pages/about",
-        "nav_3_title": "Editorial Board",
-        "nav_3_url": "/pages/editorial-board",
-        "nav_4_title": "Submit",
-        "nav_4_url": "/pages/guidelines",
-        "nav_5_title": "Subscribe",
-        "nav_5_url": "#current-edition",
+        "nav_1_title": "Philosophy",
+        "nav_1_url": "#philosophy",
+        "nav_2_title": "18 Columns",
+        "nav_2_url": "#departments",
+        "nav_3_title": "Care Pathways",
+        "nav_3_url": "#care-pathways",
+        "nav_4_title": "CARE Case Study",
+        "nav_4_url": "#care-report",
+        "nav_5_title": "Archives",
+        "nav_5_url": "#archival-museum",
+        "nav_6_title": "Editorial Board",
+        "nav_6_url": "#editorial-board",
         "logo_image": "shopify://shop_images/logo-kerala.png",
-        "logo_alt": "Vaidyam — Kerala Ayurveda"
+        "logo_alt": "Vaidyam — A Journal on Evolving Ayurveda"
       }
     }
   },

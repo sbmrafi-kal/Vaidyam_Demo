@@ -16,15 +16,12 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
+    <title>Vaidyam - A Journal on Evolving Ayurveda</title>
 
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
+    {% else %}
+      <meta name="description" content="Vaidyam - A Journal on Evolving Ayurveda. Official quarterly medical publication by Kerala Ayurveda Limited featuring physician-reviewed monographs, CARE-compliant clinical cases, and classical casuistry.">
     {% endif %}
 
     {% render 'meta-tags' %}

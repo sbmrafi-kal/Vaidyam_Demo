@@ -1,61 +1,57 @@
 {% comment %}
   sections/header-vaidyam.liquid — Masthead & Brand Header
-  Features:
-  - Top Metadata Ledger: ISSN 2394-4323, Quarterly Print & Digital Medical Journal, Vol. VIII • Issue 4, ICMJE & CARE-Standard, Manuscript Policies
-  - Main Brand Bar: VAIDYAM — A Journal on Evolving Ayurveda • Estd. 2003
-  - Academic Journal Nav: Philosophy, 18 Columns, Care Pathways, CARE Case Study, Archives (1997–2026), Editorial Board
-  - Action CTA: Subscribe (₹1,200/yr)
+  BEM Structure: .v-masthead
 {% endcomment %}
 
 {{ 'vaidyam-header.css' | asset_url | stylesheet_tag }}
 
-<header class="vaidyam-journal-masthead" role="banner">
+<header class="v-masthead" role="banner">
   <!-- Top Metadata Ledger -->
-  <div class="vaidyam-masthead-ledger">
+  <div class="v-masthead__ledger">
     <div class="page-width vaidyam-container">
-      <div class="ledger-flex-row">
-        <div class="ledger-left-group">
-          <span class="ledger-issn-pill">ISSN 2394-4323</span>
-          <span class="ledger-dot">•</span>
-          <span class="ledger-text">QUARTERLY PRINT &amp; DIGITAL MEDICAL JOURNAL</span>
-          <span class="ledger-dot hide-mobile">•</span>
-          <span class="ledger-text hide-mobile">VOL. VIII • ISSUE 4</span>
+      <div class="v-masthead__ledger-row">
+        <div class="v-masthead__ledger-left">
+          <span class="v-masthead__issn-pill">ISSN 2394-4323</span>
+          <span class="v-masthead__dot">•</span>
+          <span class="v-masthead__ledger-text">QUARTERLY PRINT &amp; DIGITAL MEDICAL JOURNAL</span>
+          <span class="v-masthead__dot v-masthead__dot--hide-mobile">•</span>
+          <span class="v-masthead__ledger-text v-masthead__ledger-text--hide-mobile">VOL. VIII • ISSUE 4</span>
         </div>
-        <div class="ledger-right-group">
-          <span class="ledger-care-badge">ICMJE &amp; CARE-STANDARD AUDITED</span>
-          <a href="#author-guidelines" class="ledger-submit-link">MANUSCRIPT POLICIES ➔</a>
+        <div class="v-masthead__ledger-right">
+          <span class="v-masthead__care-badge">ICMJE &amp; CARE-STANDARD AUDITED</span>
+          <a href="#author-guidelines" class="v-masthead__submit-link">MANUSCRIPT POLICIES ➔</a>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Main Navigation Bar -->
-  <div class="vaidyam-masthead-main">
+  <div class="v-masthead__main">
     <div class="page-width vaidyam-container">
-      <div class="main-bar-flex-row">
+      <div class="v-masthead__main-row">
         
         <!-- Brand Title -->
-        <a href="{{ routes.root_url }}" class="vaidyam-journal-brand">
-          <span class="brand-title-main">VAIDYAM</span>
-          <span class="brand-title-sub">A Journal on Evolving Ayurveda • Estd. 2003</span>
+        <a href="{{ routes.root_url }}" class="v-masthead__brand">
+          <span class="v-masthead__brand-title">VAIDYAM</span>
+          <span class="v-masthead__brand-sub">A Journal on Evolving Ayurveda • Estd. 2003</span>
         </a>
 
         <!-- Academic Nav Links -->
-        <nav class="vaidyam-academic-nav" aria-label="Journal Navigation">
-          <a href="#philosophy" class="nav-item">Philosophy</a>
-          <a href="#departments" class="nav-item">18 Columns</a>
-          <a href="#care-pathways" class="nav-item">Care Pathways</a>
-          <a href="#care-report" class="nav-item">CARE Case Study</a>
-          <a href="#archival-museum" class="nav-item">Archives (1997–2026)</a>
-          <a href="#editorial-board" class="nav-item">Editorial Board</a>
+        <nav class="v-masthead__nav" aria-label="Journal Navigation">
+          <a href="#philosophy" class="v-masthead__nav-link">Philosophy</a>
+          <a href="#departments" class="v-masthead__nav-link">18 Columns</a>
+          <a href="#care-pathways" class="v-masthead__nav-link">Care Pathways</a>
+          <a href="#care-report" class="v-masthead__nav-link">CARE Case Study</a>
+          <a href="#archival-museum" class="v-masthead__nav-link">Archives (1997–2026)</a>
+          <a href="#editorial-board" class="v-masthead__nav-link">Editorial Board</a>
         </nav>
 
         <!-- CTA Subscribe Button -->
-        <div class="vaidyam-masthead-actions">
-          <a href="#subscribe-plan" class="btn-masthead-subscribe">
+        <div class="v-masthead__actions">
+          <a href="#subscribe-plan" class="v-masthead__btn-subscribe">
             Subscribe (₹1,200/yr)
           </a>
-          <button class="masthead-mobile-toggle" type="button" aria-label="Toggle menu" onclick="document.getElementById('vaidyam-mobile-nav').classList.toggle('active')">
+          <button class="v-masthead__mobile-toggle" type="button" aria-label="Toggle menu" onclick="toggleMobileNav('vaidyam-mobile-nav')">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -69,19 +65,21 @@
   </div>
 
   <!-- Mobile Dropdown Nav -->
-  <div class="vaidyam-mobile-nav" id="vaidyam-mobile-nav">
-    <div class="mobile-nav-inner">
-      <a href="#philosophy" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">Philosophy</a>
-      <a href="#departments" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">18 Columns</a>
-      <a href="#care-pathways" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">Care Pathways</a>
-      <a href="#care-report" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">CARE Case Study</a>
-      <a href="#archival-museum" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">Archives (1997–2026)</a>
-      <a href="#editorial-board" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">Editorial Board</a>
-      <a href="#author-guidelines" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">Manuscript Policies</a>
-      <a href="#subscribe-plan" class="mobile-nav-sub-btn" onclick="document.getElementById('vaidyam-mobile-nav').classList.remove('active')">Subscribe (₹1,200/yr)</a>
+  <div class="v-masthead__mobile-nav" id="vaidyam-mobile-nav">
+    <div class="v-masthead__mobile-nav-inner">
+      <a href="#philosophy" onclick="toggleMobileNav('vaidyam-mobile-nav')">Philosophy</a>
+      <a href="#departments" onclick="toggleMobileNav('vaidyam-mobile-nav')">18 Columns</a>
+      <a href="#care-pathways" onclick="toggleMobileNav('vaidyam-mobile-nav')">Care Pathways</a>
+      <a href="#care-report" onclick="toggleMobileNav('vaidyam-mobile-nav')">CARE Case Study</a>
+      <a href="#archival-museum" onclick="toggleMobileNav('vaidyam-mobile-nav')">Archives (1997–2026)</a>
+      <a href="#editorial-board" onclick="toggleMobileNav('vaidyam-mobile-nav')">Editorial Board</a>
+      <a href="#author-guidelines" onclick="toggleMobileNav('vaidyam-mobile-nav')">Manuscript Policies</a>
+      <a href="#subscribe-plan" class="v-masthead__mobile-sub-btn" onclick="toggleMobileNav('vaidyam-mobile-nav')">Subscribe (₹1,200/yr)</a>
     </div>
   </div>
 </header>
+
+<script src="{{ 'vaidyam-landing.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {

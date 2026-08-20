@@ -1,196 +1,172 @@
 /* ==========================================================================
-   VAIDYAM ACADEMIC JOURNAL FOOTER
+   VAIDYAM ACADEMIC JOURNAL FOOTER — BEM STYLESHEET
+   Block: .v-footer
    ========================================================================== */
 
-.vaidyam-journal-footer {
-  background-color: #050C08;
-  color: #D6D3D1;
-  padding: 80px 0 32px 0;
-  border-top: 1px solid #1C2D24;
-  font-family: var(--font-sans);
+.v-footer {
+  background-color: var(--v-color-bg-darker);
+  color: var(--v-color-text-inverse-muted);
+  padding: var(--v-space-4xl) 0 var(--v-space-xl) 0;
+  border-top: 1px solid var(--v-color-border-dark);
+  font-family: var(--v-font-sans);
 }
 
-.vaidyam-footer-main-grid {
+.v-footer__grid {
   display: grid;
-  grid-template-columns: 1.2fr 1.1fr 1.1fr;
-  gap: 48px;
+  grid-template-columns: 4fr 3fr 3fr 2fr;
+  gap: var(--v-space-2xl);
   padding-bottom: 56px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--v-color-border-white-subtle);
 }
 
-.footer-col {
+.v-footer__col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--v-space-sm);
 }
 
-.footer-brand-wrap {
+.v-footer__brand-wrap {
   display: flex;
   flex-direction: column;
 }
 
-.footer-brand-title {
-  font-family: var(--font-serif);
+.v-footer__brand-title {
+  font-family: var(--v-font-serif);
   font-size: 32px;
   font-weight: 900;
   letter-spacing: 0.12em;
-  color: #FFFFFF;
+  color: var(--v-color-text-inverse-white);
   line-height: 1;
   margin: 0;
 }
 
-.footer-brand-tag {
-  font-family: var(--font-serif);
+.v-footer__brand-sub {
+  font-family: var(--v-font-serif);
   font-style: italic;
   font-size: 12px;
-  color: #FBBF24;
+  color: var(--v-color-gold-bright);
   margin: 4px 0 0 0;
 }
 
-.footer-mission-desc {
-  font-size: 13px;
-  color: #A8A29E;
+.v-footer__mission-desc {
+  font-size: 12.5px;
+  color: var(--v-color-text-inverse-subtle);
   line-height: 1.65;
   margin: 0;
 }
 
-.footer-office-meta {
-  font-family: var(--font-mono);
+.v-footer__office-meta {
+  font-family: var(--v-font-mono);
   font-size: 11px;
-  color: #78716C;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 12px;
+  color: var(--v-color-text-subtle);
+  border-top: 1px solid var(--v-color-border-white-subtle);
+  padding-top: var(--v-space-sm);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--v-space-2xs);
 }
 
-.footer-office-meta p {
+.v-footer__office-meta p {
   margin: 0;
 }
 
-.footer-office-meta strong {
-  color: #D6D3D1;
+.v-footer__office-meta strong {
+  color: var(--v-color-text-inverse-muted);
 }
 
-.footer-col-heading {
-  font-family: var(--font-mono);
+.v-footer__col-heading {
+  font-family: var(--v-font-mono);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: #FBBF24;
+  color: var(--v-color-gold-bright);
   text-transform: uppercase;
-  margin: 0 0 4px 0;
+  margin: 0 0 var(--v-space-2xs) 0;
 }
 
-.footer-guidelines-list,
-.footer-channels-list {
+/* 18 Departments 2-Column Grid */
+.v-footer__departments-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  font-size: 11px;
+}
+
+.v-footer__dept-link {
+  color: var(--v-color-text-inverse-subtle);
+  text-decoration: none;
+  transition: color var(--v-transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-footer__dept-link:hover {
+  color: var(--v-color-text-inverse-white);
+  text-decoration: underline;
+}
+
+.v-footer__guidelines-list,
+.v-footer__channels-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
-.footer-guidelines-list li,
-.footer-channels-list li {
-  color: #D6D3D1;
+.v-footer__guideline-item,
+.v-footer__channel-item {
+  color: var(--v-color-text-inverse-muted);
   line-height: 1.5;
 }
 
-.footer-gold-link,
-.footer-channels-list a {
-  color: #FDE68A;
+.v-footer__gold-link,
+.v-footer__channel-item a {
+  color: var(--v-color-gold-light);
   text-decoration: underline;
-  transition: color 0.2s ease;
+  transition: color var(--v-transition-fast);
 }
 
-.footer-channels-list a {
-  font-family: var(--font-mono);
+.v-footer__channel-item a {
+  font-family: var(--v-font-mono);
   font-size: 11.5px;
   text-decoration: none;
 }
 
-.footer-gold-link:hover,
-.footer-channels-list a:hover {
-  color: #FFFFFF;
+.v-footer__gold-link:hover,
+.v-footer__channel-item a:hover {
+  color: var(--v-color-text-inverse-white);
   text-decoration: underline;
 }
 
-.footer-newsletter-wrap {
-  margin-top: 8px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.newsletter-lbl {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: #A8A29E;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.newsletter-form {
-  display: flex;
-  gap: 8px;
-}
-
-.newsletter-input {
-  background-color: #1C2D24;
-  border: 1px solid #29382F;
-  color: #FFFFFF;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  flex: 1;
-  outline: none;
-}
-
-.newsletter-input:focus {
-  border-color: #FBBF24;
-}
-
-.newsletter-btn {
-  background-color: #92400E;
-  color: #FFFFFF;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 8px 14px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.newsletter-btn:hover {
-  background-color: #B45309;
-}
-
-.vaidyam-footer-bottom-bar {
-  padding-top: 24px;
+.v-footer__bottom-bar {
+  padding-top: var(--v-space-lg);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  font-family: var(--font-mono);
+  gap: var(--v-space-sm);
+  font-family: var(--v-font-mono);
   font-size: 11px;
-  color: #78716C;
+  color: var(--v-color-text-subtle);
 }
 
 @media (max-width: 1024px) {
-  .vaidyam-footer-main-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+  .v-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
   }
-  .vaidyam-footer-bottom-bar {
+}
+
+@media (max-width: 768px) {
+  .v-footer__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .v-footer__bottom-bar {
     flex-direction: column;
     align-items: flex-start;
   }

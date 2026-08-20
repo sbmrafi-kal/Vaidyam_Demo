@@ -1,73 +1,86 @@
 {% comment %}
-  sections/footer.liquid — High-End Editorial Publishing Footer
-  Features:
-  - Brand Masthead: Vaidyam Publication Division, Aluva, Kerala | ISSN: 2394-4323
-  - Author Guidelines & Policies (Review Articles, CARE format, Student Innovations, IAST Sanskrit)
-  - Official Channels & Quarterly Dispatch Newsletter
-  - Bottom Bar with ICMJE, CARE & Vancouver Publishing Guidelines
+  sections/footer.liquid — High-End Grand Editorial Publishing Footer
+  BEM Structure: .v-footer
 {% endcomment %}
 
 {{ 'section-footer.css' | asset_url | stylesheet_tag }}
 
-<footer class="vaidyam-journal-footer" id="author-guidelines">
+<footer class="v-footer" id="author-guidelines" role="contentinfo">
   <div class="page-width vaidyam-container">
     
-    <!-- Top Grid -->
-    <div class="vaidyam-footer-main-grid">
+    <!-- Top 4-Column Masthead Directory Grid -->
+    <div class="v-footer__grid">
       
-      <!-- Brand Masthead (4 Cols) -->
-      <div class="footer-col brand-mission-col">
-        <div class="footer-brand-wrap">
-          <span class="footer-brand-title">VAIDYAM</span>
-          <span class="footer-brand-tag">A Journal on Evolving Ayurveda • Estd. 2003</span>
+      <!-- Col 1: Publishing Legacy & Address (4 Cols) -->
+      <div class="v-footer__col v-footer__col--brand">
+        <div class="v-footer__brand-wrap">
+          <span class="v-footer__brand-title">VAIDYAM</span>
+          <span class="v-footer__brand-sub">A Journal on Evolving Ayurveda • Estd. 2003</span>
         </div>
-        <p class="footer-mission-desc">
-          Kerala Ayurveda Vaidyam is a pioneering quarterly publication committed to classical textual interpretation, CARE-compliant clinical observations, and med-tech innovation.
+        <p class="v-footer__mission-desc">
+          Kerala Ayurveda Vaidyam is a peer-reviewed quarterly journal committed to classical Sanskrit interpretation, CARE-compliant clinical observations, and med-tech innovation.
         </p>
-        <div class="footer-office-meta">
+        <div class="v-footer__office-meta">
           <p><strong>ISSN:</strong> 2394-4323 (Print &amp; Digital)</p>
-          <p><strong>Editorial Office:</strong> Publication Division, Athani Post, Aluva, Ernakulam District, Kerala – 683585, India</p>
+          <p><strong>Publication Division:</strong> Kerala Ayurveda Limited, Athani Post, Aluva, Ernakulam District, Kerala – 683585, India</p>
+          <p><strong>Direct Desk:</strong> +91 9048033348 | <a href="mailto:vaidyam@keralaayurveda.biz" class="v-footer__gold-link">vaidyam@keralaayurveda.biz</a></p>
         </div>
       </div>
 
-      <!-- Author Guidelines & Policies (4 Cols) -->
-      <div class="footer-col guidelines-col">
-        <h4 class="footer-col-heading">Author Guidelines &amp; Policies</h4>
-        <ul class="footer-guidelines-list">
-          <li>✦ <strong>Review Articles:</strong> &lt;1,500 words with minimum 5 Vancouver citations</li>
-          <li>✦ <strong>Clinical Cases:</strong> Strict international CARE format (&lt;1,500 words)</li>
-          <li>✦ <strong>Student Innovations:</strong> &lt;800 words campus reviews &amp; reflections</li>
-          <li>✦ <strong>Sanskrit Style:</strong> IAST transliteration, italicized non-proper nouns</li>
-          <li>✦ <strong>Direct Submissions:</strong> <a href="mailto:vaidyam@keralaayurveda.biz" class="footer-gold-link">vaidyam@keralaayurveda.biz</a></li>
+      <!-- Col 2: The 18 Columns Directory (3 Cols) -->
+      <div class="v-footer__col v-footer__col--departments">
+        <h4 class="v-footer__col-heading">18 Recurring Departments</h4>
+        <div class="v-footer__departments-grid">
+          <a href="#departments" class="v-footer__dept-link">01. Spotlight</a>
+          <a href="#departments" class="v-footer__dept-link">02. Vox-Populi</a>
+          <a href="#departments" class="v-footer__dept-link">03. Words, Cords...</a>
+          <a href="#departments" class="v-footer__dept-link">04. Plantscape</a>
+          <a href="#departments" class="v-footer__dept-link">05. Resonance</a>
+          <a href="#departments" class="v-footer__dept-link">06. Śāstramathanam</a>
+          <a href="#departments" class="v-footer__dept-link">07. Dravya Diaries</a>
+          <a href="#departments" class="v-footer__dept-link">08. Vaidya Voce</a>
+          <a href="#departments" class="v-footer__dept-link">09. Pathya Platters</a>
+          <a href="#departments" class="v-footer__dept-link">10. Timeless Blends</a>
+          <a href="#departments" class="v-footer__dept-link">11. Ready, Steady...</a>
+          <a href="#departments" class="v-footer__dept-link">12. Out Of Syllabus</a>
+          <a href="#departments" class="v-footer__dept-link">13. In Focus</a>
+          <a href="#departments" class="v-footer__dept-link">14. Applied Ayurveda</a>
+          <a href="#departments" class="v-footer__dept-link">15. Case of Trimonth</a>
+          <a href="#departments" class="v-footer__dept-link">16. Itinerant Vaidya</a>
+          <a href="#departments" class="v-footer__dept-link">17. Art-a-Śāstra</a>
+          <a href="#departments" class="v-footer__dept-link">18. KALeidoscope</a>
+        </div>
+      </div>
+
+      <!-- Col 3: Author Guidelines & Submission Policies (3 Cols) -->
+      <div class="v-footer__col v-footer__col--guidelines">
+        <h4 class="v-footer__col-heading">Author Guidelines</h4>
+        <ul class="v-footer__guidelines-list">
+          <li class="v-footer__guideline-item">✦ <strong>Review Articles:</strong> &lt;1,500 words with Vancouver citations</li>
+          <li class="v-footer__guideline-item">✦ <strong>Clinical Cases:</strong> Strict CARE format (&lt;1,500 words)</li>
+          <li class="v-footer__guideline-item">✦ <strong>Student Essays:</strong> &lt;800 words campus innovations</li>
+          <li class="v-footer__guideline-item">✦ <strong>Sanskrit Style:</strong> IAST transliteration, italicized non-proper nouns</li>
+          <li class="v-footer__guideline-item">✦ <strong>Direct Submissions:</strong> <a href="mailto:vaidyam@keralaayurveda.biz" class="v-footer__gold-link">vaidyam@keralaayurveda.biz</a></li>
         </ul>
       </div>
 
-      <!-- Official Channels & Newsletter (4 Cols) -->
-      <div class="footer-col channels-col">
-        <h4 class="footer-col-heading">Official Channels &amp; Outreach</h4>
-        <ul class="footer-channels-list">
-          <li>➔ <a href="https://dravya.app" target="_blank" rel="noopener">Dravya App Knowledge Platform</a></li>
-          <li>➔ <a href="https://spotify.com" target="_blank" rel="noopener">Spotify: Kerala Ayurveda Podcast</a></li>
-          <li>➔ <a href="https://youtube.com/@KALVaidyam" target="_blank" rel="noopener">YouTube: @KALVaidyam Dialogues</a></li>
-          <li>➔ <a href="https://instagram.com/keralaayurvedavaidyam" target="_blank" rel="noopener">Instagram: @keralaayurvedavaidyam</a></li>
-          <li>➔ Direct Phone: +91 9048033348</li>
+      <!-- Col 4: Official Channels & Outreach (2 Cols) -->
+      <div class="v-footer__col v-footer__col--channels">
+        <h4 class="v-footer__col-heading">Outreach Channels</h4>
+        <ul class="v-footer__channels-list">
+          <li class="v-footer__channel-item">➔ <a href="https://dravya.app" target="_blank" rel="noopener">Dravya.app Platform</a></li>
+          <li class="v-footer__channel-item">➔ <a href="https://spotify.com" target="_blank" rel="noopener">Spotify Podcast</a></li>
+          <li class="v-footer__channel-item">➔ <a href="https://youtube.com/@KALVaidyam" target="_blank" rel="noopener">YouTube Dialogues</a></li>
+          <li class="v-footer__channel-item">➔ <a href="https://instagram.com/keralaayurvedavaidyam" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
-
-        <div class="footer-newsletter-wrap">
-          <span class="newsletter-lbl">Subscribe to Quarterly Digital Table of Contents:</span>
-          <form onsubmit="event.preventDefault(); alert('Subscribed to Vaidyam Quarterly Dispatch.');" class="newsletter-form">
-            <input type="email" placeholder="doctor@hospital.org" required class="newsletter-input">
-            <button type="submit" class="newsletter-btn">Join</button>
-          </form>
-        </div>
       </div>
 
     </div>
 
-    <!-- Bottom Bar -->
-    <div class="vaidyam-footer-bottom-bar">
+    <!-- Bottom Accreditation & Copyright Strip -->
+    <div class="v-footer__bottom-bar">
       <span>© 2003–2026 Kerala Ayurveda Limited — Publication Division. All Rights Reserved.</span>
-      <span>Indexed under ICMJE, CARE &amp; Vancouver Publishing Guidelines.</span>
+      <span>Audited under ICMJE, CARE &amp; Vancouver Publishing Guidelines.</span>
     </div>
 
   </div>
